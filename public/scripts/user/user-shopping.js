@@ -45,3 +45,13 @@
   //   })
   // }
 // })  
+
+// const order = function() {
+// let yourOrder = [];
+
+//   if (!yourOrder.includes($foodName)) {
+//     yourOrder.push($foodName);
+//   } else (
+//     console.log('test')
+//   )
+// }

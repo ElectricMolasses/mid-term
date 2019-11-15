@@ -1,9 +1,27 @@
+//helpers function
 
+const order = function(food,order) {
+  if (order.length === 0) {
+    order.push(food);
+  } else {
+    let checkItem = true;
+    order.forEach(item => {
+      if (item["name"] === food["name"]) {
+        item["quantity"] += 1;
+        checkItem = false;
+        return;
+      } 
+    })  
+    if (checkItem) {order.push(food);}
+  }
+  return order;
+}
 
 //Add items to order cart
 
 const orderSum = () => {
   const template = `
+  
   <table class="user-order1">
     <tr>
       <td class="user-order-name"></td>
@@ -18,27 +36,40 @@ const orderSum = () => {
     <tr class="user-order-tax"></tr>
     <tr class="user-order-total"></tr>
   </table>
+  <footer class="order-total"><p>Subtotal: </p></footer>
+  <input class="user-order-submit" type="submit" value="Place Order"></input>
   `;
-  let subTotal = 0;
+  
   const tax = 0.05;
-  $(".user-item-add").on('click', function(event) {
-    
-    event.preventDefault();
-    
-    const $temp = $(template);
-    var $foodName = $(this).closest('tr').find(".user-item-name").text();
-    var $foodPrice = $(this).closest('tr').find(".user-item-price").text() / 100;
-    
-    $temp.find(".user-order-name").append($foodName);
-    $temp.find(".user-order-quantity").append("1");
-    $temp.find(".user-order-price").append($foodPrice);
-    //sum order
+  let yourOrder = [];
+  
 
-    subTotal += ($foodPrice);
-    taxTotal = (subTotal * tax);
-    taxTotal.toFixed(2);
-    $temp.find(".user-order-subtotal").append('Subtotal: ', subTotal);
-    $(".user-order").append($temp);
+  $(".user-item-add").on('click', function(event) {
+    let subTotal = 0;
+    event.preventDefault();
+    $(".user-order1").detach();
+    
+    let $foodName = {};
+    $foodName["name"] = $(this).closest('tr').find(".user-item-name").text();
+    order($foodName, yourOrder);
+    $foodName["quantity"] = 1;
+    $foodName["price"] = $(this).closest('tr').find(".user-item-price").text() / 100;
+    
+    for (let order of yourOrder) {
+      
+      const $temp = $(template);
+      $temp.find(".user-order-name").append(order["name"]);
+      $temp.find(".user-order-quantity").append(order["quantity"]);
+      $temp.find(".user-order-price").append(order["price"] * order["quantity"]);
+      subTotal += order["price"] * order["quantity"];
+      $(".order-total").detach();
+      $(".user-order-submit").detach();
+      $(".user-order").append($temp);
+    }
+
+    $(".order-total").text(subTotal);
+
+    
 
   })
 
@@ -81,6 +112,7 @@ $(() => {
         $temp.find(".user-item-price").text(data[index].cost);
         $(".user-menu").append($temp);
       })
+      
       orderSum();
     })  
   }))
