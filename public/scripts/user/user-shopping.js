@@ -17,31 +17,32 @@
 $(() => {
   //Add Button -> change quantity order
   //Order quantity, name, price shown in shopping cart
+  const orderSum = () => {
+    const template = `
+    <table class="user-order1">
+      <tr>
+        <td class="user-order-name"></td>
+        <td class="user-order-quantity"></a>
+        <td class="user-order-price"></td>
+        <td>
+          <button class="user-item-add" type="button"><img src="/resources/plus-circle.png"></button>
+        </td>
+      </tr>
+    </table>
+    `;
 
-  const template = `
-  <table class="user-order1">
-    <tr>
-      <td class="user-order-name"></td>
-      <td class="user-order-quantity"></a>
-      <td class="user-order-price"></td>
-      <td>
-        <input class="user-item-add" type="submit"><img scr="/resources/plus-circle.png"></input>
-      </td>
-    </tr>
-  </table>
-  `;
-  
+    // $(".user-item-add").on('click', ((event) => {
+      
+    //   event.preventDefault();
+    //   console.log($('user-item-name'));
+    //   console.log('hello');
+    //   const $temp = $(template);
+    //   $temp.find(".user-order-name").text("hello");
+    //   $temp.find(".user-order-quantity").text("there");
+    //   $temp.find(".user-order-price").text("$2");
+    //   $(".user-order").append($temp);
+      
+    // }))
+  }
+})  
 
-
-
-  let $addItem = $(".user-item-add")
-  $addItem.on('click', () => {
-    console.log('hello')
-    const $temp = $(template);
-    $temp.find(".user-order-name").text("hello");
-    $temp.find(".user-order-quantity").text("there");
-    $temp.find(".user-order-price").text("$2");
-    $(".user-order").append($temp);
-    
-  })
-})
