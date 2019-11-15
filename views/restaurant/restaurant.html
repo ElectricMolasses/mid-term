@@ -6,53 +6,35 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
   <script src="scripts/restaurant/restaurant.js"></script>
+  <script src="scripts/restaurant/restaurant-login.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Abel|Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav id="restaurant-nav">
     <a class="restaurant-nav-title" href="#">Thai-Tanic</a>
     <div class="restaurant-login-button">
-      <span>Login</span>
+      <span class="restaurant-login-button-text">Login</span>
     </div>
   </nav>
   <div class="restaurant-login-form-holder">
     <form action="/restaurant/login" method="POST" class="restaurant-login-form">
-      <label for="username">Username</label>
-      <input type="text" name="username" required>
+      <label for="email">Email</label>
+      <input class="restaurant-email" type="email" name="email" required>
 
       <label for="password">Password</label>
-      <input type="password" placeholder="Enter Password" required>
-      <button type="submit">Submit</button>
+      <input class="restaurant-password" type="password" placeholder="Enter Password" required>
+      <button type="submit" class="restaurant-login-button-submit">Submit</button>
     </form>
   </div>
   <div id="restaurant-order-container">
-    <div class="restaurant-empty">
-      <div draggable="true" class="restaurant-fill">
-        <div class="restaurant-name-display">
-          <p>Customer name</p>
-          <span class="restaurant-customer-id">Batman</span>
-        </div>
-        <div class="restaurant-time-display">
-          <p>Time Placed</p>
-          <span class="restaurant-time-started">1:00pm</span>
-        </div>
-        <div class="restaurant-menu-items">
-          <p>Menu Items<p>
-          <ul>
-            <li>Menu item 1</li>
-            <li>Menu item 2</li>
-            <li>Menu item 3</li>
-          </ul>
-        </div>
-        <div class="restaurant-phonenumber">
-          <p>phone Number</p>
-          <span class="restaurant-phone">604-312-1068</span>
-        </div>
-      </div>
+    <h2>Incoming</h2>
+    <div id="restaurant-incoming" class="restaurant-empty" >
     </div>
-    <div class="restaurant-empty">
+    <h2>In-progress</h2>
+    <div id="restaurant-in-progress" class="restaurant-empty">
     </div>
-    <div class="restaurant-empty">
+    <h2>Completed</h2>
+    <div id="restaurant-complete" class="restaurant-empty">
     </div>
   </div>
 </body>

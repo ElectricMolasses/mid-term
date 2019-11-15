@@ -4,18 +4,27 @@
  *   these routes are mounted onto /users
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
-//sherry test
+
 const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
-module.exports = (db) => {
+module.exports = (db, twilio) => {
   router.get("/", (req, res) => {
     console.log(req.data);
     //res.sendFile('/views/user/user.html', { root: '../../' });
     res.sendFile(path.resolve('./views/user/user.html'));
     // Needs to check for a users cookie, and treat
     // them as signed in if it exists.
+    // Confirmed twilio working when passed into user routes.
+    // twilio.messages.create({
+    //   body: 'test message',
+    //   to: '+19023945393',
+    //   from: '+12029029010'
+    // })
+    //   .then((mes) => {
+    //     console.log(mes.sid);
+    //   });
   }),
 
   router.get("/menu", (req, res) => {
@@ -46,7 +55,7 @@ module.exports = (db) => {
     return db.query(`
       SELECT first_name, last_name, email, phone_number
       FROM users
-      WHERE id = $1;
+      WHERE user_token = $1;
     `, [req.session.userToken])
       .then(query => {
         res.json(query.rows[0]);
@@ -63,25 +72,23 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    const userToken = 1;
-    if (req.body.email.trim() === 'testUser@test.test'
-        && req.body.password.trim() === 'password') {
-      req.session.userToken = userToken;
+
+    if (req.body.email && req.body.password) {
+      return db.query(`
+        SELECT user_token
+        FROM users
+        WHERE email = $1
+          AND password = $2;
+      `, [req.body.email.trim(), req.body.password.trim()])
+        .then(query => {
+          req.session.userToken = query.rows[0].user_token;
+          res.send({ success: "Logged in" });
+        })
+        .catch(err => {
+          res.send({ error: err.message });
+        });
     }
-    res.redirect("/user");
-    // Logins will query to confirm email and password.
-    // Will use bcrypt to hash at final stage.
-    // Assigns users token to a cookie for repeat authentication.
-    // db.query(`SELECT * FROM users;`)
-    //   .then(data => {
-    //     const users = data.rows;
-    //     res.json({ users });
-    //   })
-    //   .catch(err => {
-    //     res
-    //       .status(500)
-    //       .json({ error: err.message });
-    //   });
+    // Still need to implement bcrypt.
   });
 
   router.post("/logout", (req, res) => {
@@ -96,7 +103,53 @@ module.exports = (db) => {
 
   router.post("/order", (req, res) => {
     // Submit information to create an order and notify the restaurant.
+    // Just going to submit order immediately without checking for
+    // payment or anything initially.
+    const userId = req.session.userToken;
+    const orderItems = req.body.items;
+
+    return db.query(`
+    INSERT INTO orders (
+      customer_id,
+      restaurant_id,
+      time_placed
+    ) VALUES (
+      $1,
+      1,
+      NOW()
+    )
+    RETURNING id;
+    `, [userId])
+      .then(query => {
+        const orderId = query.rows[0].id;
+        const requests = [];
+        for (const item of orderItems) {
+          console.log(item);
+          requests.push(db.query(`
+            INSERT INTO order_items (
+              order_id, item_id
+            ) VALUES (
+              $1, $2
+            )
+            RETURNING *
+          `, [orderId, item])
+            .then(res => {
+              return res.rows;
+            }));
+        }
+
+        Promise.all(requests)
+          .then((query) => {
+            console.log('THE QUERY', query);
+            res.send('Restaurant is confirming your order');
+            // Bother twilio to send an SMS here.
+          });
+      })
+      .catch(err => {
+        console.log(err.message);
+        res.sendStatus(500);
+      });
   });
-  
+
   return router;
 };
