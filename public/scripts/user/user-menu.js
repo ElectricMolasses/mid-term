@@ -83,8 +83,6 @@ const orderSum = () => {
     $(".order-tax").append(tax);
     $(".order-total").append(total);
 
-    
-
   });
 
 };
