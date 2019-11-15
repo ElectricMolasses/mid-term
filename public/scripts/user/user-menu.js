@@ -10,9 +10,9 @@ $(() => {
       method: 'GET',
       dataType: "json",
     }).done((data) => {
-      console.log('test', data[0].name);
       $.each(data, (index) => {
         console.log('test1', data[index].name);
+        $(".user-menu").append("<div>", data[index].name, data[index].cost / 100, "</div>");
       })
     })
   }))
