@@ -16,7 +16,7 @@ $(() => {
       </td>
       <td class="user-item-price">$</td>
       <td>
-        <input class="user-item-add" type="submit"><img scr="/resources/plus-circle.png"></input>
+        <input class^="user-item-add" type="submit"><img scr="/resources/plus-circle.png"></input>
       </td>
     </tr>
   </table>
