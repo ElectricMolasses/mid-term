@@ -1,6 +1,6 @@
 //helpers function
 
-const order = function(food,order) {
+const addToOrder = (food,order) => {
   if (order.length === 0) {
     order.push(food);
   } else {
@@ -10,12 +10,12 @@ const order = function(food,order) {
         item["quantity"] += 1;
         checkItem = false;
         return;
-      } 
-    })  
-    if (checkItem) {order.push(food);}
+      }
+    });
+    if (checkItem) order.push(food);
   }
   return order;
-}
+};
 
 //Add items to order cart
 
@@ -36,44 +36,58 @@ const orderSum = () => {
     <tr class="user-order-tax"></tr>
     <tr class="user-order-total"></tr>
   </table>
-  <footer class="order-total"><p>Subtotal: </p></footer>
+  <footer >
+    <span class="order-subtotal">Subtotal: </span>
+    <span class="order-tax">Tax: </span>
+    <span class="order-total">Total: </span>
+  </footer>
   <input class="user-order-submit" type="submit" value="Place Order"></input>
   `;
   
-  const tax = 0.05;
   let yourOrder = [];
   
 
   $(".user-item-add").on('click', function(event) {
     let subTotal = 0;
+    let tax = 0;
+    let total = 0;
     event.preventDefault();
     $(".user-order1").detach();
     
     let $foodName = {};
     $foodName["name"] = $(this).closest('tr').find(".user-item-name").text();
-    order($foodName, yourOrder);
+    addToOrder($foodName, yourOrder);
     $foodName["quantity"] = 1;
     $foodName["price"] = $(this).closest('tr').find(".user-item-price").text() / 100;
     
     for (let order of yourOrder) {
       
       const $temp = $(template);
+      const $itemTotal = Number((order["price"] * order["quantity"]).toFixed(2));
+      subTotal += ($itemTotal);
+      tax = Number((0.05 * subTotal).toFixed(2));
+      total = Number((subTotal + tax).toFixed(2));
+
       $temp.find(".user-order-name").append(order["name"]);
       $temp.find(".user-order-quantity").append(order["quantity"]);
-      $temp.find(".user-order-price").append(order["price"] * order["quantity"]);
-      subTotal += order["price"] * order["quantity"];
+      $temp.find(".user-order-price").append($itemTotal);
+
+      $(".order-subtotal").detach();
+      $(".order-tax").detach();
       $(".order-total").detach();
       $(".user-order-submit").detach();
       $(".user-order").append($temp);
     }
 
-    $(".order-total").text(subTotal);
+    $(".order-subtotal").append(subTotal);
+    $(".order-tax").append(tax);
+    $(".order-total").append(total);
 
     
 
-  })
+  });
 
-}
+};
 
 
 //-------------------------------------------------
@@ -96,8 +110,8 @@ $(() => {
   </table>
   `;
 
-//get data from GET /menu
-//loop through data and render to table
+  //get data from GET /menu
+  //loop through data and render to table
 
   $(".user-order-now").on('click', ((event) => {
     event.preventDefault();
@@ -111,11 +125,11 @@ $(() => {
         $temp.find(".user-item-description").text(data[index].description);
         $temp.find(".user-item-price").text(data[index].cost);
         $(".user-menu").append($temp);
-      })
+      });
       
       orderSum();
-    })  
-  }))
+    });
+  }));
   
 
-})
+});
