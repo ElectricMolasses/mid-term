@@ -3,3 +3,52 @@ $base-color: #c6538c;
 body {
   background-color: $base-color;
 }
+
+.user-header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  top: 0px;
+  height: 60px;
+}
+.user-navbar {
+  display: flex;
+  justify-content: space-between;
+  float: left;
+  font-size: 24px;
+}
+
+.user-access {
+  float: right;
+}
+
+.user-login-form {
+  display: none;
+  position: fixed;
+  padding: 5% 7%;
+  top:30%;
+  background-color: #ffffff;  
+  z-index: 9;
+}
+
+.user-login-form input, button {
+  display: block;
+}
+
+.user-login-form input {
+  width: 250px;
+}
+
+.user-staticphoto {
+  margin-top: 100px;
+  width: 100%;
+}
+.user-login:hover {
+  opacity: 1;
+}
+
+//hide forms
+
+.visible {
+  display: block;
+}
