@@ -1,4 +1,7 @@
 
+
+//Add items to order cart
+
 const orderSum = () => {
   const template = `
   <table class="user-order1">
@@ -9,23 +12,36 @@ const orderSum = () => {
       <td>
         <button class="user-item-add" type="button"><img src="/resources/plus-circle.png"></button>
       </td>
+
     </tr>
+    <tr class="user-order-subtotal"></tr>
+    <tr class="user-order-tax"></tr>
+    <tr class="user-order-total"></tr>
   </table>
   `;
-
+  let subTotal = 0;
+  const tax = 0.05;
   $(".user-item-add").on('click', function(event) {
     
     event.preventDefault();
+    
     const $temp = $(template);
     var $foodName = $(this).closest('tr').find(".user-item-name").text();
     var $foodPrice = $(this).closest('tr').find(".user-item-price").text() / 100;
-    console.log($foodPrice);
+    
     $temp.find(".user-order-name").append($foodName);
     $temp.find(".user-order-quantity").append("1");
     $temp.find(".user-order-price").append($foodPrice);
+    //sum order
+
+    subTotal += ($foodPrice);
+    taxTotal = (subTotal * tax);
+    taxTotal.toFixed(2);
+    $temp.find(".user-order-subtotal").append('Subtotal: ', subTotal);
     $(".user-order").append($temp);
-    
+
   })
+
 }
 
 
