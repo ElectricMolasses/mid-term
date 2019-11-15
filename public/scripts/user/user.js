@@ -42,23 +42,29 @@ logout button
       }
 
     })
-      .done((data) => {
-        console.log('1',data);
-      })
+      .done((res) => {
+        console.log('1',res);
+        if (res === "Invalid Email") {
+          $(".user-error-message").text("Invalid Email/Password");
+        } else if (res === "Invalid Password") {
+          $(".user-error-message").text("Invalid Email/Password");
+        } else {
+          console.log('here');
+          $(".user-login-form").hide().removeClass('visible');
+          $(".user-access").hide().removeClass('visible');
+          $(".user-logged").show().addClass('visible');
+          // need add scroll down to menu section
+        }
+    })
 
-      if (res === "Invalid Email") {
-        $(".user-error-message").text("Invalid Email/Password");
-      } else if (res === "Invalid Password") {
-        $(".user-error-message").text("Invalid Email/Password");
-      } else {
-        console.log('here');
-        $(".user-login-form").hide().removeClass('visible');
-        $(".user-access").hide().removeClass('visible');
-        $(".user-logged").show().addClass('visible');
-        // need add scroll down to menu section
-      }
 
     // $.get('/login')
+
+    $.ajax('/user/profile', {
+      method: 'GET',
+      dataType: "json",
+
+    })
   }));
   //need to check data with our database
 
