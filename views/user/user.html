@@ -34,6 +34,13 @@
     <span class="user-login">Login</span>
     <span class="user-signup">Sign Up</span>
   </div>
+
+  <!-- Invisible unless logged in -->
+  <div class="user-logged">
+      <span class="user-email1"></span>
+      <span class="user-logout">Log out</span>
+      <span><img src="/resources/cart-outline.png"></span>
+  </div>
 </nav>
 
 <!-- homepage photo -->
@@ -43,16 +50,17 @@
 </div>
 <!-- login/register popup form -->
 
-<div class="user-login-form">
+<div class="user-login-form"></div>
+  <a class="user-error-message"></a>
   <input class="user-email" type="email" placeholder="Email Address"></input>
   <input class="user-password" type="password" placeholder="Password"></input>
-  <button type="button">Log In</button>
+  <input class="user-login-button" type="submit" value="Sign In"></input>
 </div>
 
 <div class="user-signup-form">
     <input type="email" placeholder="Email Address"></input>
     <input type="password" placeholder="Password"></input>
-    <button type="button">Register</button>
+    <button type="submit">Register</button>
 </div>
 
 <!-- MENU HEADER -->

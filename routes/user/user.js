@@ -24,8 +24,8 @@ module.exports = (db) => {
 
   router.post("/login", (req, res) => {
     const userToken = 1;
-    if (req.body.email === 'testUser@test.test'
-        && req.body.password === 'password') {
+    if (req.body.email.trim() === 'testUser@test.test'
+        && req.body.password.trim() === 'password') {
       req.session.userToken = userToken;
     }
     res.redirect("/user");

@@ -1,5 +1,7 @@
-//get login/register form popup
+
 $(() => {
+
+  //get login/signup form popup
   $(".user-login").on('click',(() => {
     if ($(".user-login-form").hasClass('visible')) {
       $(".user-login-form").hide().removeClass('visible');
@@ -8,9 +10,8 @@ $(() => {
     }
   })
   );
-});
 
-$(() => {
+
   $(".user-signup").on('click',(() => {
     if ($(".user-signup-form").hasClass('visible')) {
       $(".user-signup-form").hide().removeClass('visible');
@@ -19,37 +20,64 @@ $(() => {
     }
   })
   );
-});
+
 
 /*POST signin data.
 Login button changed to logged
 Hide Register button
 Show shopping cart and total amount
+logout button
 */
 
-$(() => {
- $button = $(".user-login-form button").on('click', (() => {
-  const userInfo = {
-    email: $(".user-email").val(), //need store email in database
-    password: $(".user-password").val()
-  }
+  let $button = $(".user-login-button");
+  $button.on('click', (() => {
+    event.preventDefault();
+    
+    $.ajax('/user/login', {
+      method: 'POST',
+      dataType: "json",
+      data: {
+        email: $(".user-email").val(), //need store email in database
+        password: $(".user-password").val()
+      }
 
+    })
+      .done((data) => {
+        console.log('1',data);
+      })
+
+      if (res === "Invalid Email") {
+        $(".user-error-message").text("Invalid Email/Password");
+      } else if (res === "Invalid Password") {
+        $(".user-error-message").text("Invalid Email/Password");
+      } else {
+        console.log('here');
+        $(".user-login-form").hide().removeClass('visible');
+        $(".user-access").hide().removeClass('visible');
+        $(".user-logged").show().addClass('visible');
+        // need add scroll down to menu section
+      }
+
+    // $.get('/login')
+  }));
   //need to check data with our database
 
     //false - pop up message
-  if (2) {
-    console.log('error')
-  } else {   // true
-    $("user-login-form").hide().removeClass('visible');
-    $("user-login").hide().removeClass('visible');
-    $("user-signup").hide().removeClass('visible');
-  }
+//   if (2) {
+//     console.log('error')
+//   } else {   // true
+//     $("user-login-form").hide().removeClass('visible');
+//     $("user-login").hide().removeClass('visible');
+//     $("user-signup").hide().removeClass('visible');
+//     //unhide logged info and shopping cart
+//   }
+//  })
+//  );
 
 
-
- })
- );
 });
+
+
 //scroll down/unhide to nav and full menu
 
 

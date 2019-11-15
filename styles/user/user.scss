@@ -37,6 +37,9 @@ body {
       opacity: 1;
     }
   }
+  .user-logged {
+    display: none;
+  }
 }
 
 .user-photoheader {
@@ -49,7 +52,6 @@ body {
   }
 
 }
-
 
 .user-login-form, .user-signup-form {
   display: none;
