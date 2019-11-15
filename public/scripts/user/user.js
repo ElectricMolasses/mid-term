@@ -28,7 +28,27 @@ Show shopping cart and total amount
 */
 
 $(() => {
+ $button = $(".user-login-form button").on('click', (() => {
+  const userInfo = {
+    email: $(".user-email").val(), //need store email in database
+    password: $(".user-password").val()
+  }
 
+  //need to check data with our database
+
+    //false - pop up message
+  if (2) {
+    console.log('error')
+  } else {   // true
+    $("user-login-form").hide().removeClass('visible');
+    $("user-login").hide().removeClass('visible');
+    $("user-signup").hide().removeClass('visible');
+  }
+
+
+
+ })
+ );
 });
 //scroll down/unhide to nav and full menu
 
