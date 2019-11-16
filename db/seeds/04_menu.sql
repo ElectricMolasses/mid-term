@@ -1,4 +1,4 @@
-INSERT INTO menu_categories (
+INSERT INTO menu (
   restaurant_id, name
 ) VALUES (1, 'Place Settings'),
          (1, 'Appetizers'),
