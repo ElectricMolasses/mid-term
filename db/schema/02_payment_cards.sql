@@ -1,9 +1,0 @@
-DROP TABLE IF EXISTS payment_cards CASCADE;
-
-CREATE TABLE payment_cards (
-  id SERIAL PRIMARY KEY NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  card_number VARCHAR(255) NOT NULL,
-  card_expiry VARCHAR(255) NOT NULL,
-  ccv VARCHAR(255) NOT NULL
-);
