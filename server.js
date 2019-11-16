@@ -55,7 +55,6 @@ app.use("/restaurant", restaurantRoutes(db));
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
   res.redirect('/user');
-  //res.sendFile("views/user/user.html", { root: '.' });
 });
 
 app.listen(PORT, () => {
