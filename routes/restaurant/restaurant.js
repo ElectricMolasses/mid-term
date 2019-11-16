@@ -15,7 +15,9 @@ module.exports = (db) => {
     res.sendFile(path.resolve('./views/restaurant/restaurant.html'));
   }),
 
-  router.get("/update")
+  router.get("/update", (req, res) => {
+    // Needs to be notified when a user makes an order to this database.  Going to build the users order query first, then work on this.
+  });
 
   router.post("/login", (req, res) => {
     // Just login.
