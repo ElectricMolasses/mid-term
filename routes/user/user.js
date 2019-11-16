@@ -49,7 +49,6 @@ module.exports = (db) => {
       WHERE id = $1;
     `, [req.session.userToken])
       .then(query => {
-        console.log(query.rows);
         res.json(query.rows[0]);
       })
       .catch(err => {
