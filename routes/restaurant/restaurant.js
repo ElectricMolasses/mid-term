@@ -21,7 +21,7 @@ module.exports = (db) => {
 
   router.get("/orders", (req, res) => {
 
-    db.query(`
+    return db.query(`
     SELECT CONCAT(users.first_name, ' ', 
           INITCAP(LEFT(users.last_name, 1))),
        users.phone_number, orders.id,
@@ -32,8 +32,8 @@ module.exports = (db) => {
       JOIN order_items ON (order_id = orders.id)
       JOIN items ON (item_id = items.id);
     `, [])
-      .then(res => {
-        res.json(res.rows);
+      .then(query => {
+        res.json(query.rows);
       });
   });
 
