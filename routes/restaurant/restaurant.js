@@ -9,6 +9,8 @@ const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
+const intercom = require('../intercom');
+
 // FIRST STEP
 // Orders first, items on order, time customer submitted.
 // {}
@@ -40,7 +42,7 @@ module.exports = (db) => {
       .catch(err => {
         res
           .status(500)
-          .json({ error: err.message});
+          .json({ error: err.message });
       });
   });
 
