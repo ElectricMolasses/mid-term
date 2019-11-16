@@ -10,6 +10,17 @@
     );
   });
 
+  $(() => {
+    $(".user-signup").on('click',(() => {
+      if ($(".user-signup-form").hasClass('visible')) {
+        $(".user-signup-form").hide().removeClass('visible');
+      } else {
+        $(".user-signup-form").show().addClass('visible');
+      }
+    })
+    );
+  });
+
 
   /*POST signin data. 
   Login button changed to logged

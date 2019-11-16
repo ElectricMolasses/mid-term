@@ -22,7 +22,7 @@ body {
   float: right;
 }
 
-.user-login-form {
+.user-login-form, .user-signup-form {
   display: none;
   position: fixed;
   padding: 5% 7%;
@@ -31,11 +31,8 @@ body {
   z-index: 9;
 }
 
-.user-login-form input, button {
+.user-login-form input, button, .user-signup-form input {
   display: block;
-}
-
-.user-login-form input {
   width: 250px;
 }
 
@@ -43,7 +40,7 @@ body {
   margin-top: 100px;
   width: 100%;
 }
-.user-login:hover {
+.user-login, .user-signup :hover {
   opacity: 1;
 }
 
