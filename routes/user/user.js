@@ -23,9 +23,11 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    console.log(res);
-    req.session.id = 1;
-    console.log('I sure tried!');
+    const userToken = 1;
+    if (req.body.email === 'testUser@test.test'
+        && req.body.password === 'password') {
+      req.session.userToken = userToken;
+    }
     res.redirect("/user");
     // Logins will query to confirm email and password.
     // Will use bcrypt to hash at final stage.
