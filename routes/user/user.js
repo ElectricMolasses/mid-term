@@ -1,17 +1,16 @@
 /*
- * All routes for Widgets are defined here
- * Since this file is loaded in server.js into api/widgets,
- *   these routes are mounted onto /widgets
+ * All routes for Users are defined here
+ * Since this file is loaded in server.js into api/users,
+ *   these routes are mounted onto /users
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
-
+//sherry test
 const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-<<<<<<< HEAD:routes/user/user.js
     console.log(req.session);
     //res.sendFile('/views/user/user.html', { root: '../../' });
     res.sendFile(path.resolve('./views/user/user.html'));
@@ -53,20 +52,6 @@ module.exports = (db) => {
 
   router.post("/order", (req, res) => {
     // Submit information to create an order and notify the restaurant.
-=======
-    let query = `SELECT * FROM widgets`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const widgets = data.rows;
-        res.json({ widgets });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
->>>>>>> 32050df07b57f5f92c304f4f22b4eb0f572929fb:routes/widgets.js
   });
   
   return router;

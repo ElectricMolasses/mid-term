@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" href="styles/restaurant/restaurant.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script src="scripts/restaurant/restaurant.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Abel|Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav id="restaurant-nav">
+    <a class="restaurant-nav-title" href="#">Thai-Tanic</a>
+    <div class="restaurant-login-button">
+      <span>Login</span>
+    </div>
+  </nav>
+  <div class="restaurant-login-form-holder">
+    <form action="/restaurant/login" method="POST" class="restaurant-login-form">
+      <label for="username">Username</label>
+      <input type="text" name="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" placeholder="Enter Password" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div id="restaurant-order-container">
+    <div class="restaurant-orders">
+    </div>
+    <div class="restaurant-orders">
+    </div>
+    <div class="restaurant-orders">
+    </div>
+  </div>
+</body>
+</html>
