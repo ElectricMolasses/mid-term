@@ -6,7 +6,7 @@ const PORT           = process.env.PORT || 8080;
 const ENV            = process.env.ENV || "development";
 const express        = require("express");
 const bodyParser     = require("body-parser");
-const cookieSession  = require('cookie-session');
+const cookieParser   = require('cookie-session');
 const sass           = require("node-sass-middleware");
 const app            = express();
 const morgan         = require('morgan');
@@ -25,6 +25,10 @@ app.use(morgan('dev'));
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser({
+  name: 'session',
+  keys: '/^%b,W7N*V@-+G>vl."X`@*Sa3@RxF0W@&95?H^{t.z(l'
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -41,7 +45,7 @@ const restaurantRoutes = require("./routes/restaurant/restaurant");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: mount other resources here, using the same pattern above
-app.use("/users", userRoutes(db));
+app.use("/user", userRoutes(db));
 app.use("/restaurant", userRoutes(db));
 
 // Home page

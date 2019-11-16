@@ -10,20 +10,30 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    res.json({test: 'test'});
+    console.log(req.session.isNew);
+    console.log(req.session.id);
+    // Needs to check for a users cookie, and treat
+    // them as signed in if it exists.
+    res.send('yolo');
   }),
 
   router.get("/login", (req, res) => {
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    console.log(req);
+    req.session.id = 1;
+    res.redirect("/users");
+    // Logins will query to confirm email and password.
+    // Will use bcrypt to hash at final stage.
+    // Assigns users token to a cookie for repeat authentication.
+    // db.query(`SELECT * FROM users;`)
+    //   .then(data => {
+    //     const users = data.rows;
+    //     res.json({ users });
+    //   })
+    //   .catch(err => {
+    //     res
+    //       .status(500)
+    //       .json({ error: err.message });
+    //   });
   });
   return router;
 };
