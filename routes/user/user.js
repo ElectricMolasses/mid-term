@@ -99,9 +99,8 @@ module.exports = (db) => {
     // Submit information to create an order and notify the restaurant.
     // Just going to submit order immediately without checking for
     // payment or anything initially.
-    const userId = 1;
-
-    const orderItems = [1, 5, 18, 32];
+    const userId = req.session.userToken;
+    const orderItems = req.body.items;
 
     return db.query(`
     INSERT INTO orders (
