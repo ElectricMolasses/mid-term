@@ -7,6 +7,7 @@ const ENV            = process.env.ENV || "development";
 const express        = require("express");
 const bodyParser     = require("body-parser");
 const cookieParser   = require('cookie-session');
+const methodOverride = require('method-override');
 const sass           = require("node-sass-middleware");
 const app            = express();
 const morgan         = require('morgan');
@@ -34,6 +35,8 @@ app.use("/styles", sass({
   debug: true,
   outputStyle: 'expanded'
 }));
+app.use(methodOverride('_method'));
+
 app.use(express.static("public"));
 
 // Separated Routes for each Resource

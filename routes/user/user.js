@@ -16,8 +16,12 @@ module.exports = (db) => {
     res.send('yolo');
   }),
 
-  router.get("/login", (req, res) => {
-    console.log(req.session);
+  router.get("/update", (req, res) => {
+    // Will be sent repeatedly while an order is active to keep the client updated.
+  });
+
+  router.post("/login", (req, res) => {
+    console.log(res);
     req.session.id = 1;
     console.log('I sure tried!');
     res.redirect("/user");
@@ -35,5 +39,18 @@ module.exports = (db) => {
     //       .json({ error: err.message });
     //   });
   });
+
+  router.post("/logout", (req, res) => {
+    // It is what it is.
+  });
+
+  router.post("/signup", (req, res) => {
+    // Register a new user (STRETCH)
+  });
+
+  router.post("/order", (req, res) => {
+    // Submit information to create an order and notify the restaurant.
+  });
+  
   return router;
 };
