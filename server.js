@@ -23,11 +23,10 @@ db.connect();
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser({
   name: 'session',
-  keys: '/^%b,W7N*V@-+G>vl."X`@*Sa3@RxF0W@&95?H^{t.z(l'
+  keys: ['/^%b,W7N*V@-+G>vl."X`@*Sa3@RxF0W@&95?H^{t.z(l']
 }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -46,7 +45,7 @@ const restaurantRoutes = require("./routes/restaurant/restaurant");
 // Note: Feel free to replace the example routes below with your own
 // Note: mount other resources here, using the same pattern above
 app.use("/user", userRoutes(db));
-app.use("/restaurant", userRoutes(db));
+app.use("/restaurant", restaurantRoutes(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!

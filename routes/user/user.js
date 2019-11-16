@@ -10,17 +10,17 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log(req.session.isNew);
-    console.log(req.session.id);
+    console.log(req.session);
     // Needs to check for a users cookie, and treat
     // them as signed in if it exists.
     res.send('yolo');
   }),
 
   router.get("/login", (req, res) => {
-    console.log(req);
+    console.log(req.session);
     req.session.id = 1;
-    res.redirect("/users");
+    console.log('I sure tried!');
+    res.redirect("/user");
     // Logins will query to confirm email and password.
     // Will use bcrypt to hash at final stage.
     // Assigns users token to a cookie for repeat authentication.
