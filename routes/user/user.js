@@ -11,7 +11,7 @@ const path = require('path');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log(req.session);
+    console.log(req.data);
     //res.sendFile('/views/user/user.html', { root: '../../' });
     res.sendFile(path.resolve('./views/user/user.html'));
     // Needs to check for a users cookie, and treat
@@ -29,6 +29,7 @@ module.exports = (db) => {
 
   router.post("/login", (req, res) => {
     const userToken = 1;
+    console.log(req.body);
     if (req.body.email === 'testUser@test.test'
         && req.body.password === 'password') {
       req.session.userToken = userToken;
@@ -51,6 +52,8 @@ module.exports = (db) => {
 
   router.post("/logout", (req, res) => {
     // It is what it is.
+    req.session = null;
+    res.redirect("/");
   });
 
   router.post("/signup", (req, res) => {
