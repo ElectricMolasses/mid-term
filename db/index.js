@@ -7,8 +7,10 @@ const pool = new Pool({
   database: 'midterm'
 });
 
-module.exports = {
-  query: (text, params) => {
+module.exports = (dbParams) => {
+  const db = new Pool(dbParams);
+
+  db.query = (text, params) => {
     const start = Date.now();
     return pool.query(text, params)
       .then(res => {
@@ -20,5 +22,9 @@ module.exports = {
       .catch(err => {
         console.log(err);
       });
-  },
+  };
+
+  db.connect();
+
+  return db;
 };

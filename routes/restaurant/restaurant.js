@@ -9,6 +9,10 @@ const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
+// FIRST STEP
+// Orders first, items on order, time customer submitted.
+// {}
+
 module.exports = (db) => {
   router.get("/", (req, res) => {
     //res.sendFile('/views/restaurant/restaurant.html', { root: '../../' });
