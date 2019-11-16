@@ -9,7 +9,6 @@ const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
-
 const path       = require('path');
 
 // PG database client/connection setup
@@ -48,6 +47,9 @@ app.use(express.static("public"));
 app.use(express.static((__dirname + 'views')));
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/user/user.html");
+});
+app.get("/restaurant", (req, res) => {
+  res.sendFile(__dirname + "/views/restaurant/restaurant.html");
 });
 
 app.listen(PORT, () => {
