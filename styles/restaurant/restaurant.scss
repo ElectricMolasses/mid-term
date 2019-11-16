@@ -1,0 +1,41 @@
+$font-heading: Bebas Neue, cursive;
+$font-body: Abel, sans-serif;
+$nav-color: #545e56;
+
+body {
+  margin: 0;
+}
+
+#restaurant-nav {
+  background-color: $nav-color;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.restaurant-nav-title {
+  font-family: $font-heading;
+  font-size: 55px;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.restaurant-login-button {
+  font-family: $font-body;
+  font-size: 40px;
+  margin-top: 25px;
+  margin-right: 20px;
+}
+
+.restaurant-login-form-holder {
+  // display: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.restaurant-login-form {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
