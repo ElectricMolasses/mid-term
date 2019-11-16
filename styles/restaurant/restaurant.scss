@@ -2,6 +2,7 @@ $font-heading: Bebas Neue, cursive;
 $font-body: Abel, sans-serif;
 $nav-color: #545e56;
 $form-color: #eae1df;
+$order-color: #917c78;
 
 body {
   margin: 0;
@@ -49,10 +50,46 @@ body {
   margin-top: 80px;
 }
 
-.restaurant-orders {
+/* draggable css */
+
+.restaurant-fill {
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
+  background-color: $order-color;
+  border: none;
+  cursor: pointer;
+
+  h6 {
+    font-size : 10px;
+
+  }
+}
+
+.restaurant-empty {
+  display: inline-block;
   border: 2px solid black;
   height: 130px;
   width: 80%;
   margin-bottom: 80px;
   align-self: center;
+  padding: 20px;
+
 }
+
+.hold {
+  border: solid lightgrey 4px;
+}
+
+.hovered {
+  background: #f4f4f4;
+  border-style: dashed;
+}
+
+.invisible {
+  display: none;
+}
+
+
+
+
