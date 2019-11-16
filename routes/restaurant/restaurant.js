@@ -7,23 +7,18 @@
 
 const express = require('express');
 const router  = express.Router();
+const path = require('path');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    res.json({test: 'test'});
+    //res.sendFile('/views/restaurant/restaurant.html', { root: '../../' });
+    res.sendFile(path.resolve('./views/restaurant/restaurant.html'));
   }),
 
-  router.get("/login", (req, res) => {
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+  router.get("/update")
+
+  router.post("/login", (req, res) => {
+    // Just login.
   });
   return router;
 };

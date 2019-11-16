@@ -7,13 +7,15 @@
 //sherry test
 const express = require('express');
 const router  = express.Router();
+const path = require('path');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
     console.log(req.session);
+    //res.sendFile('/views/user/user.html', { root: '../../' });
+    res.sendFile(path.resolve('./views/user/user.html'));
     // Needs to check for a users cookie, and treat
     // them as signed in if it exists.
-    res.send('yolo');
   }),
 
   router.get("/update", (req, res) => {

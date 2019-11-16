@@ -54,10 +54,8 @@ app.use("/restaurant", restaurantRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/user/user.html");
-});
-app.get("/restaurant", (req, res) => {
-  res.sendFile(__dirname + "/views/restaurant/restaurant.html");
+  res.redirect('/user');
+  //res.sendFile("views/user/user.html", { root: '.' });
 });
 
 app.listen(PORT, () => {
