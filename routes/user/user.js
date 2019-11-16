@@ -30,6 +30,11 @@ module.exports = (db) => {
       .then(query => {
         console.log(query.rows);
         res.json(query.rows);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
       });
   });
 
@@ -46,6 +51,11 @@ module.exports = (db) => {
       .then(query => {
         console.log(query.rows);
         res.json(query.rows[0]);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message});
       });
   });
 
