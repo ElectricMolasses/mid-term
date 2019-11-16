@@ -1,5 +1,5 @@
 INSERT INTO restaurants (
-  name, phone, province, city, street, postal_code
+  name, username, password, phone, province, city, street, postal_code
 ) VALUES (
-  'Some Thai Place', '18641438828', 'BC', 'Vancouver', 'Street Dr.', 'F3J8I1'
+  'Some Thai Place', 'Owner Mcgee', 'alsdjfioase2304$)(I', '18641438828', 'BC', 'Vancouver', 'Street Dr.', 'F3J8I1'
 );
