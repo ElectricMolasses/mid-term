@@ -25,7 +25,8 @@ module.exports = (db) => {
     SELECT CONCAT(users.first_name, ' ', 
           INITCAP(LEFT(users.last_name, 1))) AS customer,
        users.phone_number, orders.id,
-       items.name AS order_item, items.cost AS item_cost, time_placed, time_confirmed, time_complete
+       items.name AS order_item, items.cost AS item_cost,
+       time_placed, time_confirmed, time_complete
     FROM restaurants
       JOIN orders ON (restaurant_id = restaurants.id)
       JOIN users ON (customer_id = users.id)
