@@ -10,6 +10,8 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 
+const path       = require('path');
+
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
@@ -31,7 +33,6 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 // const usersRoutes = require("./routes/user/user");
@@ -46,7 +47,7 @@ app.use(express.static("public"));
 // Separate them into separate routes files (see above).
 app.use(express.static((__dirname + 'views')));
 app.get("/", (req, res) => {
-  res.render("/user/user.html");
+  res.sendFile(__dirname + "/views/user/user.html");
 });
 
 app.listen(PORT, () => {
