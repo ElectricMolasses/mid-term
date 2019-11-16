@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS menu_categories CASCADE;
+DROP TABLE IF EXISTS menu CASCADE;
 
-CREATE TABLE menu_categories (
+CREATE TABLE menu (
   id SERIAL PRIMARY KEY NOT NULL,
   restaurant_id INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255)
 );
