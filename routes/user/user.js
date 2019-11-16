@@ -11,7 +11,7 @@ const path = require('path');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    console.log(req.session);
+    console.log(req.data);
     //res.sendFile('/views/user/user.html', { root: '../../' });
     res.sendFile(path.resolve('./views/user/user.html'));
     // Needs to check for a users cookie, and treat
@@ -19,8 +19,23 @@ module.exports = (db) => {
   }),
 
   router.get("/menu", (req, res) => {
-    const dbParams = require('../../lib/db');
-    const db = require('../../db/index')(dbParams);
+    
+  });
+
+  router.get("/profile", (req, res) => {
+    if (!req.session.userToken) {
+      res.send(401);
+    }
+    // id will have to be change to userToken later.
+    return db.query(`
+      SELECT first_name, last_name, email, phone_number
+      FROM users
+      WHERE id = $1;
+    `, [req.session.userToken])
+      .then(query => {
+        console.log(query.rows);
+        res.json(query.rows[0]);
+      });
   });
 
   router.get("/update", (req, res) => {
@@ -29,8 +44,8 @@ module.exports = (db) => {
 
   router.post("/login", (req, res) => {
     const userToken = 1;
-    if (req.body.email === 'testUser@test.test'
-        && req.body.password === 'password') {
+    if (req.body.email.trim() === 'testUser@test.test'
+        && req.body.password.trim() === 'password') {
       req.session.userToken = userToken;
     }
     res.redirect("/user");
@@ -51,6 +66,8 @@ module.exports = (db) => {
 
   router.post("/logout", (req, res) => {
     // It is what it is.
+    req.session = null;
+    res.redirect("/");
   });
 
   router.post("/signup", (req, res) => {
