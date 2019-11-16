@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser({
-  name: 'session',
+  name: 'thai-tanic-session',
   keys: ['/^%b,W7N*V@-+G>vl."X`@*Sa3@RxF0W@&95?H^{t.z(l']
 }));
 app.use("/styles", sass({
