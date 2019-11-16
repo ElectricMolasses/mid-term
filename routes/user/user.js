@@ -19,7 +19,18 @@ module.exports = (db) => {
   }),
 
   router.get("/menu", (req, res) => {
-    
+    return db.query(`
+      SELECT menu_categories.name, items.name, description, cost
+      FROM restaurants
+        JOIN menu_categories ON (restaurant_id = restaurants.id)
+        JOIN items ON (menu_id = menu_categories.id)
+      WHERE restaurants.id = 1
+      ORDER BY menu_categories.id;
+    `)
+      .then(query => {
+        console.log(query.rows);
+        res.json(query.rows);
+      });
   });
 
   router.get("/profile", (req, res) => {
