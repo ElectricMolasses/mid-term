@@ -18,6 +18,11 @@ module.exports = (db) => {
     // them as signed in if it exists.
   }),
 
+  router.get("/menu", (req, res) => {
+    const dbParams = require('../../lib/db');
+    const db = require('../../db/index')(dbParams);
+  });
+
   router.get("/update", (req, res) => {
     // Will be sent repeatedly while an order is active to keep the client updated.
   });
