@@ -6,7 +6,8 @@ INSERT INTO orders (
   1,
   1,
   NOW()
-);
+)
+RETURNING id;
 
 INSERT INTO order_items (
   order_id, item_id
