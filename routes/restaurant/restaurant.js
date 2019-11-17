@@ -9,8 +9,6 @@ const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
-const intercom = require('../intercom');
-
 // FIRST STEP
 // Orders first, items on order, time customer submitted.
 // {}
@@ -24,7 +22,8 @@ module.exports = (db) => {
   router.get("/orders", (req, res) => {
 
     return db.query(`
-    SELECT CONCAT(users.first_name, ' ', 
+    SELECT orders.id AS id,
+      CONCAT(users.first_name, ' ', 
           INITCAP(LEFT(users.last_name, 1))) AS customer,
        users.phone_number, orders.id,
        items.name AS order_item, items.cost AS item_cost,
