@@ -1,3 +1,10 @@
+//time stamp
+const currentdate = new Date();
+const datetime = currentdate.getDate() + "/"
+    + currentdate.getHours() + ":"
+    + currentdate.getMinutes() + ":"
+    + currentdate.getSeconds();
+
 function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
   for (i = 0; i < orders.length; i++) {
@@ -22,11 +29,11 @@ function createOrder(i) {
   let markup =
 `<div draggable="true" class="restaurant-fill">
   <div class="restaurant-name-display">
-  <p></p>
+    <p>Name</p>
   <span class="restaurant-customer-id">${i.customer}</span>
 </div>
 <div class="restaurant-time-display">
-  <p>Time Placed</p>
+  <p class="restaurant-time-status">Time Placed</p>
   <span class="restaurant-time-started">${i.time_placed}</span>
 </div>
 <div class="restaurant-menu-items">
@@ -106,6 +113,15 @@ function dragLeave() {
 }
 
 function dragDrop() {
+  if (this === document.getElementById("restaurant-incoming")) {
+    console.log("drop-1");
+  } else if (this === document.getElementById("restaurant-in-progress")) {
+    console.log("drop-2");
+  } else if (this === document.getElementById("restaurant-complete")) {
+    $(".restaurant-time-started").text(datetime);
+    $(".restaurant-time-status").text("Time Complete");
+
+  }
   loaded = false;
   this.className = "restaurant-empty";
   this.append(fill);
