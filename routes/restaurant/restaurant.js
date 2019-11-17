@@ -21,7 +21,9 @@ module.exports = (db) => {
 
   router.get("/orders", (req, res) => {
 
-    return db.query(`
+    const pending = [];
+
+    const response = db.query(`
     SELECT orders.id AS id,
       CONCAT(users.first_name, ' ', 
           INITCAP(LEFT(users.last_name, 1))) AS customer,
@@ -36,8 +38,6 @@ module.exports = (db) => {
     `, [])
       .then(query => {
         const orders = query.rows;
-        const pending = [];
-
         for (const order of orders) {
           order.items = [
             db.query(`
@@ -54,16 +54,17 @@ module.exports = (db) => {
           ];
           pending.push(...order.items);
         }
-        console.log(pending);
-        Promise.all(pending)
-          .then(() => {
-            res.json(orders);
-          });
       })
       .catch(err => {
         res
           .status(500)
           .json({ error: err.message });
+      });
+
+    console.log(pending);
+    return Promise.all(pending)
+      .then(() => {
+        res.json(response);
       });
   });
 
