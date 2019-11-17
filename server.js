@@ -22,8 +22,8 @@ db.connect();
 // Twilio connection setup.
 const twilio = require('twilio');
 const client = new twilio(
-  'ACc6048a83fae54c02091305f8a93464a0',
-  'b6b344d5cb8b54d8163ad8951d09c474'
+  process.env.TWILIO_SID,
+  process.env.TWILIO_TOKEN
 );
 
 // client.messages.create({
