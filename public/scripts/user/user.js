@@ -31,7 +31,7 @@ $(() => {
   let $button = $(".user-login-button");
   $button.on('click', (() => {
     event.preventDefault();
-    
+
     $.ajax('/user/login', {
       method: 'POST',
       dataType: "json",
