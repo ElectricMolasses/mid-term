@@ -4,7 +4,7 @@
  *   these routes are mounted onto /users
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
-//sherry test
+
 const express = require('express');
 const router  = express.Router();
 const path = require('path');
@@ -79,19 +79,7 @@ module.exports = (db) => {
           res.send({ error: err.message });
         });
     }
-    // Logins will query to confirm email and password.
-    // Will use bcrypt to hash at final stage.
-    // Assigns users token to a cookie for repeat authentication.
-    // db.query(`SELECT * FROM users;`)
-    //   .then(data => {
-    //     const users = data.rows;
-    //     res.json({ users });
-    //   })
-    //   .catch(err => {
-    //     res
-    //       .status(500)
-    //       .json({ error: err.message });
-    //   });
+    // Still need to implement bcrypt.
   });
 
   router.post("/logout", (req, res) => {

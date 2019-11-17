@@ -9,10 +9,6 @@ const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
-// FIRST STEP
-// Orders first, items on order, time customer submitted.
-// {}
-
 module.exports = (db) => {
   router.get("/", (req, res) => {
 
@@ -103,13 +99,13 @@ module.exports = (db) => {
     WHERE email = $1
       AND password = $2;
   `, [req.body.email.trim(), req.body.password.trim()])
-    .then(query => {
-      req.session.userToken = query.rows[0].user_token;
-      res.send({ success: "Logged in" });
-    })
-    .catch(err => {
-      res.send({ error: err.message });
-    });
+      .then(query => {
+        req.session.userToken = query.rows[0].user_token;
+        res.send({ success: "Logged in" });
+      })
+      .catch(err => {
+        res.send({ error: err.message });
+      });
   });
 
   return router;
