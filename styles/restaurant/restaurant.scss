@@ -6,6 +6,7 @@ $order-color: #917c78;
 
 body {
   margin: 0;
+  background-color: $form-color;
 }
 
 #restaurant-nav {
@@ -48,6 +49,12 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 80px;
+}
+
+h2 {
+  font-family: $font-body;
+  align-items: flex-start;
+  margin-left: 10%;
 }
 
 /* draggable css */
