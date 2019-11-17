@@ -133,10 +133,12 @@ module.exports = (db) => {
           .then((query) => {
             console.log('THE QUERY', query);
             res.send('Restaurant is confirming your order');
+            // Bother twilio to send an SMS here.
           });
       })
       .catch(err => {
-        res.send(500);
+        console.log(err.message);
+        res.sendStatus(500);
       });
   });
 
