@@ -19,12 +19,12 @@ const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
 
-// Twilio connection setup.
-// const twilio = require('twilio');
-// const client = new twilio(
-//   process.env.TWILIO_SID,
-//   process.env.TWILIO_TOKEN
-// );
+//Twilio connection setup.
+const Twilio = require('twilio');
+const twilio = new Twilio(
+  process.env.TWILIO_SID,
+  process.env.TWILIO_TOKEN
+);
 
 // client.messages.create({
 //   body: 'Oh hai thar',
@@ -61,8 +61,8 @@ const restaurantRoutes = require("./routes/restaurant/restaurant");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: mount other resources here, using the same pattern above
-app.use("/user", userRoutes(db));
-app.use("/restaurant", restaurantRoutes(db));
+app.use("/user", userRoutes(db, twilio));
+app.use("/restaurant", restaurantRoutes(db, twilio));
 
 // Home page
 // Warning: avoid creating more routes in this file!

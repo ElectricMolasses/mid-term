@@ -9,7 +9,7 @@ const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
-module.exports = (db) => {
+module.exports = (db, twilio) => {
   router.get("/", (req, res) => {
 
     res.sendFile(path.resolve('./views/restaurant/restaurant.html'));
