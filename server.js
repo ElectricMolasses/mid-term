@@ -19,6 +19,20 @@ const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
 
+// Twilio connection setup.
+const twilio = require('twilio');
+const client = new twilio(
+  process.env.TWILIO_SID,
+  process.env.TWILIO_TOKEN
+);
+
+// client.messages.create({
+//   body: 'Oh hai thar',
+//   to: '+19023945393',
+//   from: '+12029029010'
+// })
+//   .then((mes) => console.log(mes.sid));
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.

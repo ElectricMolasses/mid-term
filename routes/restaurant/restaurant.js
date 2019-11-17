@@ -15,7 +15,7 @@ const path = require('path');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    //res.sendFile('/views/restaurant/restaurant.html', { root: '../../' });
+
     res.sendFile(path.resolve('./views/restaurant/restaurant.html'));
   }),
 
