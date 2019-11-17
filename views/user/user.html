@@ -4,6 +4,7 @@
 
   <!-- CSS -->
   <link type="text/css" href="styles/user/user.css" rel="stylesheet">
+  <link type="text/css" href="styles/user/user-menu.css" rel="stylesheet">
 
   <!-- External JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -12,7 +13,7 @@
 
   <!-- JS -->
   <script src="scripts/user/user.js"></script>
-
+  <script src="scripts/user/user-menu.js"></script>
 </head>
 <body>
 
@@ -46,7 +47,7 @@
 <!-- homepage photo -->
 <div class="user-photoheader">
 <img class="user-staticphoto" src="/resources/static_photo.jpeg">
-<button class="user-order-now" type="button">Order Now</button>
+<input class="user-order-now" type="submit" value="Order Now"></input>
 </div>
 <!-- login/register popup form -->
 
@@ -60,7 +61,7 @@
 <div class="user-signup-form">
     <input type="email" placeholder="Email Address"></input>
     <input type="password" placeholder="Password"></input>
-    <button type="submit">Register</button>
+    <input class="user-signup-button" type="submit" value="Register"></input>
 </div>
 
 <!-- MENU HEADER -->
@@ -82,24 +83,8 @@
 
 <!-- for restaurant full menu -->
 <!-- loop through menu table and render -->
-
 <div class="user-menu">
-  <div>
-    <button>
-      <img>
-    </button>
-      <span>A1</span>
-    <button>
-      <img>
-    </button>
-    <button>
-      <img>
-    </button>
-      <span>A2</span>
-    <button>
-      <img>
-    </button>
-  </div>
+ <!-- add menu -->
 </div>
 
 </body>

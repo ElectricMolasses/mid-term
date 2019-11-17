@@ -12,6 +12,7 @@ $(() => {
   );
 
   $(".user-signup").on('click',(() => {
+    console.log('test')
     if ($(".user-signup-form").hasClass('visible')) {
       $(".user-signup-form").hide().removeClass('visible');
     } else {
@@ -40,13 +41,11 @@ $(() => {
       }
     })
       .done((res) => {
-        console.log('1',res);
         if (res === "Invalid Email") {
           $(".user-error-message").text("Invalid Email/Password");
         } else if (res === "Invalid Password") {
           $(".user-error-message").text("Invalid Email/Password");
         } else {
-          console.log('here');
           $(".user-login-form").hide().removeClass('visible');
           // need add scroll down to menu section
         }
@@ -55,7 +54,6 @@ $(() => {
       method: 'GET',
       dataType: "json"
     }).done((data) => {
-      console.log(data.first_name);
       $(".user-access").hide().removeClass('visible');
       $(".user-email1").text(data.first_name);
       $(".user-logged").show().addClass('visible');
