@@ -1,3 +1,22 @@
+//time elapsed
+function clock() {
+  const today = new Date();
+  let hours = today.getHours();
+  let minutes = today.getMinutes();
+  let seconds = today.getSeconds();
+  minutes = renderTime(minutes);
+  seconds = renderTime(seconds);
+  $(".restaurant-current-time").text(`${hours} : ${minutes} : ${seconds}`);
+  setTimeout(clock, 500);
+}
+
+function renderTime(i) {
+  if (i < 10) {i = "0" + i};
+  return i;
+}
+
+
+
 //time stamp
 const currentdate = new Date();
 const datetime = currentdate.getDate() + "/"
@@ -46,6 +65,10 @@ function createOrder(i) {
   <p>phone Number</p>
   <span class="restaurant-phone">${i.phone_number}</span>
 </div>
+<div class="restaurant-current-time-holder">
+  <p class="restaurant-current-time-elasped>Time elapsed">
+  <span class="restaurant-current-time"><span>
+</div>
 </div>`;
 console.log(markup);
 return markup;
@@ -61,6 +84,7 @@ $("document").ready(function(){
       if (loaded) {
         console.log(data);
         renderOrder(data);
+        clock();
       }
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
