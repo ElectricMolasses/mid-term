@@ -12,7 +12,6 @@ $(() => {
   );
 
   $(".user-signup").on('click',(() => {
-    console.log('test')
     if ($(".user-signup-form").hasClass('visible')) {
       $(".user-signup-form").hide().removeClass('visible');
     } else {
