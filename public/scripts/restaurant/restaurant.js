@@ -1,15 +1,59 @@
+function renderOrder(orders) {
+  const appendTothis = document.querySelector(".restaurant-empty");
+  for (i = 0; i < orders.length; i++) {
+    appendTothis.insertAdjacentHTML('afterbegin', createOrder(orders[i]));
+  };
+  return console.log("orders loaded");
+}
+
+function generateLi(orderItemsArray) {
+  if (!Array.isArray(orderItemsArray)) {
+    return `<li>${orderItemsArray}</li>`
+  } else {
+    let $item = ``;
+    for (const j of orderItemsArray) {
+      $item += `<li>${j}</li>`
+    }
+    return $item;
+  }
+}
+
+function createOrder(i) {
+  let markup =
+`<div draggable="true" class="restaurant-fill">
+  <div class="restaurant-name-display">
+  <p></p>
+  <span class="restaurant-customer-id">${i.customer}</span>
+</div>
+<div class="restaurant-time-display">
+  <p>Time Placed</p>
+  <span class="restaurant-time-started">${i.time_placed}</span>
+</div>
+<div class="restaurant-menu-items">
+  <p>Menu Items<p>
+  <ul>
+    ${generateLi(i.order_item)}
+  </ul>
+</div>
+<div class="restaurant-phonenumber">
+  <p>phone Number</p>
+  <span class="restaurant-phone">${i.phone_number}</span>
+</div>
+</div>`;
+return markup;
+}
+
+
 $("document").ready(function(){
+  let loaded = true;
+  $.ajax('/restaurant/orders/', {
+    method: 'GET'
+  })
+    .done((data, status, xhr) => {
+      if (loaded) {
+        renderOrder(data);
+      }
 $(".restaurant-login-form").hide();
-
-// $.ajax('/restaurant/orders/', {
-//   method: 'GET'
-// })
-//   .done((data, status, xhr) => {
-//     console.log(data);
-//   }).catch(() => {
-//     console.log('failed');
-//   });
-
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
     $(".restaurant-login-form").slideToggle("slow", function() {
@@ -20,7 +64,7 @@ $(".restaurant-login-button").on("click", function() {
 // drag and drop
 const fill = document.querySelector(".restaurant-fill");
 const empties = document.querySelectorAll(".restaurant-empty");
-console.log(empties);
+
 
 //loop through empties;
 for (const empty of empties) {
@@ -56,11 +100,17 @@ function dragEnter(e) {
 
 function dragLeave() {
   this.className = 'restaurant-empty';
-
 }
 
 function dragDrop() {
+  loaded = false;
   this.className = "restaurant-empty";
   this.append(fill);
 }
+
+// generate dynamic infomation for orders
+}).catch(() => {
+      console.log('failed');
+    });
 });
+
