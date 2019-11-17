@@ -9,6 +9,8 @@ const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
+const intercom = require('../intercom');
+
 module.exports = (db) => {
   router.get("/", (req, res) => {
     console.log(req.data);
@@ -96,6 +98,50 @@ module.exports = (db) => {
 
   router.post("/order", (req, res) => {
     // Submit information to create an order and notify the restaurant.
+    // Just going to submit order immediately without checking for
+    // payment or anything initially.
+    const userId = req.session.userToken;
+    const orderItems = req.body.items;
+
+    return db.query(`
+    INSERT INTO orders (
+      customer_id,
+      restaurant_id,
+      time_placed
+    ) VALUES (
+      $1,
+      1,
+      NOW()
+    )
+    RETURNING id;
+    `, [userId])
+      .then(query => {
+        const orderId = query.rows[0].id;
+        const requests = [];
+        for (const item of orderItems) {
+          console.log(item);
+          requests.push(db.query(`
+            INSERT INTO order_items (
+              order_id, item_id
+            ) VALUES (
+              $1, $2
+            )
+            RETURNING *
+          `, [orderId, item])
+            .then(res => {
+              return res.rows;
+            }));
+        }
+
+        Promise.all(requests)
+          .then((query) => {
+            console.log('THE QUERY', query);
+            res.send('Restaurant is confirming your order');
+          });
+      })
+      .catch(err => {
+        res.send(500);
+      });
   });
   
   return router;

@@ -3,5 +3,5 @@ INSERT INTO users (
 ) VALUES (
   'test', 'user', 'testUser@test.test', 'password', '888-347-1929'
 ), (
-  'Owner', 'Mcgee', 'businessOwner@bus.ness', 'password', '888-817-8181'
-)
+  'Owner', 'Mcgee', 'businessOwner@buss.ness', 'password', '888-817-8181'
+);
