@@ -20,7 +20,7 @@ function generateLi(orderItemsArray) {
 
 function createOrder(i) {
   let markup =
-`<div draggable="true" class="restaurant-fill">
+`<div id=${i.id} draggable="true" class="restaurant-fill">
   <div class="restaurant-name-display">
   <p></p>
   <span class="restaurant-customer-id">${i.customer}</span>
@@ -40,6 +40,7 @@ function createOrder(i) {
   <span class="restaurant-phone">${i.phone_number}</span>
 </div>
 </div>`;
+console.log(markup);
 return markup;
 }
 
@@ -52,6 +53,7 @@ $("document").ready(function(){
     .done((data, status, xhr) => {
       if (loaded) {
         renderOrder(data);
+        console.log(data[0].id);
       }
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
