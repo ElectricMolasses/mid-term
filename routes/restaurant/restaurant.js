@@ -35,8 +35,31 @@ module.exports = (db) => {
       JOIN items ON (item_id = items.id);
     `, [])
       .then(query => {
-        console.log(query.rows);
-        res.json(query.rows);
+        const data = query.rows;
+        const uniqueOrders = {};
+        const formattedOutput = [];
+
+        for (const order of data) {
+          if (!uniqueOrders.hasOwnProperty(order.id)) {
+            uniqueOrders[order.id] = order;
+            uniqueOrders[order.id].items = [{
+              name: order.order_item,
+              cost: order.item_cost
+            }];
+            delete uniqueOrders[order.id].order_item;
+            delete uniqueOrders[order.id].item_cost;
+          } else {
+            uniqueOrders[order.id].items.push({
+              name: order.order_item,
+              cots: order.item_cost
+            });
+          }
+        }
+        for (const order in uniqueOrders) {
+          formattedOutput.push(uniqueOrders[order]);
+        }
+
+        res.json(formattedOutput);
       })
       .catch(err => {
         res
