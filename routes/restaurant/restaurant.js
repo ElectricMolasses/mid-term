@@ -9,8 +9,6 @@ const express = require('express');
 const router  = express.Router();
 const path = require('path');
 
-const intercom = require('../intercom');
-
 // FIRST STEP
 // Orders first, items on order, time customer submitted.
 // {}
