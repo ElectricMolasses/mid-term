@@ -24,7 +24,8 @@
     "path": "^0.12.7",
     "pg": "^6.4.2",
     "pg-native": "^3.0.0",
-    "sass": "^1.23.5"
+    "sass": "^1.23.5",
+    "twilio": "^3.37.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
