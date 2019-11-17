@@ -46,7 +46,7 @@ module.exports = (db) => {
     return db.query(`
       SELECT first_name, last_name, email, phone_number
       FROM users
-      WHERE id = $1;
+      WHERE user_token = $1;
     `, [req.session.userToken])
       .then(query => {
         res.json(query.rows[0]);
@@ -63,12 +63,22 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    const userToken = 1;
-    if (req.body.email.trim() === 'testUser@test.test'
-        && req.body.password.trim() === 'password') {
-      req.session.userToken = userToken;
+    
+    if (req.body.email && req.body.password) {
+      return db.query(`
+        SELECT user_token
+        FROM users
+        WHERE email = $1
+          AND password = $2;
+      `, [req.body.email.trim(), req.body.password.trim()])
+        .then(query => {
+          req.session.userToken = query.rows[0].user_token;
+          res.send({ success: "Logged in" });
+        })
+        .catch(err => {
+          res.send({ error: err.message });
+        });
     }
-    res.redirect("/user");
     // Logins will query to confirm email and password.
     // Will use bcrypt to hash at final stage.
     // Assigns users token to a cookie for repeat authentication.
