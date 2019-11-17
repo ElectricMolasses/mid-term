@@ -21,6 +21,8 @@ module.exports = (db) => {
 
   router.get("/orders", (req, res) => {
 
+    const pending = [];
+
     return db.query(`
     SELECT orders.id AS id,
       CONCAT(users.first_name, ' ', 
@@ -35,8 +37,30 @@ module.exports = (db) => {
       JOIN items ON (item_id = items.id);
     `, [])
       .then(query => {
-        console.log(query.rows);
-        res.json(query.rows);
+        const orders = query.rows;
+        
+
+        for (const order of orders) {
+          order.items = [
+            db.query(`
+              SELECT items.name AS name, items.cost AS cost, COUNT(items) AS quantity
+              FROM orders
+                JOIN order_items ON (order_id = orders.id)
+                JOIN items ON (item_id = items.id)
+              WHERE orders.id = $1
+              GROUP BY items.name, items.cost;
+            `, [order.id])
+              .then(query => {
+                return query.rows[0];
+              })
+          ];
+          pending.push(...order.items);
+        }
+        console.log(pending);
+        Promise.all(pending)
+          .then(() => {
+            res.json(orders);
+          });
       })
       .catch(err => {
         res
