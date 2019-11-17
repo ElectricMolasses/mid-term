@@ -1,4 +1,3 @@
-
 $(() => {
 
 const $button = $(".restaurant-login-button-submit");
@@ -13,7 +12,7 @@ $button.on("click", () => {
       password: $(".restaurant-password").val()
     }
   }).done((res) => {
-    console.log("sucess");
+    $(".restaurant-login-button-text").text("");
   });
 });
 
