@@ -20,10 +20,9 @@ module.exports = (db) => {
   }),
 
   router.get("/orders", (req, res) => {
-
     const pending = [];
 
-    const response = db.query(`
+    return db.query(`
     SELECT orders.id AS id,
       CONCAT(users.first_name, ' ', 
           INITCAP(LEFT(users.last_name, 1))) AS customer,
@@ -37,35 +36,53 @@ module.exports = (db) => {
       JOIN items ON (item_id = items.id);
     `, [])
       .then(query => {
+        console.log(query.rows);
         const orders = query.rows;
-        for (const order of orders) {
-          order.items = [
-            db.query(`
-              SELECT items.name AS name, items.cost AS cost, COUNT(items) AS quantity
-              FROM orders
-                JOIN order_items ON (order_id = orders.id)
-                JOIN items ON (item_id = items.id)
-              WHERE orders.id = $1
-              GROUP BY items.name, items.cost;
-            `, [order.id])
-              .then(query => {
-                return query.rows[0];
-              })
-          ];
-          pending.push(...order.items);
-        }
+        return (async () => {
+          for (const order of orders) {
+            // order.id for next param.
+            order.items = [];
+            order.items.push(await db.query(`
+            SELECT items.name AS name, items.cost AS cost, COUNT(items) AS quantity
+            FROM orders
+              JOIN order_items ON (order_id = orders.id)
+              JOIN items ON (item_id = items.id)
+            WHERE orders.id = $1
+            GROUP BY items.name, items.cost;
+            `, [order.id]));
+            console.log('After await', order.items.rows);
+          }
+          console.log('Ever after await', orders[0].items.rows);
+          return orders;
+        })();
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+      .then((query) => {
+        res.json(query.rows);
       });
-
-    console.log(pending);
-    return Promise.all(pending)
-      .then(() => {
-        res.json(response);
-      });
+    // .then(query => {
+    //   const orders = query.rows;
+    //   for (const order of orders) {
+    //     order.items = [
+    //       db.query(`
+    //         SELECT items.name AS name, items.cost AS cost, COUNT(items) AS quantity
+    //         FROM orders
+    //           JOIN order_items ON (order_id = orders.id)
+    //           JOIN items ON (item_id = items.id)
+    //         WHERE orders.id = $1
+    //         GROUP BY items.name, items.cost;
+    //       `, [order.id])
+    //         .then(() => {
+              
+    //         })
+    //     ];
+    //     pending.push(...order.items);
+    //   }
+    // })
+    // .catch(err => {
+    //   res
+    //     .status(500)
+    //     .json({ error: err.message });
+    // });
   });
 
   router.get("/update", (req, res) => {
