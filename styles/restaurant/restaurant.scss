@@ -87,6 +87,19 @@ h2 {
   border: solid lightgrey 4px;
 }
 
+.hold2 {
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
+  background-color: $order-color;
+  border-radius: 35px;
+  cursor: pointer;
+
+  h6 {
+    font-size : 10px;
+  }
+}
+
 .hovered {
   background: #f4f4f4;
   border-style: dashed;

@@ -6,6 +6,7 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
   <script src="scripts/restaurant/restaurant.js"></script>
+  <script src="scripts/restaurant/restaurant-login.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Abel|Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,12 +18,12 @@
   </nav>
   <div class="restaurant-login-form-holder">
     <form action="/restaurant/login" method="POST" class="restaurant-login-form">
-      <label for="username">Username</label>
-      <input type="text" name="username" required>
+      <label for="email">Email</label>
+      <input class="restaurant-email" type="email" name="email" required>
 
       <label for="password">Password</label>
-      <input type="password" placeholder="Enter Password" required>
-      <button type="submit">Submit</button>
+      <input class="restaurant-password" type="password" placeholder="Enter Password" required>
+      <button type="submit" class="restaurant-login-button-submit">Submit</button>
     </form>
   </div>
   <div id="restaurant-order-container">

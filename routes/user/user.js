@@ -63,7 +63,7 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    
+
     if (req.body.email && req.body.password) {
       return db.query(`
         SELECT user_token
@@ -151,6 +151,6 @@ module.exports = (db) => {
         res.send(500);
       });
   });
-  
+
   return router;
 };
