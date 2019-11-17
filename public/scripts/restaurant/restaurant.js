@@ -58,7 +58,7 @@ function createOrder(i) {
 <div class="restaurant-menu-items">
   <p>Menu Items<p>
   <ul>
-    ${generateLi(i.order_item)}
+    ${generateLi(i.items[0].name)}
   </ul>
 </div>
 <div class="restaurant-phonenumber">
