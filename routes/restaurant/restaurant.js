@@ -20,7 +20,6 @@ module.exports = (db) => {
   }),
 
   router.get("/orders", (req, res) => {
-    const pending = [];
 
     return db.query(`
     SELECT orders.id AS id,
@@ -36,53 +35,37 @@ module.exports = (db) => {
       JOIN items ON (item_id = items.id);
     `, [])
       .then(query => {
-        console.log(query.rows);
-        const orders = query.rows;
-        return (async () => {
-          for (const order of orders) {
-            // order.id for next param.
-            order.items = [];
-            order.items.push(await db.query(`
-            SELECT items.name AS name, items.cost AS cost, COUNT(items) AS quantity
-            FROM orders
-              JOIN order_items ON (order_id = orders.id)
-              JOIN items ON (item_id = items.id)
-            WHERE orders.id = $1
-            GROUP BY items.name, items.cost;
-            `, [order.id]));
-            console.log('After await', order.items.rows);
+        const data = query.rows;
+        const uniqueOrders = {};
+        const formattedOutput = [];
+
+        for (const order of data) {
+          if (!uniqueOrders.hasOwnProperty(order.id)) {
+            uniqueOrders[order.id] = order;
+            uniqueOrders[order.id].items = [{
+              name: order.order_item,
+              cost: order.item_cost
+            }];
+            delete uniqueOrders[order.id].order_item;
+            delete uniqueOrders[order.id].item_cost;
+          } else {
+            uniqueOrders[order.id].items.push({
+              name: order.order_item,
+              cots: order.item_cost
+            });
           }
-          console.log('Ever after await', orders[0].items.rows);
-          return orders;
-        })();
+        }
+        for (const order in uniqueOrders) {
+          formattedOutput.push(uniqueOrders[order]);
+        }
+
+        res.json(formattedOutput);
       })
-      .then((query) => {
-        res.json(query.rows);
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
       });
-    // .then(query => {
-    //   const orders = query.rows;
-    //   for (const order of orders) {
-    //     order.items = [
-    //       db.query(`
-    //         SELECT items.name AS name, items.cost AS cost, COUNT(items) AS quantity
-    //         FROM orders
-    //           JOIN order_items ON (order_id = orders.id)
-    //           JOIN items ON (item_id = items.id)
-    //         WHERE orders.id = $1
-    //         GROUP BY items.name, items.cost;
-    //       `, [order.id])
-    //         .then(() => {
-              
-    //         })
-    //     ];
-    //     pending.push(...order.items);
-    //   }
-    // })
-    // .catch(err => {
-    //   res
-    //     .status(500)
-    //     .json({ error: err.message });
-    // });
   });
 
   router.get("/update", (req, res) => {
