@@ -24,7 +24,7 @@ module.exports = (db) => {
 
     return db.query(`
     SELECT orders.id AS id,
-      CONCAT(users.first_name, ' ', 
+      CONCAT(users.first_name, ' ',
           INITCAP(LEFT(users.last_name, 1))) AS customer,
        users.phone_number, orders.id,
        items.name AS order_item, items.cost AS item_cost,
@@ -114,7 +114,19 @@ module.exports = (db) => {
   });
 
   router.post("/login", (req, res) => {
-    // Just login.
+    return db.query(`
+    SELECT user_token
+    FROM users
+    WHERE email = $1
+      AND password = $2;
+  `, [req.body.email.trim(), req.body.password.trim()])
+    .then(query => {
+      req.session.userToken = query.rows[0].user_token;
+      res.send({ success: "Logged in" });
+    })
+    .catch(err => {
+      res.send({ error: err.message });
+    });
   });
 
   return router;

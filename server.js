@@ -20,11 +20,11 @@ const db = new Pool(dbParams);
 db.connect();
 
 // Twilio connection setup.
-const twilio = require('twilio');
-const client = new twilio(
-  process.env.TWILIO_SID,
-  process.env.TWILIO_TOKEN
-);
+// const twilio = require('twilio');
+// const client = new twilio(
+//   process.env.TWILIO_SID,
+//   process.env.TWILIO_TOKEN
+// );
 
 // client.messages.create({
 //   body: 'Oh hai thar',
