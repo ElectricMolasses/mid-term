@@ -15,13 +15,11 @@ const path = require('path');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    //res.sendFile('/views/restaurant/restaurant.html', { root: '../../' });
+
     res.sendFile(path.resolve('./views/restaurant/restaurant.html'));
   }),
 
   router.get("/orders", (req, res) => {
-
-    const pending = [];
 
     return db.query(`
     SELECT orders.id AS id,
@@ -38,7 +36,7 @@ module.exports = (db) => {
     `, [])
       .then(query => {
         const orders = query.rows;
-        
+        const pending = [];
 
         for (const order of orders) {
           order.items = [
