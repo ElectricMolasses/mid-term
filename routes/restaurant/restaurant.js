@@ -82,6 +82,15 @@ module.exports = (db, twilio) => {
         `, [req.params.id, req.body.estimate])
           .then(() => {
             res.json({ status: 'success' });
+            twilio.messages.create({
+              body: `Your order has been confirmed by RESTAURANT NAME.
+                    It should be ready in TEMPORARY TEXT`,
+              to: `+19023945393`,
+              from: `+12029029010`
+            })
+              .then((mes) => {
+                console.log(mes.sid);
+              });
           });
         break;
       case 'deny':
@@ -93,6 +102,15 @@ module.exports = (db, twilio) => {
         `, [req.params.id])
           .then(() => {
             res.json({ status: 'success' });
+            res.json({ status: 'success' });
+            twilio.messages.create({
+              body: `Your order has been declined by RESTAURANT NAME.`,
+              to: `+19023945393`,
+              from: `+12029029010`
+            })
+              .then((mes) => {
+                console.log(mes.sid);
+              });
           });
         break;
       case 'cancel':
@@ -113,6 +131,15 @@ module.exports = (db, twilio) => {
         `, [req.params.id, req.body.estimate])
           .then(() => {
             res.json({ status: 'success' });
+            twilio.messages.create({
+              body: `The restaurant has changed the estimated time of completion on your order.
+                    The new estimate time is TEMPORARY TEXT`,
+              to: `+19023945393`,
+              from: `+12029029010`
+            })
+              .then((mes) => {
+                console.log(mes.sid);
+              });
           });
         break;
       case 'complete':
@@ -123,10 +150,26 @@ module.exports = (db, twilio) => {
         `, [req.params.id])
           .then(() => {
             res.json({ status: 'success' });
+            twilio.messages.create({
+              body: `Your order has been complete and is ready for pick up!`,
+              to: `+19023945393`,
+              from: `+12029029010`
+            })
+              .then((mes) => {
+                console.log(mes.sid);
+              });
           });
       }
     }
   });
+  // twilio.messages.create({
+  //   body: 'test message',
+  //   to: '+19023945393',
+  //   from: '+12029029010'
+  // })
+  //   .then((mes) => {
+  //     console.log(mes.sid);
+  //   });
 
   router.get("/update", (req, res) => {
     // Needs to be notified when a user makes an order to this database.  Going to build the users order query first, then work on this.
