@@ -63,6 +63,7 @@ h2 {
   display: flex;
   justify-content: space-evenly;
   margin: auto;
+  margin-bottom: 20px;
   background-color: $order-color;
   border-radius: 35px;
   cursor: pointer;
@@ -75,7 +76,7 @@ h2 {
 .restaurant-empty {
   display: inline-block;
   border: 2px solid black;
-  height: 130px;
+  height: 300px;
   width: 80%;
   margin-bottom: 80px;
   align-self: center;

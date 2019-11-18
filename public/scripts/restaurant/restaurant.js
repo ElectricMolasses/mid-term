@@ -20,6 +20,7 @@ function loadOrders() {
   }).catch(() => {
       console.log('failed');
     });
+
 }
 
 function generateLi(orderItemsArray) {
@@ -35,6 +36,7 @@ function generateLi(orderItemsArray) {
 }
 
 function createOrder(i) {
+  let timeStamp = i.time_placed.slice(0, 19);
   let markup =
 `<div draggable="true" class="restaurant-fill">
   <div class="restaurant-name-display">
@@ -56,7 +58,7 @@ function createOrder(i) {
   <span class="restaurant-phone">${i.phone_number}</span>
 </div>
 <div class="restaurant-current-time-holder">
-  <p class="restaurant-current-time-elasped">Time elapsed</p>
+  <p class="restaurant-current-time-elasped">${(moment(timeStamp).fromNow())}</p>
   <span class="restaurant-current-time"><span>
 </div>
 </div>`;
@@ -69,10 +71,8 @@ $("document").ready(function(){
     method: 'GET'
   })
     .done((data, status, xhr) => {
-      console.log(data[0].time_placed);
-      console.log(new Date);
-      let timeStamp = data[0].time_placed.slice(0, 19);
-      setInterval(console.log(moment(timeStamp).fromNow()), 500);
+
+
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
@@ -136,7 +136,5 @@ function dragDrop() {
 }}).catch(() => {
   console.log('failed');
 });
-
-
 });
 
