@@ -23,16 +23,13 @@ function loadOrders() {
 
 }
 
-function generateLi(orderItemsArray) {
-  if (!Array.isArray(orderItemsArray)) {
-    return `<li>${orderItemsArray}</li>`
-  } else {
-    let $item = ``;
-    for (const j of orderItemsArray) {
-      $item += `<li>${j}</li>`
-    }
-    return $item;
+function generateLi(orderItemsObject) {
+  let itemHTML = ``;
+  for (const i of orderItemsObject) {
+    itemHTML += `<li>${i.name}</li>`
+    console.log(i.name);
   }
+return itemHTML;
 }
 
 function createOrder(i) {
@@ -50,7 +47,7 @@ function createOrder(i) {
 <div class="restaurant-menu-items">
   <p>Menu Items<p>
   <ul>
-    ${generateLi(i.items[0].name)}
+    ${generateLi(i.items)}
   </ul>
 </div>
 <div class="restaurant-phonenumber">
@@ -63,6 +60,7 @@ function createOrder(i) {
 </div>
 </div>`;
 return markup;
+
 }
 
 $("document").ready(function(){
