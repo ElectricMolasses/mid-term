@@ -8,8 +8,13 @@
 const express = require('express');
 const router  = express.Router();
 const path = require('path');
+const moment = require('moment');
 
 module.exports = (db, twilio) => {
+  router.get("/test", (req, res) => {
+    res.sendFile(path.resolve('./views/restaurant/test.html'));
+  });
+
   router.get("/", (req, res) => {
 
     res.sendFile(path.resolve('./views/restaurant/restaurant.html'));
@@ -64,27 +69,25 @@ module.exports = (db, twilio) => {
       });
   });
 
-  router.put("/orders/:id", (req, res) => {
-    // This will take an order ID and change the information in the database based on keys present in the object the user sends.
-    // { time_change: [] }
+  router.put("/orders/", (req, res) => {
 
     const request = req.body;
-    console.log(req.body);
 
     if (request.hasOwnProperty('orderStatus')) {
       switch (request.orderStatus) {
       case 'confirm':
+        console.log(request.time_estimate);
         db.query(`
           UPDATE orders
-            SET time_confirmed = NOW()
-            SET time_estimate = $2
+            SET time_confirmed = NOW(),
+            time_estimate = $2
           WHERE id = $1;
-        `, [req.params.id, req.body.estimate])
+        `, [request.orderId, request.time_estimate])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
-              body: `Your order has been confirmed by RESTAURANT NAME.
-                    It should be ready in TEMPORARY TEXT`,
+              body: `Your order has been confirmed.
+                    It should be ready in ${moment(request.time_estimate).fromNow()}`,
               to: `+19023945393`,
               from: `+12029029010`
             })
@@ -96,15 +99,14 @@ module.exports = (db, twilio) => {
       case 'deny':
         db.query(`
           UPDATE orders
-            SET time_confirmed = infinity
-            SET time_complete = infinity
+            SET time_confirmed = 'infinity',
+            time_complete = 'infinity'
           WHERE id = $1;
-        `, [req.params.id])
+        `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
-            res.json({ status: 'success' });
             twilio.messages.create({
-              body: `Your order has been declined by RESTAURANT NAME.`,
+              body: `Your order has been declined.`,
               to: `+19023945393`,
               from: `+12029029010`
             })
@@ -116,11 +118,19 @@ module.exports = (db, twilio) => {
       case 'cancel':
         db.query(`
           UPDATE orders
-            SET time_complete = infinity
+            SET time_complete = 'infinity'
           WHERE id = $1;
-        `, [req.params.id])
+        `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
+            twilio.messages.create({
+              body: `Your order has been cancelled.`,
+              to: `+19023945393`,
+              from: `+12029029010`
+            })
+              .then((mes) => {
+                console.log(mes.sid);
+              });
           });
         break;
       case 'estimate':
@@ -128,12 +138,18 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_estimate = $2
           WHERE id = $1;
-        `, [req.params.id, req.body.estimate])
+        `, [request.orderId, moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `The restaurant has changed the estimated time of completion on your order.
-                    The new estimate time is TEMPORARY TEXT`,
+              The new time estimate is ${
+                moment(
+                moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")
+                ).fromNow()
+              }
+                    `,
+                    
               to: `+19023945393`,
               from: `+12029029010`
             })
@@ -147,7 +163,7 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_complete = NOW()
           WHERE id = $1
-        `, [req.params.id])
+        `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
