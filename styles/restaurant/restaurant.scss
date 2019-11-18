@@ -1,16 +1,4 @@
-@use '../base';
-
-$font-heading: base.$font-heading;
-$font-body: base.$font-body;
-$nav-color: base.$nav-color;
-$form-color: base.$form-color;
-$order-color: base.$order-color;
-
-$c1: base.$c1;
-$c2: base.$c2;
-$c3: base.$c3;
-$c4: base.$c4;
-$c5: base.$c5;
+@import '../base';
 
 body {
   margin: 0;
@@ -100,18 +88,15 @@ h2 {
   }
 }
 
-.restaurant-empty::-webkit-scrollbar {
-  width: 10px;
-}
-
-.restaurant-empty::-webkit-scrollbar-track {
-  background-color: $c4;
-}
-
-.restaurant-empty::-webkit-scrollbar-thumb {
-  background-color: $c1;
-  border-radius: 5px;
-  box-shadow: inset 0px 0px 1px 1px $c2;
+.restaurant-empty {
+  display: inline-block;
+  border: 2px solid black;
+  height: 600px;
+  width: 80%;
+  border-radius: 3px;
+  align-self: center;
+  padding: 20px;
+  overflow: auto;
 }
 
 .hold {
