@@ -1,0 +1,14 @@
+.user-order {
+  position: fixed;
+  z-index: 6;
+  top: 300px;
+  display: block;
+  margin: 0 auto;
+  background: #ffffff;
+  width: 600px;
+  height: auto;
+  margin-bottom: 20px;
+  span {
+    display: block;
+  }
+}

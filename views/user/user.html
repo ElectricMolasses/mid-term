@@ -5,6 +5,7 @@
   <!-- CSS -->
   <link type="text/css" href="styles/user/user.css" rel="stylesheet">
   <link type="text/css" href="styles/user/user-menu.css" rel="stylesheet">
+  <link type="text/css" href="styles/user/user-shopping.css" rel="stylesheet">
 
   <!-- External JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -14,11 +15,75 @@
   <!-- JS -->
   <script src="scripts/user/user.js"></script>
   <script src="scripts/user/user-menu.js"></script>
+  <script src="scripts/user/user-shopping.js"></script>
 </head>
+
 <body>
 
 <!-- nav bar for homepage -->
 
+<<<<<<< HEAD
+  <nav class="user-header">
+    <div class="user-navbar">
+      <a>THAI-TANIC</a>
+      <span>About Us</span>
+      <span>Menu</span>
+      <span>Reservation</span>
+      <span>Contact Us</span>
+    </div>  
+
+    <!-- login/sign up button when not log in -->
+    <!-- username and shopping cart when log in -->
+
+    <div class="user-access">
+      <span class="user-login">Login</span>
+      <span class="user-signup">Sign Up</span>
+    </div>
+
+    <!-- Invisible unless logged in -->
+    <div class="user-logged">
+        <span class="user-email1">hello</span>
+        <span class="user-logout">Log out</span>
+        <span><img src="/resources/cart-outline.png"></span>
+    </div>
+  </nav>
+
+  <!-- homepage photo -->
+  <div class="user-photoheader">
+  <img class="user-staticphoto" src="/resources/static_photo.jpeg">
+  <input class="user-order-now" type="submit" value="Order Now"></input>
+  </div>
+  <!-- login/register popup form -->
+
+  <div class="user-login-form"></div>
+    <a class="user-error-message"></a>
+    <input class="user-email" type="email" placeholder="Email Address"></input>
+    <input class="user-password" type="password" placeholder="Password"></input>
+    <input class="user-login-button" type="submit" value="Sign In"></input>
+  </div>
+
+  <div class="user-signup-form">
+      <input type="email" placeholder="Email Address"></input>
+      <input type="password" placeholder="Password"></input>
+      <input class="user-signup-button" type="submit" value="Register"></input>
+  </div>
+
+  <!-- MENU HEADER -->
+
+  <h1 class="user-header-menu">Menu</h1>
+
+  <!-- for nav category menu -->
+
+  <!-- static data for now. -->
+  <!-- loop through menu table and render -->
+  <div class="user-nav-menu">
+    <span>Appertizers</span>
+    <span>Noodles</span>
+    <span>Curry</span>
+    <span>Rice Dishes</span>
+    <span>Desserts</span>
+    <span>Drink</span>
+=======
 <nav class="user-header">
   <div class="user-navbar">
     <a>THAI-TANIC</a>
@@ -34,58 +99,21 @@
   <div class="user-access">
     <span class="user-login">Login</span>
     <span class="user-signup">Sign Up</span>
+>>>>>>> c77d9ad39a6dd9e5fa7a1c9d0cf44b7bc1fabf90
   </div>
 
-  <!-- Invisible unless logged in -->
-  <div class="user-logged">
-      <span class="user-email1">hello</span>
-      <span class="user-logout">Log out</span>
-      <span><img src="/resources/cart-outline.png"></span>
+  <!-- for restaurant full menu -->
+  <!-- loop through menu table and render -->
+
+  <div class="user-menu">
+  <!-- add menu -->
   </div>
-</nav>
 
-<!-- homepage photo -->
-<div class="user-photoheader">
-<img class="user-staticphoto" src="/resources/static_photo.jpeg">
-<input class="user-order-now" type="submit" value="Order Now"></input>
-</div>
-<!-- login/register popup form -->
+  <div class="user-order">
+      <h2>Order Summary</h2>
+    
+  </div>
 
-<div class="user-login-form"></div>
-  <a class="user-error-message"></a>
-  <input class="user-email" type="email" placeholder="Email Address"></input>
-  <input class="user-password" type="password" placeholder="Password"></input>
-  <input class="user-login-button" type="submit" value="Sign In"></input>
-</div>
-
-<div class="user-signup-form">
-    <input type="email" placeholder="Email Address"></input>
-    <input type="password" placeholder="Password"></input>
-    <input class="user-signup-button" type="submit" value="Register"></input>
-</div>
-
-<!-- MENU HEADER -->
-
-<h1 class="user-header-menu">Menu</h1>
-
-<!-- for nav category menu -->
-
-<!-- static data for now. -->
-<!-- loop through menu table and render -->
-<div class="user-nav-menu">
-  <span>Appertizers</span>
-  <span>Noodles</span>
-  <span>Curry</span>
-  <span>Rice Dishes</span>
-  <span>Desserts</span>
-  <span>Drink</span>
-</div>
-
-<!-- for restaurant full menu -->
-<!-- loop through menu table and render -->
-<div class="user-menu">
- <!-- add menu -->
-</div>
 
 </body>
 
