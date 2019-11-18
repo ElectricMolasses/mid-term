@@ -1,10 +1,12 @@
+@use '../base';
 
-$base-color: #c6538c;
+$base-color: base.$base-color;
 
 body {
   background-color: $base-color;
   width: 100%;
   align-content: center;
+  color: #fdbb12;
 }
 
 .user-header {

@@ -1,28 +1,7 @@
-//time elapsed
-function clock() {
-  const today = new Date();
-  let hours = today.getHours();
-  let minutes = today.getMinutes();
-  let seconds = today.getSeconds();
-  minutes = renderTime(minutes);
-  seconds = renderTime(seconds);
-  $(".restaurant-current-time").text(`${hours} : ${minutes} : ${seconds}`);
-  setTimeout(clock, 500);
+function parseTimeStamp(time) {
+  const properTime = time.slice(11,19);
+  return properTime;
 }
-
-function renderTime(i) {
-  if (i < 10) {i = "0" + i};
-  return i;
-}
-
-
-
-//time stamp
-const currentdate = new Date();
-const datetime = currentdate.getDate() + "/"
-    + currentdate.getHours() + ":"
-    + currentdate.getMinutes() + ":"
-    + currentdate.getSeconds();
 
 function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
@@ -30,6 +9,17 @@ function renderOrder(orders) {
     appendTothis.insertAdjacentHTML('afterbegin', createOrder(orders[i]));
   };
   return console.log("orders loaded");
+}
+
+function loadOrders() {
+  $.ajax('/restaurant/orders/', {
+  method: 'GET'
+})
+  .done((data, status, xhr) => {
+      renderOrder(data);
+  }).catch(() => {
+      console.log('failed');
+    });
 }
 
 function generateLi(orderItemsArray) {
@@ -53,7 +43,7 @@ function createOrder(i) {
 </div>
 <div class="restaurant-time-display">
   <p class="restaurant-time-status">Time Placed</p>
-  <span class="restaurant-time-started">${i.time_placed}</span>
+  <span class="restaurant-time-started">${parseTimeStamp(i.time_placed)}</span>
 </div>
 <div class="restaurant-menu-items">
   <p>Menu Items<p>
@@ -66,26 +56,23 @@ function createOrder(i) {
   <span class="restaurant-phone">${i.phone_number}</span>
 </div>
 <div class="restaurant-current-time-holder">
-  <p class="restaurant-current-time-elasped>Time elapsed">
+  <p class="restaurant-current-time-elasped">Time elapsed</p>
   <span class="restaurant-current-time"><span>
 </div>
 </div>`;
-console.log(markup);
 return markup;
 }
 
-
 $("document").ready(function(){
-  let loaded = true;
+  loadOrders();
   $.ajax('/restaurant/orders/', {
     method: 'GET'
   })
     .done((data, status, xhr) => {
-      if (loaded) {
-        console.log(data);
-        renderOrder(data);
-        clock();
-      }
+      console.log(data[0].time_placed);
+      console.log(new Date);
+      let timeStamp = data[0].time_placed.slice(0, 19);
+      setInterval(console.log(moment(timeStamp).fromNow()), 500);
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
@@ -97,7 +84,6 @@ $(".restaurant-login-button").on("click", function() {
 // drag and drop
 const fill = document.querySelector(".restaurant-fill");
 const empties = document.querySelectorAll(".restaurant-empty");
-
 
 //loop through empties;
 for (const empty of empties) {
@@ -142,18 +128,15 @@ function dragDrop() {
   } else if (this === document.getElementById("restaurant-in-progress")) {
     console.log("drop-2");
   } else if (this === document.getElementById("restaurant-complete")) {
-    $(".restaurant-time-started").text(datetime);
+    $(".restaurant-time-started").text(moment());
     $(".restaurant-time-status").text("Time Complete");
-
   }
-  loaded = false;
   this.className = "restaurant-empty";
   this.append(fill);
-}
+}}).catch(() => {
+  console.log('failed');
+});
 
-// generate dynamic infomation for orders
-}).catch(() => {
-      console.log('failed');
-    });
+
 });
 
