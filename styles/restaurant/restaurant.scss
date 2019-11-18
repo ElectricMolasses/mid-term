@@ -6,13 +6,20 @@ $nav-color: base.$nav-color;
 $form-color: base.$form-color;
 $order-color: base.$order-color;
 
+$c1: base.$c1;
+$c2: base.$c2;
+$c3: base.$c3;
+$c4: base.$c4;
+$c5: base.$c5;
+
 body {
   margin: 0;
   background-color: $form-color;
+  padding-bottom: 40px;
 }
 
 #restaurant-nav {
-  background-color: $nav-color;
+  background-color: $c1;
   height: 100px;
   display: flex;
   justify-content: space-between;
@@ -51,6 +58,10 @@ body {
   display: flex;
   flex-direction: column;
   margin-top: 80px;
+
+  h2 {
+    color: $c2;
+  }
 }
 
 h2 {
@@ -64,10 +75,11 @@ h2 {
 .restaurant-fill {
   display: flex;
   justify-content: space-evenly;
-  margin: auto;
-  background-color: $order-color;
-  border-radius: 35px;
+  margin: 10px auto;
+  background-color: $c4;
+  border-radius: 13px;
   cursor: pointer;
+  box-shadow: inset 0px 0px 3px 3px $c3;
 
   h6 {
     font-size : 10px;
@@ -79,7 +91,7 @@ h2 {
   border: 2px solid black;
   height: 130px;
   width: 80%;
-  margin-bottom: 80px;
+  border-radius: 3px;
   align-self: center;
   padding: 20px;
   overflow: auto;
