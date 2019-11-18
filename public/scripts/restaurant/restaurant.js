@@ -16,7 +16,7 @@ function randomId() {
 function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
   for (i = 0; i < orders.length; i++) {
-    appendTothis.insertAdjacentHTML('afterbegin', createOrder(orders[i]));
+    appendTothis.append(createOrder(orders[i]));
   };
   return console.log("orders loaded");
 }
@@ -43,41 +43,40 @@ return itemHTML;
 
 function createOrder(i) {
   let timeStamp = i.time_placed.slice(0, 19);
-  let markup =
-`<div draggable="true" class="restaurant-fill">
-  <div class="restaurant-name-display">
-    <p>Name</p>
-  <span class="restaurant-customer-id">${i.customer}</span>
+  let div = document.createElement('div');
+  div.setAttribute('draggable', 'true');
+  div.setAttribute('id', "hi")
+  div.setAttribute('class', 'restaurant-fill');
+  div.innerHTML = (`<div class="restaurant-name-display">
+  <p>Name</p>
+<span class="restaurant-customer-id">${i.customer}</span>
 </div>
 <div class="restaurant-time-display">
-  <p class="restaurant-time-status">Time Placed</p>
-  <span class="restaurant-time-started">${parseTimeStamp(i.time_placed)}</span>
+<p class="restaurant-time-status">Time Placed</p>
+<span class="restaurant-time-started">${parseTimeStamp(i.time_placed)}</span>
 </div>
 <div class="restaurant-menu-items">
-  <p>Menu Items<p>
-  <ul>
-    ${generateLi(i.items)}
-  </ul>
+<p>Menu Items<p>
+<ul>
+  ${generateLi(i.items)}
+</ul>
 </div>
 <div class="restaurant-phonenumber">
-  <p>phone Number</p>
-  <span class="restaurant-phone">${i.phone_number}</span>
+<p>phone Number</p>
+<span class="restaurant-phone">${i.phone_number}</span>
 </div>
 <div class="restaurant-current-time-holder">
-  <p class="restaurant-current-time-elasped">Time Elapsed</p>
-  <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
-</div>
-</div>`;
-
-// let fill = document.querySelector(`#${randomId}`);
-// $(`#${randomId}`).addEventListener('dragstart', dragStart);
-// $(`#${randomId}`).addEventListener('dragend', dragEnd);
-
-return markup;
-
+<p class="restaurant-current-time-elasped">Time Elapsed</p>
+<span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
+</div>`);
+  div.addEventListener("click", function() {
+    div.style.background = "black";
+  })
+  console.log(div);
+  return div;
 }
 
-$("document").ready(function(){
+$("document").ready(function() {
   loadOrders();
   $.ajax('/restaurant/orders/', {
     method: 'GET'
@@ -94,7 +93,7 @@ $(".restaurant-login-button").on("click", function() {
 
 // drag and drop
 const empties = document.querySelectorAll(".restaurant-empty");
-const fill = document.querySelector(".restaurant-fill");
+// const fill = document.querySelector(".restaurant-fill");
 //loop through empties;
 for (const empty of empties) {
   empty.addEventListener('dragover', dragOver);
@@ -103,8 +102,6 @@ for (const empty of empties) {
   empty.addEventListener('drop', dragDrop);
 }
 
-fill.addEventListener('dragstart', dragStart);
-fill.addEventListener('dragend', dragEnd);
 
 //drag function
 function dragStart() {

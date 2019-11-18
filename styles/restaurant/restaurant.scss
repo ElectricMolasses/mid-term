@@ -1,9 +1,10 @@
-$font-heading: Bebas Neue, cursive;
-$font-body: Abel, sans-serif;
-$nav-color: #545e56;
-$form-color: #eae1df;
-$order-color: #917c78;
-$base-color: #c6538c;
+@use '../base';
+
+$font-heading: base.$font-heading;
+$font-body: base.$font-body;
+$nav-color: base.$nav-color;
+$form-color: base.$form-color;
+$order-color: base.$order-color;
 
 $c1: base.$c1;
 $c2: base.$c2;
@@ -71,14 +72,28 @@ h2 {
 
 /* draggable css */
 
+.restaurant-empty {
+  border: 2px solid $c2;
+  height: 130px;
+  width: 80%;
+  border-radius: 3px;
+  align-self: center;
+  padding: 20px;
+  overflow: auto;
+}
+
 .restaurant-fill {
-  display: flex;
+  display: grid;
+  padding: 0px 10px;
+  grid-template-columns: 15% 15% 35% 15% 20%;
+  grid-template-rows: 50% 50%;
   justify-content: space-evenly;
   margin: 10px auto;
   background-color: $c4;
   border-radius: 13px;
   cursor: pointer;
-  box-shadow: inset 0px 0px 3px 3px $c3;
+  box-shadow: inset 0px 0px 3px 3px $c3,
+              0px 0px 1px 1px $c3;
 
   h6 {
     font-size : 10px;
