@@ -68,7 +68,7 @@ module.exports = (db, twilio) => {
   });
 
   router.get("/update", (req, res) => {
-    // Will be sent repeatedly while an order is active to keep the client updated.
+    const orders = req.body.orders; // Will be an array of orderId's.
   });
 
   router.post("/login", (req, res) => {
@@ -126,12 +126,12 @@ module.exports = (db, twilio) => {
         for (const item of orderItems) {
           console.log(item);
           requests.push(db.query(`
-            INSERT INTO order_items (
-              order_id, item_id
-            ) VALUES (
-              $1, $2
-            )
-            RETURNING *
+          INSERT INTO order_items (
+            order_id, item_id
+          ) VALUES (
+            $1, (SELECT id FROM items WHERE name = $2)
+          )
+          RETURNING *;
           `, [orderId, item])
             .then(res => {
               return res.rows;

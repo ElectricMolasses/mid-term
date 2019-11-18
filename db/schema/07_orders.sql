@@ -5,7 +5,7 @@ CREATE TABLE orders (
   customer_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   restaurant_id INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   time_placed TIMESTAMP NOT NULL,
-  time_confirmed TIMESTAMP NOT NULL,
-  time_complete TIMESTAMP NOT NULL,
+  time_confirmed TIMESTAMP,
+  time_complete TIMESTAMP,
   time_estimate TIMESTAMP
 );
