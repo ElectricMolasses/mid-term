@@ -105,6 +105,16 @@ module.exports = (db, twilio) => {
             res.json({ status: 'success' });
           });
         break;
+      case 'estimate':
+        db.query(`
+          UPDATE orders
+            SET time_estimate = $2
+          WHERE id = $1;
+        `, [req.params.id, req.body.estimate])
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+        break;
       case 'complete':
         db.query(`
           UPDATE orders
