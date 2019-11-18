@@ -133,9 +133,23 @@ module.exports = (db, twilio) => {
           )
           RETURNING *;
           `, [orderId, item])
-            .then(res => {
-              return res.rows;
-            }));
+            .then(query => {
+              return query.rows;
+            }))
+            .then(query => {
+              res.json({ status: 'success' });
+              twilio.messages.create({
+                body: 'A new order has been requested.',
+                to: '+19023945393',
+                from: '+12029029010'
+              })
+                .then((mes) => {
+                  console.log(mes.sid);
+                });
+            })
+            .catch(err => {
+              console.log({ error: err.message });
+            });
         }
 
         Promise.all(requests)
