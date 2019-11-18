@@ -1,6 +1,5 @@
 // load .env data into process.env
 require('dotenv').config();
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_TOKEN);
 
 // Web server config
 const PORT           = process.env.PORT || 8080;
