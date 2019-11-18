@@ -90,7 +90,7 @@ module.exports = (db, twilio) => {
             SET time_confirmed = infinity
             SET time_complete = infinity
           WHERE id = $1;
-        `), [req.params.id]
+        `, [req.params.id])
           .then(() => {
             res.json({ status: 'success' });
           });
