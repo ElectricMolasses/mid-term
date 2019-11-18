@@ -11,19 +11,15 @@ $(() => {
 
   //template for full menu
   const template = `
-  <table class="user-menu-table">
-    <tr class="user-menu-category"></tr>
-    <tr>
-      <td>
+  <div class="user-menu-table">
+    <span class="user-menu-category"></span>
+    <span>
         <a class="user-item-name">name</a>
         <a class="user-item-description">description</a>
-      </td>
-      <td class="user-item-price">$</td>
-      <td>
+        <a class="user-item-price">$</a>
         <img class="user-item-add"src="/resources/plus.png">
-      </td>
-    </tr>
-  </table>
+    </span>
+  </div>
   `;
 
   //get data from GET /menu
