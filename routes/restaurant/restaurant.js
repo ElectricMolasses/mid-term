@@ -69,6 +69,7 @@ module.exports = (db, twilio) => {
     // { time_change: [] }
 
     const request = req.body;
+    console.log(req.body);
 
     if (request.hasOwnProperty('orderStatus')) {
       switch (request.orderStatus) {
@@ -76,8 +77,9 @@ module.exports = (db, twilio) => {
         db.query(`
           UPDATE orders
             SET time_confirmed = NOW()
+            SET time_estimate = $2
           WHERE id = $1;
-        `, [req.params.id])
+        `, [req.params.id, req.body.estimate])
           .then(() => {
             res.json({ status: 'success' });
           });
