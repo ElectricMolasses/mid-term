@@ -3,6 +3,16 @@ function parseTimeStamp(time) {
   return properTime;
 }
 
+function randomId() {
+  let random = "";
+  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+  'g', 'h', 'r', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  for (let i = 0; i < 7; i++) {
+    random += values[Math.floor(Math.random() * (values.length - 1))];
+  }
+  return random;
+}
+
 function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
   for (i = 0; i < orders.length; i++) {
@@ -20,13 +30,12 @@ function loadOrders() {
   }).catch(() => {
       console.log('failed');
     });
-
 }
 
 function generateLi(orderItemsObject) {
   let itemHTML = ``;
   for (const i of orderItemsObject) {
-    itemHTML += `<li>${i.name}</li>`
+    itemHTML += `<li>${i.name}</li> `
     console.log(i.name);
   }
 return itemHTML;
@@ -59,6 +68,11 @@ function createOrder(i) {
   <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
 </div>
 </div>`;
+
+// let fill = document.querySelector(`#${randomId}`);
+// $(`#${randomId}`).addEventListener('dragstart', dragStart);
+// $(`#${randomId}`).addEventListener('dragend', dragEnd);
+
 return markup;
 
 }
@@ -69,6 +83,7 @@ $("document").ready(function(){
     method: 'GET'
   })
     .done((data, status, xhr) => {
+      console.log(randomId());
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
@@ -78,9 +93,8 @@ $(".restaurant-login-button").on("click", function() {
   })
 
 // drag and drop
-const fill = document.querySelector(".restaurant-fill");
 const empties = document.querySelectorAll(".restaurant-empty");
-
+const fill = document.querySelector(".restaurant-fill");
 //loop through empties;
 for (const empty of empties) {
   empty.addEventListener('dragover', dragOver);
@@ -102,7 +116,6 @@ function dragStart() {
 
 function dragEnd() {
   this.className = "hold2"
-
 }
 
 function dragOver(e) {
