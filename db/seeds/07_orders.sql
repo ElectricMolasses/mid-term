@@ -14,5 +14,7 @@ INSERT INTO orders (
   time_placed
 ) VALUES (
   1, 1, NOW()
+), (
+  1, 1, NOW()
 );
 
