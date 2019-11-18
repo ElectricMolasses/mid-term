@@ -67,14 +67,53 @@ module.exports = (db, twilio) => {
   router.put("/orders/:id", (req, res) => {
     // This will take an order ID and change the information in the database based on keys present in the object the user sends.
     // { time_change: [] }
-    db.query(`
-    UPDATE orders
-      SET $1 = NOW()
-    WHERE id = $2
-    `, [])
-      .then(() => {
 
-      });
+    const request = req.body;
+
+    if (request.hasOwnProperty('orderStatus')) {
+      switch (request.orderStatus) {
+      case 'confirm':
+        db.query(`
+          UPDATE orders
+            SET time_confirmed = NOW()
+          WHERE id = $1;
+        `, [req.params.id])
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+        break;
+      case 'deny':
+        db.query(`
+          UPDATE orders
+            SET time_confirmed = infinity
+            SET time_complete = infinity
+          WHERE id = $1;
+        `), [req.params.id]
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+        break;
+      case 'cancel':
+        db.query(`
+          UPDATE orders
+            SET time_complete = infinity
+          WHERE id = $1;
+        `, [req.params.id])
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+        break;
+      case 'complete':
+        db.query(`
+          UPDATE orders
+            SET time_complete = NOW()
+          WHERE id = $1
+        `, [req.params.id])
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+      }
+    }
   });
 
   router.get("/update", (req, res) => {
