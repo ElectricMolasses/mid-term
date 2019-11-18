@@ -12,7 +12,7 @@ function timeNow() {
 
 function renderTime(i) {
   if (i.length > 3) {
-ß
+
   }
   if (i < 10) {i = "0" + i};
   return i;
@@ -120,9 +120,6 @@ function createOrder(i) {
 </div>`;
 return markup;
 }
-
-
-
 
 $("document").ready(function(){
   loadOrders();
