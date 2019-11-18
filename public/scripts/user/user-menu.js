@@ -95,12 +95,10 @@ const orderSum = () => {
     //submit
     
     orderItems.push($foodName["name"]);
-    // console.log(orderItems);
     $(".user-order-submit").on('click', ((event) => {
       // event.preventDefault();
       console.log($(".user-order").val());
       console.log('test');
-      // $(".user-order-submit").triggerHandler('click');
       $.ajax("user/order", {
         
         method: 'POST',
@@ -119,15 +117,6 @@ const orderSum = () => {
 
 };
 
-//order POST to router /order
-
-// const placeOrder = () => {
-//   $(".user-order-submit").on('click', ((event) => {
-//     event.preventDefault();
-//     console.log('test');
-//   }))
-  
-// };
 
 
 //-------------------------------------------------
@@ -178,22 +167,6 @@ $(() => {
 
     });
   }));
-
-  // $(".user-order-submit").on('click', ((event) => {
-  //   // event.preventDefault();
-  //   console.log('test');
-  //   // $(".user-order-submit").triggerHandler('click');
-  //   $.ajax("user/order", {
-  //     method: 'POST',
-  //     dataType: "json",
-  //     data: {
-  //       orderItems: $(".user-order").val()
-  //     }
-  //   }).done((res) => {
-  //     console.log(res.rows);
-  //   })
-  // }))
-  // $(".user-order-submit").trigger('click')
 
 
 
