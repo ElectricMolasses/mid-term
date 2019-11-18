@@ -1,4 +1,6 @@
-@import '../base';
+@use '../base';
+
+$base-color: base.$base-color;
 
 body {
   background-color: $base-color;
@@ -43,7 +45,7 @@ body {
 }
 
 .user-photoheader {
-
+  
   margin: 0 auto;
   // display: lex;
   // justify-content: center;
@@ -61,7 +63,7 @@ body {
   padding: 5% 7%;
   top:30%;
   left: 50%;
-  background-color: #ffffff;
+  background-color: #ffffff;  
   z-index: 9;
   img {
     width: 30px;
@@ -80,6 +82,3 @@ body {
   display: block;
 }
 
-img{
-  background: none;
-}

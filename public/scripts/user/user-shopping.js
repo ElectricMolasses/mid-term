@@ -18,14 +18,22 @@ const addToOrder = (food,order) => {
   return order;
 };
 
-const updateCart = (cart, item) => {
-  for (let i in cart) {
-    if (cart[i] === item) {
-       cart .splice(0,1);
-       return cart;
+const updateCartTotal = () => {
+  let subTotal = 0;
+  const $order = $(".user-order1")
+  for (let i = 0; i < $order.length; i++) {
+    console.log($order[i])
+    console.log(($order[i]).find(".user-item-price").text())
+    // const $itemTotal = Number($order[i].closest('tr').find(".user-item-price").text()) * Number($(".user-order-quantity"));
+    console.log($itemTotal)
+    // console.log($order[i].find(".user-item-price").text())
+    subTotal += ($itemTotal);
+    console.log(subTotal);
     }
-  }
-  // return cart;
+    $(".order-subtotal").val(subTotal.toFixed(2));
+    $(".order-tax").val(Number((0.05 * subTotal).toFixed(2)));
+    $(".order-total").val(Number((subTotal + subTotal* 0.05).toFixed(2)));
+  
 }
 
 const templateOrder = `
@@ -67,11 +75,12 @@ const addToCart = (orders) => {
     $("footer, input").detach();
     $(".user-order").append($temp);
   }
-  $(".order-subtotal").append(subTotal);
+  $(".order-subtotal").append(subTotal.toFixed(2));
   $(".order-tax").append(Number((0.05 * subTotal).toFixed(2)));
   $(".order-total").append(Number((subTotal + subTotal* 0.05).toFixed(2)));
   
-  }
+}
+
 //Add items to order cart
 
 const orderSum = () => {
@@ -81,55 +90,29 @@ const orderSum = () => {
   let orderItems = []; //send to server
 
   $("body").on('click', ".user-item-add", function(event) {
-    console.log('test')
-    // let subTotal = 0;
     event.preventDefault();
     $(".user-order1").detach();
     
     let $foodName = {};
     $foodName["name"] = $(this).closest('tr').find(".user-item-name").text();
-    addToOrder($foodName, yourOrder);
+    addToOrder($foodName, yourOrder); //add food name to order summary
     $foodName["quantity"] = 1;
     $foodName["price"] = $(this).closest('tr').find(".user-item-price").text() / 100;
 
     addToCart(yourOrder);
 
-    // for (let order of yourOrder) {
-      
-    //   const $temp = $(templateOrder);
-    //   const $itemTotal = Number((order["price"] * order["quantity"]).toFixed(2));
-    //   subTotal += ($itemTotal);
-      
-    //   $temp.find(".user-item-name").append(order["name"]);
-    //   $temp.find(".user-item-quantity").append(order["quantity"]);
-    //   $temp.find(".user-item-price").append($itemTotal);
-
-    //   $("footer, input").detach();
-    //   $(".user-order").append($temp);
-    // }
-    // $(".order-subtotal").append(subTotal);
-    // $(".order-tax").append(Number((0.05 * subTotal).toFixed(2)));
-    // $(".order-total").append(Number((subTotal + subTotal* 0.05).toFixed(2)));
-
-
-
-    
-   
-
      //submit order to server
     orderItems.push($foodName["name"]);
     $(".user-order-submit").on('click', ((event) => {
+
       // event.preventDefault();
       
-      console.log($(".user-order").val());
-      console.log('test');
       $.ajax("user/order", {
         
         method: 'POST',
         dataType: "json",
         data: {
           items: orderItems,
-
           
         }
       }).done((res) => {
@@ -139,27 +122,26 @@ const orderSum = () => {
       })
     }))
   });
-
-  $(document).on('click', ".user-item-remove", function(event) {
+  $("body").on('click', ".user-item-remove", function(event) {
     event.preventDefault();
-    // $this = $(".user-item-remove");
+
     $item = $(this).closest('tr').find(".user-item-name").text();
-    console.log($item);
     $qty = Number($(this).closest('tr').find(".user-order-quantity").text());
     $price = Number($(this).closest('tr').find(".user-item-price").text());
     $unitPrice = ($price / $qty).toFixed(2);
+
     if ($qty <= 1) {
-      $(".user-order1").remove();
+      $(this).closest(".user-order1").detach();
+      orderItems.splice(orderItems.indexOf($item), 1);
+      yourOrder
     } else {
-      // updateCart(orderItems, $item);
-      // console.log(updateCart(orderItems, $item));
       $qty -= 1;
-      console.log('2', $unitPrice, $qty);
-      $this.closest('tr').find(".user-order-quantity").text($qty);
-      $this.closest('tr').find(".user-item-price").text($qty * $unitPrice);
-      // $(".user-order").find(".order-subtotal").text(Number($(".order-subtotal").text()) - $qty * $unitPrice);
+      console.log(yourOrder)
+      orderItems.splice(orderItems.indexOf($item), 1);
+      $(this).closest('tr').find(".user-order-quantity").text($qty);
+      $(this).closest('tr').find(".user-item-price").text($qty * $unitPrice);
+      updateCartTotal();
     }
   })
-
 };
 
