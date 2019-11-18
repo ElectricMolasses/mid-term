@@ -87,6 +87,16 @@ const orderSum = () => {
 
 };
 
+//order POST to router /order
+
+// const placeOrder = () => {
+//   $(".user-order-submit").on('click', ((event) => {
+//     event.preventDefault();
+//     console.log('test');
+//   }))
+  
+// };
+
 
 //-------------------------------------------------
 //menu display - pull data from database
@@ -124,10 +134,30 @@ $(() => {
         $temp.find(".user-item-price").text(data[index].cost);
         $(".user-menu").append($temp);
       });
-      
+
       orderSum();
+
     });
   }));
+
+  $(".user-order-submit").on('click', ((event) => {
+    event.preventDefault();
+    console.log('test');
+    $(".user-order-submit").triggerHandler('click');
+    $.ajax("user/order", {
+      method: 'POST',
+      dataType: "json",
+      data: {
+        orderItems: $(".user-order").val()
+      }
+    }).done((res) => {
+      console.log(res.rows);
+    })
+  }))
   
+
+
+
+
 
 });
