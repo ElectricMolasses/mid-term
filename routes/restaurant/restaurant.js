@@ -138,12 +138,18 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_estimate = $2
           WHERE id = $1;
-        `, [request.orderId, request.estimate])
+        `, [request.orderId, moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `The restaurant has changed the estimated time of completion on your order.
-                    The new estimate time is TEMPORARY TEXT`,
+              The new time estimate is ${
+                moment(
+                moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")
+                ).fromNow()
+              }
+                    `,
+                    
               to: `+19023945393`,
               from: `+12029029010`
             })
