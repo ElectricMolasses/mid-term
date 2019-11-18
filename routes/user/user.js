@@ -12,19 +12,7 @@ const path = require('path');
 module.exports = (db, twilio) => {
   router.get("/", (req, res) => {
     console.log(req.data);
-    //res.sendFile('/views/user/user.html', { root: '../../' });
     res.sendFile(path.resolve('./views/user/user.html'));
-    // Needs to check for a users cookie, and treat
-    // them as signed in if it exists.
-    // Confirmed twilio working when passed into user routes.
-    // twilio.messages.create({
-    //   body: 'test message',
-    //   to: '+19023945393',
-    //   from: '+12029029010'
-    // })
-    //   .then((mes) => {
-    //     console.log(mes.sid);
-    //   });
   }),
 
   router.get("/menu", (req, res) => {
