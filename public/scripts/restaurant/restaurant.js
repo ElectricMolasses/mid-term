@@ -58,8 +58,8 @@ function createOrder(i) {
   <span class="restaurant-phone">${i.phone_number}</span>
 </div>
 <div class="restaurant-current-time-holder">
-  <p class="restaurant-current-time-elasped">${(moment(timeStamp).fromNow())}</p>
-  <span class="restaurant-current-time"><span>
+  <p class="restaurant-current-time-elasped">Time Elapsed</p>
+  <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
 </div>
 </div>`;
 return markup;
@@ -71,8 +71,6 @@ $("document").ready(function(){
     method: 'GET'
   })
     .done((data, status, xhr) => {
-
-
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
