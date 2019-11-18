@@ -64,6 +64,58 @@ module.exports = (db, twilio) => {
       });
   });
 
+  router.put("/orders/:id", (req, res) => {
+    // This will take an order ID and change the information in the database based on keys present in the object the user sends.
+    // { time_change: [] }
+
+    const request = req.body;
+
+    if (request.hasOwnProperty('orderStatus')) {
+      switch (request.orderStatus) {
+      case 'confirm':
+        db.query(`
+          UPDATE orders
+            SET time_confirmed = NOW()
+          WHERE id = $1;
+        `, [req.params.id])
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+        break;
+      case 'deny':
+        db.query(`
+          UPDATE orders
+            SET time_confirmed = infinity
+            SET time_complete = infinity
+          WHERE id = $1;
+        `), [req.params.id]
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+        break;
+      case 'cancel':
+        db.query(`
+          UPDATE orders
+            SET time_complete = infinity
+          WHERE id = $1;
+        `, [req.params.id])
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+        break;
+      case 'complete':
+        db.query(`
+          UPDATE orders
+            SET time_complete = NOW()
+          WHERE id = $1
+        `, [req.params.id])
+          .then(() => {
+            res.json({ status: 'success' });
+          });
+      }
+    }
+  });
+
   router.get("/update", (req, res) => {
     // Needs to be notified when a user makes an order to this database.  Going to build the users order query first, then work on this.
     // Will repeat polls to the db as an update loop.  Since order ID's are always unique, it will check them against a Set, and if anything
@@ -93,6 +145,8 @@ module.exports = (db, twilio) => {
   });
 
   router.post("/login", (req, res) => {
+    // Will modify this at some point to confirm the user
+    // signing in is actually restaurant staff.
     return db.query(`
     SELECT user_token
     FROM users
