@@ -19,7 +19,7 @@ $(() => {
         <a class="user-item-description">description</a>
       </td>
       <td>
-        <img class="user-item-add"src="/resources/minus.png">
+        <img class="user-item-remove"src="/resources/minus.png">
       </td>
       <td class="user-item-price">$</td>
       <td>
