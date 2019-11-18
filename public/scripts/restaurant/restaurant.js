@@ -1,20 +1,18 @@
-
-
 //time elapsed
-function clock() {
+function timeNow() {
   const today = new Date();
   let hours = today.getHours();
   let minutes = today.getMinutes();
   let seconds = today.getSeconds();
   minutes = renderTime(minutes);
   seconds = renderTime(seconds);
-  $(".restaurant-current-time").text(`${hours}:${minutes}:${seconds}`);
-  setTimeout(clock, 500);
+  return `${hours}:${minutes}:${seconds}`
+  setTimeout(timeNow, 500);
 }
 
 function renderTime(i) {
   if (i.length > 3) {
-
+ß
   }
   if (i < 10) {i = "0" + i};
   return i;
@@ -45,7 +43,7 @@ function TimeElaspedinSeconds(timeStamp, currentTime) {
   return (timeStampSeconds - currentTimeSeconds);
 }
 
-function TimeElapsed(timeInSeconds) {
+function timeElapsed(timeInSeconds) {
   let pad = function(num, size) { return ('000' + num).slice(size * -1); };
   time = parseFloat(timeInSeconds).toFixed(3);
   hours = Math.floor(time / 60 / 60);
@@ -56,7 +54,7 @@ function TimeElapsed(timeInSeconds) {
 };
 
 
-//time stamp
+//time stamp complete
 const currentdate = new Date();
 const datetime =
       currentdate.getHours() + ":"
@@ -69,6 +67,17 @@ function renderOrder(orders) {
     appendTothis.insertAdjacentHTML('afterbegin', createOrder(orders[i]));
   };
   return console.log("orders loaded");
+}
+
+function loadOrders() {
+  $.ajax('/restaurant/orders/', {
+  method: 'GET'
+})
+  .done((data, status, xhr) => {
+      renderOrder(data);
+  }).catch(() => {
+      console.log('failed');
+    });
 }
 
 function generateLi(orderItemsArray) {
@@ -109,22 +118,20 @@ function createOrder(i) {
   <span class="restaurant-current-time"><span>
 </div>
 </div>`;
-console.log(i.time_placed);
 return markup;
 }
 
 
+
+
 $("document").ready(function(){
-  let loaded = true;
+  loadOrders();
   $.ajax('/restaurant/orders/', {
     method: 'GET'
   })
     .done((data, status, xhr) => {
-      if (loaded) {
-        console.log(data);
-        renderOrder(data);
-        clock();
-      }
+      console.log((timeElapsed(TimeElaspedinSeconds(parseTimeStamp(data[0].time_placed), timeNow()))));
+
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
@@ -183,16 +190,13 @@ function dragDrop() {
   } else if (this === document.getElementById("restaurant-complete")) {
     $(".restaurant-time-started").text(datetime);
     $(".restaurant-time-status").text("Time Complete");
-
   }
-  loaded = false;
   this.className = "restaurant-empty";
   this.append(fill);
-}
-
+}}).catch(() => {
+  console.log('failed');
+});
 // generate dynamic infomation for orders
-}).catch(() => {
-      console.log('failed');
-    });
+
 });
 
