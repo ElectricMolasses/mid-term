@@ -105,7 +105,6 @@ module.exports = (db, twilio) => {
         `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
-            res.json({ status: 'success' });
             twilio.messages.create({
               body: `Your order has been declined.`,
               to: `+19023945393`,
@@ -119,11 +118,19 @@ module.exports = (db, twilio) => {
       case 'cancel':
         db.query(`
           UPDATE orders
-            SET time_complete = infinity
+            SET time_complete = 'infinity'
           WHERE id = $1;
         `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
+            twilio.messages.create({
+              body: `Your order has been cancelled.`,
+              to: `+19023945393`,
+              from: `+12029029010`
+            })
+              .then((mes) => {
+                console.log(mes.sid);
+              });
           });
         break;
       case 'estimate':
