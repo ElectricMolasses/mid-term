@@ -1,7 +1,7 @@
 
 $(() => {
 
-  //get login/signup form popup
+  //LOGIN BUTTON: get login form popup
   $(".user-login").on('click',(() => {
     if ($(".user-login-form").hasClass('visible')) {
       $(".user-login-form").hide().removeClass('visible');
@@ -11,8 +11,8 @@ $(() => {
   })
   );
 
+  //SIGNUP BUTTON: get signup form popup
   $(".user-signup").on('click',(() => {
-    console.log('test')
     if ($(".user-signup-form").hasClass('visible')) {
       $(".user-signup-form").hide().removeClass('visible');
     } else {
@@ -20,6 +20,20 @@ $(() => {
     }
   })
   );
+
+  //LOGOUT BUTTON: stretch work
+
+  //SHOPPING CART: Order Summary Popup
+
+  $(".user-logged img").on('click',(() => {
+    if ($(".user-order").hasClass('visible')) {
+      $(".user-order").hide().removeClass('visible');
+    } else {
+      $(".user-order").show().addClass('visible');
+    }
+  })
+  );
+
 
   /*POST signin data.
   Login button changed to logged
@@ -29,7 +43,7 @@ $(() => {
   */
 
   let $button = $(".user-login-button");
-  $button.on('click', (() => {
+  $button.on('click', ((event) => {
     event.preventDefault();
 
     $.ajax('/user/login', {
