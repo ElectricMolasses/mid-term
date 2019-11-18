@@ -1,5 +1,6 @@
 // load .env data into process.env
 require('dotenv').config();
+const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_TOKEN);
 
 // Web server config
 const PORT           = process.env.PORT || 8080;
@@ -26,12 +27,12 @@ const twilio = new Twilio(
   process.env.TWILIO_TOKEN
 );
 
-// client.messages.create({
-//   body: 'Oh hai thar',
-//   to: '+19023945393',
-//   from: '+12029029010'
-// })
-//   .then((mes) => console.log(mes.sid));
+client.messages.create({
+  body: 'Oh hai thar',
+  to: '+19023945393',
+  from: '+12029029010'
+})
+  .then((mes) => console.log(mes.sid));
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
