@@ -12,19 +12,7 @@ const path = require('path');
 module.exports = (db, twilio) => {
   router.get("/", (req, res) => {
     console.log(req.data);
-    //res.sendFile('/views/user/user.html', { root: '../../' });
     res.sendFile(path.resolve('./views/user/user.html'));
-    // Needs to check for a users cookie, and treat
-    // them as signed in if it exists.
-    // Confirmed twilio working when passed into user routes.
-    // twilio.messages.create({
-    //   body: 'test message',
-    //   to: '+19023945393',
-    //   from: '+12029029010'
-    // })
-    //   .then((mes) => {
-    //     console.log(mes.sid);
-    //   });
   }),
 
   router.get("/menu", (req, res) => {
@@ -107,6 +95,7 @@ module.exports = (db, twilio) => {
     // payment or anything initially.
     const userId = req.session.userToken;
     const orderItems = req.body.items;
+    const promises = [];
 
     return db.query(`
     INSERT INTO orders (
@@ -114,7 +103,9 @@ module.exports = (db, twilio) => {
       restaurant_id,
       time_placed
     ) VALUES (
-      $1,
+      (SELECT id
+        FROM users
+        WHERE user_token = $1),
       1,
       NOW()
     )
@@ -122,10 +113,10 @@ module.exports = (db, twilio) => {
     `, [userId])
       .then(query => {
         const orderId = query.rows[0].id;
-        const requests = [];
+        
         for (const item of orderItems) {
           console.log(item);
-          requests.push(db.query(`
+          db.query(`
           INSERT INTO order_items (
             order_id, item_id
           ) VALUES (
@@ -134,29 +125,27 @@ module.exports = (db, twilio) => {
           RETURNING *;
           `, [orderId, item])
             .then(query => {
+              console.log(query.rows);
               return query.rows;
-            }))
-            .then(query => {
-              res.json({ status: 'success' });
-              twilio.messages.create({
-                body: 'A new order has been requested.',
-                to: '+19023945393',
-                from: '+12029029010'
-              })
-                .then((mes) => {
-                  console.log(mes.sid);
-                });
             })
             .catch(err => {
               console.log({ error: err.message });
             });
         }
 
-        Promise.all(requests)
+        Promise.all(promises)
           .then((query) => {
             console.log('THE QUERY', query);
             res.send('Restaurant is confirming your order');
             // Bother twilio to send an SMS here.
+            twilio.messages.create({
+              body: 'A new order has been requested.',
+              to: '+19023945393',
+              from: '+12029029010'
+            })
+              .then((mes) => {
+                console.log(mes.sid);
+              });
           });
       })
       .catch(err => {
