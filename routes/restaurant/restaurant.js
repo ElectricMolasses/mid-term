@@ -10,6 +10,10 @@ const router  = express.Router();
 const path = require('path');
 
 module.exports = (db, twilio) => {
+  router.get("/test", (req, res) => {
+    res.sendFile(path.resolve('./views/restaurant/test.html'));
+  });
+
   router.get("/", (req, res) => {
 
     res.sendFile(path.resolve('./views/restaurant/restaurant.html'));
@@ -65,21 +69,19 @@ module.exports = (db, twilio) => {
   });
 
   router.put("/orders/:id", (req, res) => {
-    // This will take an order ID and change the information in the database based on keys present in the object the user sends.
-    // { time_change: [] }
 
     const request = req.body;
-    console.log(req.body);
 
     if (request.hasOwnProperty('orderStatus')) {
       switch (request.orderStatus) {
       case 'confirm':
+        console.log(request.time_estimate);
         db.query(`
           UPDATE orders
-            SET time_confirmed = NOW()
-            SET time_estimate = $2
+            SET time_confirmed = NOW(),
+            time_estimate = $2
           WHERE id = $1;
-        `, [req.params.id, req.body.estimate])
+        `, [req.params.id, request.time_estimate])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
@@ -96,8 +98,8 @@ module.exports = (db, twilio) => {
       case 'deny':
         db.query(`
           UPDATE orders
-            SET time_confirmed = infinity
-            SET time_complete = infinity
+            SET time_confirmed = infinity,
+            time_complete = infinity
           WHERE id = $1;
         `, [req.params.id])
           .then(() => {
