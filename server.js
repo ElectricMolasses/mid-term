@@ -36,12 +36,7 @@ app.use(cookieParser({
   name: 'thai-tanic-session',
   keys: ['/^%b,W7N*V@-+G>vl."X`@*Sa3@RxF0W@&95?H^{t.z(l']
 }));
-app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
-  debug: true,
-  outputStyle: 'expanded'
-}));
+
 app.use(methodOverride('_method'));
 
 app.use(express.static("public"));
