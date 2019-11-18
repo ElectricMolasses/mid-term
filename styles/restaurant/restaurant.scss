@@ -1,8 +1,10 @@
-$font-heading: Bebas Neue, cursive;
-$font-body: Abel, sans-serif;
-$nav-color: #545e56;
-$form-color: #eae1df;
-$order-color: #917c78;
+@use '../base';
+
+$font-heading: base.$font-heading;
+$font-body: base.$font-body;
+$nav-color: base.$nav-color;
+$form-color: base.$form-color;
+$order-color: base.$order-color;
 
 body {
   margin: 0;
