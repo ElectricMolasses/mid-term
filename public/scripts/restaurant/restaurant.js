@@ -1,63 +1,14 @@
-function timeNow() {
-  const today = new Date();
-  let hours = today.getHours();
-  let minutes = today.getMinutes();
-  let seconds = today.getSeconds();
-  minutes = renderTime(minutes);
-  seconds = renderTime(seconds);
-  return `${hours}:${minutes}:${seconds}`
-}
 
-function renderTime(i) {
-  if (i.length > 3) {
-
-  }
-  if (i < 10) {i = "0" + i};
-  return i;
-}
 
 function parseTimeStamp(time) {
   const properTime = time.slice(11,19);
   return properTime;
 }
 
-function TimeElaspedinSeconds(timeStamp, currentTime) {
-  let timeStampArray = timeStamp.split(":");
-  let currentTimeArray = currentTime.split(":");
-  let timeStampSeconds = 0;
-  let currentTimeSeconds = 0;
-  for (let i = 0; i < timeStampArray.length; i++) {
-    if (i === 0) {
-      timeStampSeconds += (Number(timeStampArray[i]) * 3600);
-      currentTimeSeconds += (Number(currentTimeArray[i]) * 3600)
-    } else if (i === 1) {
-      timeStampSeconds += (Number(timeStampArray[i]) * 60);
-      currentTimeSeconds += (Number(currentTimeArray[i]) * 60)
-    } else if (i === 2) {
-      timeStampSeconds += (Number(timeStampArray[i]) * 1);
-      currentTimeSeconds += (Number(currentTimeArray[i]) * 1)
-    }
-  }
-  return (timeStampSeconds - currentTimeSeconds);
-}
-
-function timeElapsed(timeInSeconds) {
-  let pad = function(num, size) { return ('000' + num).slice(size * -1); };
-  time = parseFloat(timeInSeconds).toFixed(3);
-  hours = Math.floor(time / 60 / 60);
-  minutes = Math.floor(time / 60) % 60;
-  seconds = Math.floor(time - minutes * 60);
-
-  return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2);
-};
 
 
-//time stamp complete
-const currentdate = new Date();
-const datetime =
-      currentdate.getHours() + ":"
-    + currentdate.getMinutes() + ":"
-    + currentdate.getSeconds();
+
+
 
 function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
@@ -127,6 +78,8 @@ $("document").ready(function(){
     .done((data, status, xhr) => {
       console.log(data[0].time_placed);
       console.log(new Date);
+      let timeStamp = data[0].time_placed.slice(0, 19);
+      setInterval(console.log(moment(timeStamp).fromNow()), 500);
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
@@ -183,7 +136,7 @@ function dragDrop() {
   } else if (this === document.getElementById("restaurant-in-progress")) {
     console.log("drop-2");
   } else if (this === document.getElementById("restaurant-complete")) {
-    $(".restaurant-time-started").text(datetime);
+    $(".restaurant-time-started").text(moment());
     $(".restaurant-time-status").text("Time Complete");
   }
   this.className = "restaurant-empty";
