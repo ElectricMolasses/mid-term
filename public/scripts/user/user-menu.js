@@ -1,6 +1,7 @@
 //helpers function
 
 const addToOrder = (food,order) => {
+  
   if (order.length === 0) {
     order.push(food);
   } else {
@@ -14,6 +15,13 @@ const addToOrder = (food,order) => {
     });
     if (checkItem) order.push(food);
   }
+  return order;
+};
+
+//Food order send to restaurant
+
+const orderItems = (item, order) => {
+  order.push(item);
   return order;
 };
 
@@ -45,12 +53,13 @@ const orderSum = () => {
   `;
   
   let yourOrder = [];
-  
+  let orderItems = [];
 
   $(".user-item-add").on('click', function(event) {
     let subTotal = 0;
     let tax = 0;
     let total = 0;
+    
     event.preventDefault();
     $(".user-order1").detach();
     
@@ -61,6 +70,7 @@ const orderSum = () => {
     $foodName["price"] = $(this).closest('tr').find(".user-item-price").text() / 100;
     
     for (let order of yourOrder) {
+      
       
       const $temp = $(template);
       const $itemTotal = Number((order["price"] * order["quantity"]).toFixed(2));
@@ -78,11 +88,33 @@ const orderSum = () => {
       $(".user-order-submit").detach();
       $(".user-order").append($temp);
     }
-
     $(".order-subtotal").append(subTotal);
     $(".order-tax").append(tax);
     $(".order-total").append(total);
 
+    //submit
+    
+    orderItems.push($foodName["name"]);
+    // console.log(orderItems);
+    $(".user-order-submit").on('click', ((event) => {
+      // event.preventDefault();
+      console.log($(".user-order").val());
+      console.log('test');
+      // $(".user-order-submit").triggerHandler('click');
+      $.ajax("user/order", {
+        
+        method: 'POST',
+        dataType: "json",
+        data: {
+          items: orderItems,
+
+          
+        }
+      }).done((res) => {
+        console.log($(".user-order").val());
+        console.log(res.rows);
+      })
+    }))
   });
 
 };
@@ -101,7 +133,13 @@ const orderSum = () => {
 //-------------------------------------------------
 //menu display - pull data from database
 $(() => {
+  $(".user-order-now").on('click', ((event) => {
+    event.preventDefault();
+  }));  
 
+  $(".user-order-submit").on('click', ((event) => {
+    event.preventDefault();
+  })); 
   //template for menu
   const template = `
   <table class="user-menu-table">
@@ -122,7 +160,7 @@ $(() => {
   //loop through data and render to table
 
   $(".user-order-now").on('click', ((event) => {
-    event.preventDefault();
+    // event.preventDefault();
     $.ajax("user/menu", {
       method: 'GET',
       dataType: "json",
@@ -140,23 +178,21 @@ $(() => {
     });
   }));
 
-  $(".user-order-submit").on('click', ((event) => {
-    event.preventDefault();
-    console.log('test');
-    $(".user-order-submit").triggerHandler('click');
-    $.ajax("user/order", {
-      method: 'POST',
-      dataType: "json",
-      data: {
-        orderItems: $(".user-order").val()
-      }
-    }).done((res) => {
-      console.log(res.rows);
-    })
-  }))
-  
-
-
+  // $(".user-order-submit").on('click', ((event) => {
+  //   // event.preventDefault();
+  //   console.log('test');
+  //   // $(".user-order-submit").triggerHandler('click');
+  //   $.ajax("user/order", {
+  //     method: 'POST',
+  //     dataType: "json",
+  //     data: {
+  //       orderItems: $(".user-order").val()
+  //     }
+  //   }).done((res) => {
+  //     console.log(res.rows);
+  //   })
+  // }))
+  // $(".user-order-submit").trigger('click')
 
 
 
