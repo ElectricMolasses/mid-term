@@ -4,3 +4,5 @@ public/styles
 *.log
 *.sqlite3
 remoteDB.js
+test.css
+test.html
