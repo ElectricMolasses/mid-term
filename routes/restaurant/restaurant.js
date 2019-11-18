@@ -8,6 +8,7 @@
 const express = require('express');
 const router  = express.Router();
 const path = require('path');
+const moment = require('moment');
 
 module.exports = (db, twilio) => {
   router.get("/test", (req, res) => {
@@ -85,8 +86,8 @@ module.exports = (db, twilio) => {
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
-              body: `Your order has been confirmed by RESTAURANT NAME.
-                    It should be ready in TEMPORARY TEXT`,
+              body: `Your order has been confirmed.
+                    It should be ready in ${moment(request.time_estimate).fromNow()}`,
               to: `+19023945393`,
               from: `+12029029010`
             })
@@ -106,7 +107,7 @@ module.exports = (db, twilio) => {
             res.json({ status: 'success' });
             res.json({ status: 'success' });
             twilio.messages.create({
-              body: `Your order has been declined by RESTAURANT NAME.`,
+              body: `Your order has been declined.`,
               to: `+19023945393`,
               from: `+12029029010`
             })
