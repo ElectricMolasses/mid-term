@@ -165,6 +165,7 @@ $(() => {
       method: 'GET',
       dataType: "json",
     }).done((data) => {
+      console.log(data);
       $.each(data, (index) => {
         const $temp = $(template);
         $temp.find(".user-item-name").text(data[index].name);

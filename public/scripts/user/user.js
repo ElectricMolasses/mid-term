@@ -36,10 +36,10 @@ $(() => {
 
 
   /*POST signin data.
-  Login button changed to logged
-  Hide Register button
+  Login button changed to logged - DONE
+  Hide Register button - DONE
   Show shopping cart and total amount
-  logout button
+  logout button - DONE
   */
 
   let $button = $(".user-login-button");
@@ -53,25 +53,27 @@ $(() => {
         email: $(".user-email").val(),
         password: $(".user-password").val()
       }
-    })
-      .done((res) => {
+    }).done((res) => {
         if (res === "Invalid Email") {
           $(".user-error-message").text("Invalid Email/Password");
         } else if (res === "Invalid Password") {
           $(".user-error-message").text("Invalid Email/Password");
         } else {
           $(".user-login-form").hide().removeClass('visible');
-          // need add scroll down to menu section
+          $(".user-order-now").trigger('click'); // menu section pop up once click login
         }
-      });
-    $.ajax('/user/profile', {
-      method: 'GET',
-      dataType: "json"
-    }).done((data) => {
-      $(".user-access").hide().removeClass('visible');
-      $(".user-email1").text(data.first_name);
-      $(".user-logged").show().addClass('visible');
-    });
+        
+      }).then (() => {
+        $.ajax('/user/profile', {
+          method: 'GET',
+          dataType: "json"
+        }).done((data) => {
+          $(".user-access").hide().removeClass('visible');
+          $(".user-email1").text(data.first_name);
+          $(".user-logged").show().addClass('visible');
+        });
+      })
+
   }));
 });
 
