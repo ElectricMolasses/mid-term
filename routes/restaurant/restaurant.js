@@ -64,6 +64,19 @@ module.exports = (db, twilio) => {
       });
   });
 
+  router.put("/orders/:id", (req, res) => {
+    // This will take an order ID and change the information in the database based on keys present in the object the user sends.
+    // { time_change: [] }
+    db.query(`
+    UPDATE orders
+      SET $1 = NOW()
+    WHERE id = $2
+    `, [])
+      .then(() => {
+
+      });
+  });
+
   router.get("/update", (req, res) => {
     // Needs to be notified when a user makes an order to this database.  Going to build the users order query first, then work on this.
     // Will repeat polls to the db as an update loop.  Since order ID's are always unique, it will check them against a Set, and if anything
@@ -93,6 +106,8 @@ module.exports = (db, twilio) => {
   });
 
   router.post("/login", (req, res) => {
+    // Will modify this at some point to confirm the user
+    // signing in is actually restaurant staff.
     return db.query(`
     SELECT user_token
     FROM users
