@@ -68,7 +68,7 @@ module.exports = (db, twilio) => {
       });
   });
 
-  router.put("/orders/:id", (req, res) => {
+  router.put("/orders/", (req, res) => {
 
     const request = req.body;
 
@@ -81,7 +81,7 @@ module.exports = (db, twilio) => {
             SET time_confirmed = NOW(),
             time_estimate = $2
           WHERE id = $1;
-        `, [req.params.id, request.time_estimate])
+        `, [request.orderId, request.time_estimate])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
@@ -98,10 +98,10 @@ module.exports = (db, twilio) => {
       case 'deny':
         db.query(`
           UPDATE orders
-            SET time_confirmed = infinity,
-            time_complete = infinity
+            SET time_confirmed = 'infinity',
+            time_complete = 'infinity'
           WHERE id = $1;
-        `, [req.params.id])
+        `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
             res.json({ status: 'success' });
@@ -120,7 +120,7 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_complete = infinity
           WHERE id = $1;
-        `, [req.params.id])
+        `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
           });
@@ -130,7 +130,7 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_estimate = $2
           WHERE id = $1;
-        `, [req.params.id, req.body.estimate])
+        `, [request.orderId, request.estimate])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
@@ -149,7 +149,7 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_complete = NOW()
           WHERE id = $1
-        `, [req.params.id])
+        `, [request.orderId])
           .then(() => {
             res.json({ status: 'success' });
             twilio.messages.create({
