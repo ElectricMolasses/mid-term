@@ -17,7 +17,7 @@ module.exports = (db, twilio) => {
 
   router.get("/menu", (req, res) => {
     return db.query(`
-      SELECT menu_categories.name, items.name, description, cost
+      SELECT menu_categories.name AS menu_category, items.name, description, cost
       FROM restaurants
         JOIN menu_categories ON (restaurant_id = restaurants.id)
         JOIN items ON (menu_id = menu_categories.id)
