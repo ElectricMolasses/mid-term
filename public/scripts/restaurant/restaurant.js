@@ -1,4 +1,3 @@
-//time elapsed
 function timeNow() {
   const today = new Date();
   let hours = today.getHours();
@@ -7,7 +6,6 @@ function timeNow() {
   minutes = renderTime(minutes);
   seconds = renderTime(seconds);
   return `${hours}:${minutes}:${seconds}`
-  setTimeout(timeNow, 500);
 }
 
 function renderTime(i) {
@@ -127,8 +125,8 @@ $("document").ready(function(){
     method: 'GET'
   })
     .done((data, status, xhr) => {
-      console.log((timeElapsed(TimeElaspedinSeconds(parseTimeStamp(data[0].time_placed), timeNow()))));
-
+      console.log(data[0].time_placed);
+      console.log(new Date);
 $(".restaurant-login-form").hide();
 //Click log in button to dsiplay form
 $(".restaurant-login-button").on("click", function() {
