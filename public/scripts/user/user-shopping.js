@@ -27,9 +27,12 @@ const orderSum = () => {
     <tr>
       <td class="user-order-name"></td>
       <td class="user-order-quantity"></a>
+      <td>
+        <img class="user-item-add"src="/resources/minus.png">
+      </td>
       <td class="user-order-price"></td>
       <td>
-        <button class="user-item-add" type="button"><img src="/resources/plus-circle.png"></button>
+        <img class="user-item-add" src="/resources/plus.png">
       </td>
 
     </tr>
