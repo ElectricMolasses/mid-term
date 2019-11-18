@@ -6,6 +6,7 @@ $order-color: #917c78;
 
 body {
   margin: 0;
+  background-color: $form-color;
 }
 
 #restaurant-nav {
@@ -50,6 +51,12 @@ body {
   margin-top: 80px;
 }
 
+h2 {
+  font-family: $font-body;
+  align-items: flex-start;
+  margin-left: 10%;
+}
+
 /* draggable css */
 
 .restaurant-fill {
@@ -57,12 +64,11 @@ body {
   justify-content: space-evenly;
   margin: auto;
   background-color: $order-color;
-  border: none;
+  border-radius: 35px;
   cursor: pointer;
 
   h6 {
     font-size : 10px;
-
   }
 }
 
@@ -74,11 +80,24 @@ body {
   margin-bottom: 80px;
   align-self: center;
   padding: 20px;
-
+  overflow: auto;
 }
 
 .hold {
   border: solid lightgrey 4px;
+}
+
+.hold2 {
+  display: flex;
+  justify-content: space-evenly;
+  margin: auto;
+  background-color: $order-color;
+  border-radius: 35px;
+  cursor: pointer;
+
+  h6 {
+    font-size : 10px;
+  }
 }
 
 .hovered {
