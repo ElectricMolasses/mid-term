@@ -6,5 +6,6 @@ CREATE TABLE orders (
   restaurant_id INTEGER REFERENCES restaurants(id) ON DELETE CASCADE,
   time_placed TIMESTAMP NOT NULL,
   time_confirmed TIMESTAMP NOT NULL,
-  time_complete TIMESTAMP NOT NULL
+  time_complete TIMESTAMP NOT NULL,
+  time_estimate TIMESTAMP
 );
