@@ -1,14 +1,7 @@
-
-
 function parseTimeStamp(time) {
   const properTime = time.slice(11,19);
   return properTime;
 }
-
-
-
-
-
 
 function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
@@ -92,7 +85,6 @@ $(".restaurant-login-button").on("click", function() {
 const fill = document.querySelector(".restaurant-fill");
 const empties = document.querySelectorAll(".restaurant-empty");
 
-
 //loop through empties;
 for (const empty of empties) {
   empty.addEventListener('dragover', dragOver);
@@ -144,7 +136,7 @@ function dragDrop() {
 }}).catch(() => {
   console.log('failed');
 });
-// generate dynamic infomation for orders
+
 
 });
 
