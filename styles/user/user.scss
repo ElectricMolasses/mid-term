@@ -78,6 +78,14 @@ body {
   }
 }
 
+.order-confirmation {
+  display: none;
+  position: fixed;
+  top: 300px;
+  background-color: red;
+  width: 300px;
+  height: auto;
+}
 //unhide forms
 
 .visible {
