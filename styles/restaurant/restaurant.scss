@@ -61,6 +61,17 @@ h2 {
 
 /* draggable css */
 
+#restaurant-deny-order {
+  display: inline-block;
+  border: 2px solid black;
+  height: 100px;
+  width: 80%;
+  border-radius: 3px;
+  align-self: center;
+  padding: 20px;
+  overflow: auto;
+}
+
 .restaurant-empty {
   border: 2px solid $c2;
   height: 130px;
@@ -92,7 +103,7 @@ h2 {
 .restaurant-empty {
   display: inline-block;
   border: 2px solid black;
-  height: 600px;
+  height: 500px;
   width: 80%;
   border-radius: 3px;
   align-self: center;
