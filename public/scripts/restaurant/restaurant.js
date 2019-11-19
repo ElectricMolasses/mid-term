@@ -1,5 +1,12 @@
 // import { object } from "twilio/lib/base/serialize";
 $("document").ready(function() {
+  $("#restaurant-deny-order").hide();
+
+  $(".deny-orders").on("click", function() {
+    $("#restaurant-deny-order").slideToggle("fast", function() {
+      //animation complete
+    })
+  })
 let object = {};
 let pushArray = [];
 
@@ -167,12 +174,7 @@ function dragDrop(event) {
           //animation complete;
   });
 });
-  $("#restaurant-deny-order").hide();
-  $(".deny-orders").on("click", function() {
-    $("#restaurant").slidetoggle("fast", function() {
-      //animation complete
-    })
-  })
+
 
 });
 
