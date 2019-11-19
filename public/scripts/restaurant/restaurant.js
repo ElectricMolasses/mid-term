@@ -1,4 +1,59 @@
-// Parse Time Stamp From DataBase
+// import { object } from "twilio/lib/base/serialize";
+$("document").ready(function() {
+  $("#restaurant-deny-order").hide();
+
+  $(".deny-orders").on("click", function() {
+    $("#restaurant-deny-order").slideToggle("fast", function() {
+      //animation complete
+    })
+  })
+let object = {};
+let pushArray = [];
+
+function updateTimeEstamate() {
+  $.ajax('/restaurant/orders', {
+    method: 'PUT',
+    data: {
+      orderId: 3,
+      orderStatus: 'estimate',
+      time_estimate: new Date(2019, 10, 18, 12, 15, 0)
+    }
+  })
+}
+
+function loadOrders() {
+  $.ajax('/restaurant/orders/', {
+    method: 'GET'
+  })
+    .done((data, status, xhr) => {
+      renderOrder(data);
+    }).catch(() => {
+      console.log('failed');
+    });
+}
+
+function orderComplete() {
+  $.ajax('/restaurant/orders', {
+    method: 'PUT',
+    data: {
+      orderId: 3,
+      orderStatus: 'complete'
+    }
+});
+}
+
+function denyOrder() {
+  event.preventDefault();
+  $.ajax('/restaurant/orders', {
+    method: 'PUT',
+    data: {
+      orderId: 3,
+      orderStatus: 'deny'
+    }
+  })
+  console.log("deny-Order has been called!");
+}
+
 function parseTimeStamp(time) {
   const properTime = time.slice(11,19);
   return properTime;
@@ -21,17 +76,6 @@ function renderOrder(orders) {
     appendTothis.append(createOrder(orders[i]));
   }
   return console.log("orders loaded");
-}
-
-function loadOrders() {
-  $.ajax('/restaurant/orders/', {
-    method: 'GET'
-  })
-    .done((data, status, xhr) => {
-      renderOrder(data);
-    }).catch(() => {
-      console.log('failed');
-    });
 }
 
 function generateLi(orderItemsObject) {
@@ -71,76 +115,79 @@ function createOrder(i) {
   <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
   </div>`);
 
-  div.addEventListener('dragstart', () => {
-    div.className += ' hold';
-    let ID = div.getAttribute("id");
-    console.log(ID);
-    setTimeout(() => {
-      div.className = 'invisible';
-    }, 0);
-  });
-
-  div.addEventListener('dragend', (event) => {
-    div.className = 'restaurant-empty';
-    console.log(div.parentElement.getAttribute("id"));
-    $(`#${div.parentElement.getAttribute("id")}`).append(div);
-  });
+  object[div.getAttribute("id")] = div;
+  div.addEventListener('dragstart', dragStart);
+  div.addEventListener('dragend', dragEnd);
   return div;
 }
+const deny = document.querySelector("#restaurant-deny-order");
+deny.addEventListener('dragover', dragOver);
+deny.addEventListener('dragenter', dragEnter);
+deny.addEventListener('dragleave', dragLeave);
+deny.addEventListener('drop', dragDrop);
 
-$("document").ready(function() {
+const empties = document.querySelectorAll(".restaurant-empty");
+for (const empty of empties) {
+  empty.addEventListener('dragover', dragOver);
+  empty.addEventListener('dragenter', dragEnter);
+  empty.addEventListener('dragleave', dragLeave);
+  empty.addEventListener('drop', dragDrop);
+}
+
+function dragStart() {
+  pushArray.push(event.toElement.attributes.id.nodeValue);
+  this.className += ' hold';
+  setTimeout(() => {
+    this.className = 'invisible';
+  }, 0);
+}
+
+function dragEnd() {
+  this.className = 'restaurant-fill';
+  pushArray.pop();
+}
+
+function dragOver(e) {
+  e.preventDefault();
+}
+
+function dragEnter(e) {
+  e.preventDefault();
+  this.className += ' hovered';
+}
+
+function dragLeave() {
+  this.className = 'restaurant-empty';
+}
+
+function dragDrop(event) {
+  for (const i in object) {
+    if (this === document.getElementById("restaurant-incoming") && pushArray[pushArray.length - 1] === i) {
+      $("#restaurant-incoming").append($(`#${pushArray[0]}`));
+    } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
+      $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
+    } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
+      $("#restaurant-complete").append($(`#${pushArray[0]}`));
+      $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
+      $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
+      orderComplete();
+    } else if (this === document.getElementById("restaurant-deny-order") && pushArray[pushArray.length - 1] === i) {
+      denyOrder();
+      $("#restaurant-deny-order").append($(`#${pushArray[0]}`));
+    }
+    this.className = "restaurant-empty";
+  }
+}
+
   loadOrders();
-  $.ajax('/restaurant/orders/', {
-    method: 'GET'
-  })
-    .done((data, status, xhr) => {
-      $(".restaurant-login-form").hide();
-      //Click log in button to dsiplay form
-      $(".restaurant-login-button").on("click", function() {
-        $(".restaurant-login-form").slideToggle("slow", function() {
+  $(".restaurant-login-form").hide();
+  //Click log in button to dsiplay form
+  $(".restaurant-login-button").on("click", function() {
+  $(".restaurant-login-form").slideToggle("slow", function() {
           //animation complete;
-        });
-      });
+  });
+});
 
-      const empties = document.querySelectorAll(".restaurant-empty");
-      for (const empty of empties) {
-        empty.addEventListener('dragover', dragOver);
-        empty.addEventListener('dragenter', dragEnter);
-        empty.addEventListener('dragleave', dragLeave);
-        empty.addEventListener('drop', dragDrop);
-      }
-
-      function dragOver(e) {
-        e.preventDefault();
-      }
-
-      function dragEnter(e) {
-        e.preventDefault();
-        this.className += ' hovered';
-      }
-
-      function dragLeave() {
-        this.className = 'restaurant-empty';
-      }
-
-      function dragDrop() {
-        if (this === document.getElementById("restaurant-incoming")) {
-          console.log("drop-1");
-        } else if (this === document.getElementById("restaurant-in-progress")) {
-          console.log("drop-2");
-        } else if (this === document.getElementById("restaurant-complete")) {
-          console.log("drop 3");
-          $(".restaurant-time-started").text(moment());
-          $(".restaurant-time-status").text("Time Complete");
-        }
-        this.className = "restaurant-empty";
-        this.append($('.restaurant-fill'));
-
-      }
-
-    }).catch(() => {
-      console.log('failed');
-    });
 
 });
 

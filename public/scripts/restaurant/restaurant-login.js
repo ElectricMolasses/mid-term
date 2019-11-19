@@ -15,6 +15,7 @@ $button.on("click", () => {
     }
   }).done((res) =>  {
     $(".restaurant-login-button-text").text("logged in!")
+    $(".restaurant-login-form").hide();
     console.log("sucess");
   }).catch(err => {
     //TODO make sure error message is sent properly
