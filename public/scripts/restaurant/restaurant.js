@@ -103,6 +103,7 @@ function dragStart() {
 
 function dragEnd(event) {
   this.className = 'restaurant-fill';
+  pushArray.pop();
 }
 
 function dragOver(e) {
