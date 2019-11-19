@@ -20,11 +20,13 @@ body {
   color: #00e5ffbd;
   text-shadow: 0px 0px 10px #00e5ffdc;
   margin-top: 15px;
-  margin-left: 15px;
+  margin-left: 30px;
 }
 
 .restaurant-login-button {
   font-family: $font-body;
+  color: #00e5ffbd;
+  text-shadow: 0px 0px 4px #00e5ffdc;
   font-size: 40px;
   margin-top: 25px;
   margin-right: 20px;
@@ -36,6 +38,7 @@ body {
 }
 
 .restaurant-login-form {
+  position: absolute;
   font-size: 20px;
   display: flex;
   flex-direction: column;
