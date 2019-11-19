@@ -108,7 +108,7 @@ module.exports = (db, twilio) => {
     const orderItems = req.body.items;
     let phone_number;
     const promises = [];
-
+    console.log(userId);
     return db.query(`
     INSERT INTO orders (
       customer_id,
@@ -134,8 +134,7 @@ module.exports = (db, twilio) => {
             order_id, item_id
           ) VALUES (
             $1, (SELECT id FROM items WHERE name = $2)
-          )
-          RETURNING *;
+          );
           `, [orderId, item])
             .then(query => {
               console.log(query.rows);
@@ -154,7 +153,7 @@ module.exports = (db, twilio) => {
             twilio.messages.create({
               body: 'A new order has been requested.',
               to: phone_number,
-              from: '+120229029010'
+              from: '+12029029010'
             })
               .then((mes) => {
                 console.log(mes.sid);

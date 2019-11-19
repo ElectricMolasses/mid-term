@@ -39,7 +39,6 @@ const totalOrder = (orders) => {
 const addToCart = (orders) => {
   for (let order in orders) {    
     const $temp = $(templateOrder);
-    console.log(typeof orders[order]);
     $temp.find(".user-item-name").append(orders[order]["name"]);
     $temp.find(".user-order-quantity").append(orders[order]["quantity"]);
     $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
@@ -85,6 +84,7 @@ const orderSum = () => {
     //submit order to server
 
     $(".user-order-submit").on('click', ((event) => {
+      event.preventDefault();
       $.ajax("user/order", {
         method: 'POST',
         dataType: "json",
@@ -92,15 +92,24 @@ const orderSum = () => {
           items: orderItems,
         }
       }).done((res) => {
-        if (res === 500) {
-          alert("Please sign in to place order");
-        } else {
+        // if (res === 500) {
+        //   alert("Please sign in to place order");
+        // } else {
           console.log(data);
           console.log($(".user-order").val());
           console.log(res.rows);
-        }
-
+        // })
+      //get update on order confirmation
       })
+      .then(() => {
+        $.ajax('/user/profile', {
+          method: 'GET',
+          dataType: "json"
+        }).done((res) => {
+          console.log(res.rows[0]);
+        })
+      })
+
     }))
   })
 
@@ -129,6 +138,8 @@ const orderSum = () => {
     }
   })
   
+  
+
 
 };
 
