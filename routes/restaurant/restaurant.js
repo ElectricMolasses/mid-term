@@ -221,7 +221,7 @@ module.exports = (db, twilio) => {
                 return order.rows;
               }));
           }
-          
+
         }
         Promise.all(newOrders)
           .then((values) => {
