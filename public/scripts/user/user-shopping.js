@@ -1,7 +1,7 @@
 //helpers function
 
 const addToOrder = (food,order) => {
-  
+
   if (order.length === 0) {
     order.push(food);
   } else {
@@ -29,7 +29,7 @@ const updateCart = (cart, item) => {
 }
 
 const templateOrder = `
-  
+
   <table class="user-order1">
     <tr>
       <td class="user-item-name"></td>
@@ -55,28 +55,28 @@ const templateOrder = `
 const addToCart = (orders) => {
   let subTotal = 0;
   for (let order of orders) {
-        
+
     const $temp = $(templateOrder);
     const $itemTotal = Number((order["price"] * order["quantity"]).toFixed(2));
     subTotal += ($itemTotal);
-    
+
     $temp.find(".user-item-name").append(order["name"]);
     $temp.find(".user-order-quantity").append(order["quantity"]);
     $temp.find(".user-item-price").append($itemTotal);
-  
+
     $("footer, input").detach();
     $(".user-order").append($temp);
   }
   $(".order-subtotal").append(subTotal);
   $(".order-tax").append(Number((0.05 * subTotal).toFixed(2)));
   $(".order-total").append(Number((subTotal + subTotal* 0.05).toFixed(2)));
-  
+
   }
 //Add items to order cart
 
 const orderSum = () => {
-  
-  
+
+
   let yourOrder = [];
   let orderItems = []; //send to server
 
@@ -85,7 +85,7 @@ const orderSum = () => {
     // let subTotal = 0;
     event.preventDefault();
     $(".user-order1").detach();
-    
+
     let $foodName = {};
     $foodName["name"] = $(this).closest('tr').find(".user-item-name").text();
     addToOrder($foodName, yourOrder);
@@ -95,11 +95,11 @@ const orderSum = () => {
     addToCart(yourOrder);
 
     // for (let order of yourOrder) {
-      
+
     //   const $temp = $(templateOrder);
     //   const $itemTotal = Number((order["price"] * order["quantity"]).toFixed(2));
     //   subTotal += ($itemTotal);
-      
+
     //   $temp.find(".user-item-name").append(order["name"]);
     //   $temp.find(".user-item-quantity").append(order["quantity"]);
     //   $temp.find(".user-item-price").append($itemTotal);
@@ -113,24 +113,24 @@ const orderSum = () => {
 
 
 
-    
-   
+
+
 
      //submit order to server
     orderItems.push($foodName["name"]);
     $(".user-order-submit").on('click', ((event) => {
       // event.preventDefault();
-      
+
       console.log($(".user-order").val());
       console.log('test');
       $.ajax("user/order", {
-        
+
         method: 'POST',
         dataType: "json",
         data: {
           items: orderItems,
 
-          
+
         }
       }).done((res) => {
         console.log(data);

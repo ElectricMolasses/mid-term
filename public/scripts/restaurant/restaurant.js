@@ -3,6 +3,26 @@ $("document").ready(function() {
 let object = {};
 let pushArray = [];
 
+function orderComplete() {
+  $.ajax('/restaurant/orders', {
+    method: 'PUT',
+    data: {
+      orderId: 3,
+      orderStatus: 'complete'
+    }
+});
+}
+
+function denyOrder() {
+  $.ajax('/restaurant/orders', {
+    method: 'PUT',
+    data: {
+      orderId: 3,
+      orderStatus: 'deny'
+    }
+  });
+}
+
 function parseTimeStamp(time) {
   const properTime = time.slice(11,19);
   return properTime;
@@ -73,6 +93,10 @@ function createOrder(i) {
   <div class="restaurant-current-time-holder">
   <p class="restaurant-current-time-elasped">Time Elapsed</p>
   <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
+  </div>
+  <div class="deny-box">
+  <p class="restaurant-deny-p">Deny Order</p>
+  <button class="restaurant-deny"></button>
   </div>`);
 
   object[div.getAttribute("id")] = div;
@@ -133,19 +157,29 @@ function dragDrop(event) {
       $("#restaurant-complete").append($(`#${pushArray[0]}`));
       $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
       $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
+      orderComplete();
     }
     this.className = "restaurant-empty";
   }
   }
 
+  $(".restaurant-deny").on("click", function() {
+    event.preventDefault();
+    denyOrder();
+    console.log("hello");
+  });
+
+
   loadOrders();
-      $(".restaurant-login-form").hide();
-      //Click log in button to dsiplay form
-      $(".restaurant-login-button").on("click", function() {
-        $(".restaurant-login-form").slideToggle("slow", function() {
+$(".restaurant-login-form").hide();
+  //Click log in button to dsiplay form
+  $(".restaurant-login-button").on("click", function() {
+  $(".restaurant-login-form").slideToggle("slow", function() {
           //animation complete;
-        });
-      });
+  });
+});
+
+
 
       console.log(object);
 });
