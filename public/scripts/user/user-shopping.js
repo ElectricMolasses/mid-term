@@ -39,6 +39,7 @@ const totalOrder = (orders) => {
   $(".total").text((subTotal + (subTotal * 0.05)).toFixed(2));
 }
 
+
 //render orders in local storage
 const renderCookieCart = () => {
   const cartLocalStorage = JSON.parse(localStorage.getItem('sessionCart'));
@@ -85,7 +86,12 @@ const orderSum = () => {
     
   let orderItems = [];
   let $foodName = {};
-  
+  let storage = JSON.parse(localStorage.getItem('sessionCart'));
+  if (storage !== null) {
+    $foodName = Object.assign(storage, $foodName);
+    console.log($foodName);
+  }
+
   renderCookieCart();
   $("body").on('click', ".user-item-add", function(event) {
     event.preventDefault();
@@ -113,8 +119,24 @@ const orderSum = () => {
     addToCart($foodName);   //add food item to cart
     
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
+
     
+  
+
+
+
+      ///////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////
     //submit order to server
+
+
+
+
+
+
+
+
+
 
     let id;
     $(".user-order-submit").on('click', ((event) => {
