@@ -113,6 +113,7 @@ module.exports = (db, twilio) => {
               });
           });
         break;
+        
       case 'deny':
         db.query(`
           UPDATE orders
@@ -134,6 +135,7 @@ module.exports = (db, twilio) => {
                 });
             }));
         break;
+
       case 'cancel':
         db.query(`
           UPDATE orders
@@ -154,6 +156,7 @@ module.exports = (db, twilio) => {
               });
           });
         break;
+
       case 'estimate':
         db.query(`
           UPDATE orders
@@ -180,6 +183,7 @@ module.exports = (db, twilio) => {
               });
           });
         break;
+
       case 'complete':
         db.query(`
           UPDATE orders
