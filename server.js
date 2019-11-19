@@ -37,15 +37,16 @@ app.use(cookieParser({
   keys: ['/^%b,W7N*V@-+G>vl."X`@*Sa3@RxF0W@&95?H^{t.z(l']
 }));
 app.use(sass({
-  src: __dirname + '/styles',
-  dest: __dirname + '/public/styles',
+  src: path.join(__dirname, '/styles'),
+  dest: path.join(__dirname, '/public/styles'),
   debug: true,
   outputStyle: 'compressed',
+  prefix: '/styles'
 }));
-
+console.log(__dirname);
 app.use(methodOverride('_method'));
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
