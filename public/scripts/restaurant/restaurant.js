@@ -6,40 +6,32 @@ let pushArray = [];
 let IdArray = [];
 
 $("document").ready(function() {
-  // setInterval(loadOrders, 5000);
-  loadOrders();
-  $("#restaurant-deny-order").hide();
-  $(".deny-orders").on("click", function() {
-    $("#restaurant-deny-order").slideToggle("fast", function() {
-      //animation complete
-    });
+  loadOrders()
+  .then(function() {
+    setInterval(sendOrderIds, 10000);
   });
+  // loadOrders();
+  // $("#restaurant-deny-order").hide();
+  // $(".deny-orders").on("click", function() {
+  //   $("#restaurant-deny-order").slideToggle("fast", function() {
+  //     //animation complete
+  //   });
+  // });
 
-  // UPDATE ORDER TIME TO COMPLETE;
-  // function updateTimeEstamate() {
-  //   $.ajax('/restaurant/orders', {
-  //     method: 'PUT',
-  //     data: {
-  //       orderId: 3,
-  //       orderStatus: 'estimate',
-  //       time_estimate: new Date(2019, 10, 18, 12, 15, 0)
-  //     }
-  //   })
-  // }
-
-  function confirmOrderAccepted() {
+  function confirmOrderAccepted(id) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
-        orderId: 3,
+        orderId: id,
         orderStatus: 'confirm',
         time_estimate: moment(new Date(1995, 5, 1, 12, 12, 12)).format("YYYY-MM-DD HH:mm:ss")
       }
     });
+    console.log("done");
   }
 
   function loadOrders() {
-    $.ajax('/restaurant/orders/', {
+    return $.ajax('/restaurant/orders/', {
       method: 'GET'
     })
       .done((data, status, xhr) => {
@@ -48,7 +40,20 @@ $("document").ready(function() {
       }).catch(() => {
         console.log('failed');
       });
+
+}
+
+  function sendOrderIds() {
+    $.ajax('/restaurant/update', {
+      method: "POST",
+      data: {
+        orderIds: IdArray
+      }
+    }).then((data) => {
+      renderOrder(data);
+    })
   }
+
 
   function orderComplete() {
     $.ajax('/restaurant/orders', {
@@ -60,16 +65,14 @@ $("document").ready(function() {
     });
   }
 
-  function denyOrder() {
-    event.preventDefault();
+  function denyOrder(id) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
-        orderId: 3,
+        orderId: id,
         orderStatus: 'deny'
       }
     });
-    console.log("deny-Order has been called!");
   }
 
   function parseTimeStamp(time) {
@@ -80,11 +83,16 @@ $("document").ready(function() {
   function renderOrder(orders) {
     const incoming = document.querySelector("#restaurant-incoming");
     const complete = document.querySelector("#restaurant-complete");
-    // const inprogress = document.querySelector("#restaurant-in-progress");
-    // const deny
+    const inProgress = document.querySelector("#restaurant-in-progress");
+    const deny = document.querySelector("#restaurant-deny-order");
     for (let i = 0; orders.length; i++) {
-      if (orders[i].time_complete !== null) {
+      console.log(orders[i].time_confirmed);
+      if (orders[i].time_complete) {
         complete.append(createOrder(orders[i]));
+      } else if(orders[i].time_confirmed == "infinity") {
+        deny.append(createOrder(orders[i]));
+      } else if (orders[i].time_confirmed) {
+        inProgress.append(createOrder(orders[i]));
       } else {
         incoming.append(createOrder(orders[i]));
       }
@@ -100,7 +108,8 @@ $("document").ready(function() {
   }
 
   function createOrder(i) {
-    let timeStamp = i.time_placed.slice(0, 19);
+    let time = i.time_placed.slice(0, 19);
+    let timeStamp = time
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -183,20 +192,19 @@ $("document").ready(function() {
         $("#restaurant-incoming").append($(`#${pushArray[0]}`));
       } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
-        confirmOrderAccepted();
+        confirmOrderAccepted(pushArray[0]);
       } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-complete").append($(`#${pushArray[0]}`));
         $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
         $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
         orderComplete();
       } else if (this === document.getElementById("restaurant-deny-order") && pushArray[pushArray.length - 1] === i) {
-        denyOrder();
+        denyOrder(pushArray[0]);
         $("#restaurant-deny-order").append($(`#${pushArray[0]}`));
       }
       this.className = "restaurant-empty";
     }
   }
-
 
   $(".restaurant-login-form").hide();
   //Click log in button to dsiplay form
