@@ -54,6 +54,11 @@ $(() => {
       $.each(category, (index) => {
         $(".user-nav-menu").append("<span>",category[index],"</span>");
       });
+
+      //slide effect
+      $(document).click(() => {
+        $(".user-nav-menu").toggle("slide");
+      })
       $(".user-order-now").hide().addClass('visible');
 
       orderSum();
