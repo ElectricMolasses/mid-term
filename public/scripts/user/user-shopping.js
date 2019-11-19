@@ -53,6 +53,9 @@ const addToCart = (orders) => {
 
 // Pick items from menu and add to order cart or increase qty in order cart
 
+
+
+
 const orderSum = () => {
   
   let orderItems = [];
@@ -83,35 +86,58 @@ const orderSum = () => {
 
     //submit order to server
 
+    let id;
     $(".user-order-submit").on('click', ((event) => {
       event.preventDefault();
+      
       $.ajax("user/order", {
         method: 'POST',
         dataType: "json",
         data: {
           items: orderItems,
         }
-      }).done((res) => {
+      })  
+      .done((res) => {
         // if (res === 500) {
         //   alert("Please sign in to place order");
         // } else {
-          console.log(data);
-          console.log($(".user-order").val());
-          console.log(res.rows);
+          // console.log(data);
+          // console.log($(".user-order").val());
+          // console.log(res.rows);
+          id = res;
+
         // })
       //get update on order confirmation
       })
-      .then(() => {
-        $.ajax('/user/profile', {
-          method: 'GET',
-          dataType: "json"
-        }).done((res) => {
-          console.log(res.rows[0]);
-        })
-      })
+      $(".user-order").hide().removeClass('visible');
+      $(".order-confirmation").show().addClass('visible');
+      setInterval(() => {checkData()}, 5000);
+      
 
     }))
+
+    function checkData(){
+      console.log(id);
+      $.ajax('/user/update', {
+        method: 'POST',
+        dataType: "json",
+        data: {
+          order: id
+        }
+      }).then((data) => {
+        const date = (data.time_confirmed).substring(0, 10);
+        const time = (data.time_confirmed).substring(11, 16);
+        $(".user-time-confirm").text(`Your order is confirmed at ${time} on ${date}.`);
+      })
+              
+    }
+    function stopInterval() {
+      clearInterval(myVar);
+    }
+
   })
+
+
 
   //remove items from order cart
   //change the arr of order items sent to server
