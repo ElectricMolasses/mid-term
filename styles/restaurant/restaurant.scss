@@ -17,8 +17,8 @@ body {
 .restaurant-nav-title {
   font-family: $font-heading;
   font-size: 55px;
-  color: $blue;
-  text-shadow: 0px 0px 10px $glow-blue;
+  color: #00e5ffbd;
+  text-shadow: 0px 0px 10px #00e5ffdc;
   margin-top: 15px;
   margin-left: 15px;
 }
@@ -130,9 +130,6 @@ h2 {
   background-repeat: no-repeat; 
   background-position: bottom right; 
 }
-
-
-
 
 .hold {
   border: solid lightgrey 4px;
