@@ -1,8 +1,9 @@
+// Parse Time Stamp From DataBase
 function parseTimeStamp(time) {
   const properTime = time.slice(11,19);
   return properTime;
 }
-
+//Generate a Random Id for each Html Element
 function randomId() {
   let random = "";
   const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
@@ -48,39 +49,43 @@ function createOrder(i) {
   div.setAttribute('class', 'restaurant-fill');
   div.innerHTML = (`<div class="restaurant-name-display">
   <p>Name</p>
-<span class="restaurant-customer-id">${i.customer}</span>
-</div>
-<div class="restaurant-time-display">
-<p class="restaurant-time-status">Time Placed</p>
-<span class="restaurant-time-started">${parseTimeStamp(i.time_placed)}</span>
-</div>
-<div class="restaurant-menu-items">
-<p>Menu Items<p>
-<ul>
-  ${generateLi(i.items)}
-</ul>
-</div>
-<div class="restaurant-phonenumber">
-<p>phone Number</p>
-<span class="restaurant-phone">${i.phone_number}</span>
-</div>
-<div class="restaurant-current-time-holder">
-<p class="restaurant-current-time-elasped">Time Elapsed</p>
-<span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
-</div>`);
+  <span class="restaurant-customer-id">${i.customer}</span>
+  </div>
+  <div class="restaurant-time-display">
+  <p class="restaurant-time-status">Time Placed</p>
+  <span class="restaurant-time-started">${parseTimeStamp(i.time_placed)}</span>
+  </div>
+  <div class="restaurant-menu-items">
+  <p>Menu Items<p>
+  <ul>
+    ${generateLi(i.items)}
+  </ul>
+  </div>
+  <div class="restaurant-phonenumber">
+  <p>phone Number</p>
+  <span class="restaurant-phone">${i.phone_number}</span>
+  </div>
+  <div class="restaurant-current-time-holder">
+  <p class="restaurant-current-time-elasped">Time Elapsed</p>
+  <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
+  </div>`);
 
-div.addEventListener('dragstart', () => {
-  this.className += ' hold';
-  setTimeout(() => {
-    this.className = 'invisible'
-  }, 0);
-});
+  div.addEventListener('dragstart', () => {
+    div.className += ' hold';
+    let ID = div.getAttribute("id");
+    console.log(ID);
+    setTimeout(() => {
+      div.className = 'invisible';
+    }, 0);
+  });
 
-div.addEventListener('dragend', () => {
-  this.className = 'restaurant-empty';
-});
-  return div;
-}
+  div.addEventListener('dragend', () => {
+    div.className = 'restaurant-empty';
+    let ID = div.getAttribute("id");
+    console.log(ID);
+  });
+    return div;
+  }
 
 $("document").ready(function() {
   loadOrders();
@@ -128,7 +133,7 @@ $("document").ready(function() {
         $(".restaurant-time-status").text("Time Complete");
       }
       this.className = "restaurant-empty";
-      this.append($('restaurant-fill'));
+      this.append($('.restaurant-fill'));
 
     }
 
