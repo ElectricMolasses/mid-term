@@ -131,8 +131,8 @@ function dragDrop(event) {
       console.log(i)
     } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
       $("#restaurant-complete").append($(`#${pushArray[0]}`));
-      $(".restaurant-time-started").text(moment());
-      $(".restaurant-time-status").text("Time Complete");
+      $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
+      $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
     }
     this.className = "restaurant-empty";
   }
