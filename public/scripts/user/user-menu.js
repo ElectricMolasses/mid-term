@@ -1,15 +1,3 @@
-// helpers function
-
-// const categorySort = (data) => {
-//   let category = [];
-//   for (let key in data) {
-//     if (!category.includes(key["menu_category"])) {
-//       category.push(key["menu_category"]);
-//     }
-//   }
-//   return category;
-// }
-
 //-------------------------------------------------
 //menu display - pull data from database
 $(() => {
@@ -21,15 +9,6 @@ $(() => {
     event.preventDefault();
   })); 
 
-  //template for category menu
-  const tempCategory = `
-  <table class="user-nav-menu">
-    <tr></tr>
-    <tr></tr>
-  </table>
-  `;
-  
-
   //template for full menu
   const template = `
   <table class="user-menu-table">
@@ -39,9 +18,12 @@ $(() => {
         <a class="user-item-name">name</a>
         <a class="user-item-description">description</a>
       </td>
+      <td>
+        <img class="user-item-remove"src="/resources/minus.png">
+      </td>
       <td class="user-item-price">$</td>
       <td>
-        <button class="user-item-add" type="button"><img src="/resources/plus-circle.png"></button>
+        <img class="user-item-add"src="/resources/plus.png">
       </td>
     </tr>
   </table>
@@ -76,7 +58,6 @@ $(() => {
         $(".user-menu").append($temp);
         
       });
-      console.log(category)
       $.each(category, (index) => {
         $(".user-nav-menu").append("<span>",category[index],"</span>");
       })

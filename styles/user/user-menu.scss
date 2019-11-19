@@ -1,3 +1,7 @@
+.user-nav-menu {
+  position: fixed;
+  display: grid;
+}
 .user-menu {
   background-color: palegreen;
   width: 50%;
@@ -13,6 +17,11 @@
     a{
       display: block;
     }
+
+
 }
-  
-  
+.user-item-add, .user-item-remove{
+  margin: 5px;
+  width: 15px;
+  height: 15px;
+}  
