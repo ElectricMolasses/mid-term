@@ -57,7 +57,16 @@ module.exports = (db, twilio) => {
   });
 
   router.get("/update", (req, res) => {
-    const orders = req.body.order; // Will be an array of orderId's.
+    const order = req.body.order;
+
+    return db.query(`
+    SELECT time_confirmed
+    FROM orders
+    WHERE id = $1;
+    `, [order])
+      .then((query) => {
+        res.json(query.rows[0]);
+      });
   });
 
   router.post("/login", (req, res) => {
