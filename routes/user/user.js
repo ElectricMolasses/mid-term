@@ -72,6 +72,7 @@ module.exports = (db, twilio) => {
         .then(query => {
           req.session.userToken = query.rows[0].user_token;
           res.send({ success: "Logged in" });
+          console.log(res.send({ success: "Logged in" }));
         })
         .catch(err => {
           res.send({ error: err.message });
@@ -144,7 +145,7 @@ module.exports = (db, twilio) => {
             twilio.messages.create({
               body: 'A new order has been requested.',
               to: phone_number,
-              from: '+12029029010'
+              from: '+120229029010'
             })
               .then((mes) => {
                 console.log(mes.sid);

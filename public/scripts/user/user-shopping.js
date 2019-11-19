@@ -92,9 +92,14 @@ const orderSum = () => {
           items: orderItems,
         }
       }).done((res) => {
-        console.log(data);
-        console.log($(".user-order").val());
-        console.log(res.rows);
+        if (res === 500) {
+          alert("Please sign in to place order");
+        } else {
+          console.log(data);
+          console.log($(".user-order").val());
+          console.log(res.rows);
+        }
+
       })
     }))
   })
