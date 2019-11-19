@@ -7,11 +7,11 @@ body {
 }
 
 #restaurant-nav {
-  background-color: $c1;
+  background-color: $header-bg;
   height: 100px;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0px 0px 15px 0px $c2;
+  box-shadow: 0px 0px 15px 0px $card-shadow;
 }
 
 .restaurant-nav-title {
@@ -49,7 +49,7 @@ body {
   margin-top: 80px;
 
   h2 {
-    color: $c2;
+    color: $header-bg;
   }
 }
 
@@ -92,7 +92,7 @@ h2 {
   background-color: $c4;
   border-radius: 13px;
   cursor: pointer;
-  box-shadow: inset 0px 0px 3px 0px purple,
+  box-shadow: inset 0px 0px 3px 0px $card-shadow,
               0px 0px 5px 1px $c3;
 
   h6 {
@@ -120,9 +120,8 @@ h2 {
 }
 
 .restaurant-empty::-webkit-scrollbar-thumb {
-  background-color: $c1;
+  background-color: $card-bg;
   border-radius: 5px;
-  box-shadow: inset 0px 0px 10px $c4;
 }
 
 .hold {
