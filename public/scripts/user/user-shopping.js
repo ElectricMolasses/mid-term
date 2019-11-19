@@ -81,8 +81,6 @@ const addToCart = (orders) => {
 
 
 const orderSum = () => {
-
-
     
   let orderItems = [];
   let $foodName = {};
@@ -120,10 +118,6 @@ const orderSum = () => {
     
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
 
-    
-  
-
-
 
       ///////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////
@@ -133,15 +127,10 @@ const orderSum = () => {
 
 
 
-
-
-
-
-
     let id;
     $(".user-order-submit").on('click', ((event) => {
       event.preventDefault();
-      
+      localStorage.clear();
       $.ajax("user/order", {
         method: 'POST',
         dataType: "json",
@@ -163,12 +152,10 @@ const orderSum = () => {
       })
       $(".user-order").hide().removeClass('visible');
       $(".order-confirmation").show().addClass('visible');
-      setInterval(() => {checkData()}, 5000);
-      
+      setInterval(() => { checkData() }, 5000);
+    }));
 
-    }))
-
-    function checkData(){
+    function checkData() {
       console.log(id);
       $.ajax('/user/update', {
         method: 'POST',
@@ -179,17 +166,9 @@ const orderSum = () => {
       }).then((data) => {
         const time = (data.time_estimate).substring(11, 16);
         $(".user-time-confirm").text(`Your order was confirmed. The estimate time is ${time}.`);
-      })
-              
+      });
     }
-    function stopInterval() {
-      clearInterval(myVar);
-    }
-
-  })
-
-
-  
+  });
 
   //remove items from order cart
   //change the arr of order items sent to server
@@ -198,8 +177,8 @@ const orderSum = () => {
   $("body").on('click', ".user-item-remove", function(event) {
     event.preventDefault();
 
-    $item = $(this).closest('div').find(".user-item-name").text();
-    $qty = Number($(this).closest('div').find(".user-order-quantity").text());
+    const $item = $(this).closest('div').find(".user-item-name").text();
+    let $qty = Number($(this).closest('div').find(".user-order-quantity").text());
 
     if ($qty <= 1) {
       delete $foodName[$item];
@@ -214,11 +193,6 @@ const orderSum = () => {
       $(this).closest('div').find(".user-item-price").text($foodName[$item]["price"] * $qty);
       totalOrder($foodName);
     }
-  })
-  
-
-  
-  
-
+  });
 
 };

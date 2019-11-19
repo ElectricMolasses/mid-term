@@ -41,7 +41,11 @@ body {
   }
   .user-logged {
     display: none;
-    margin-right:10px;
+    margin-right:70px;
+    position: fixed;
+    .user-logout {
+      margin-right: 40px;
+    }
   }
 }
 
@@ -89,6 +93,7 @@ body {
   width: 300px;
   height: auto;
 }
+
 //unhide forms
 
 .visible {
