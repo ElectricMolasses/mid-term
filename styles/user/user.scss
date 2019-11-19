@@ -1,6 +1,6 @@
 @use '../base';
 
-$base-color: base.$base-color;
+$base-color: base;
 
 body {
   background-color: $base-color;
