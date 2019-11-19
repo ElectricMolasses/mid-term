@@ -10,6 +10,17 @@ $("document").ready(function() {
 let object = {};
 let pushArray = [];
 
+function updateTimeEstamate() {
+  $.ajax('/restaurant/orders', {
+    method: 'PUT',
+    data: {
+      orderId: 3,
+      orderStatus: 'estimate',
+      time_estimate: new Date(2019, 10, 18, 12, 15, 0)
+    }
+  })
+}
+
 function loadOrders() {
   $.ajax('/restaurant/orders/', {
     method: 'GET'
@@ -40,6 +51,7 @@ function denyOrder() {
       orderStatus: 'deny'
     }
   })
+  console.log("deny-Order has been called!");
 }
 
 function parseTimeStamp(time) {
@@ -130,7 +142,7 @@ function dragStart() {
   }, 0);
 }
 
-function dragEnd(event) {
+function dragEnd() {
   this.className = 'restaurant-fill';
   pushArray.pop();
 }
@@ -160,6 +172,7 @@ function dragDrop(event) {
       $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
       orderComplete();
     } else if (this === document.getElementById("restaurant-deny-order") && pushArray[pushArray.length - 1] === i) {
+      denyOrder();
       $("#restaurant-deny-order").append($(`#${pushArray[0]}`));
     }
     this.className = "restaurant-empty";
