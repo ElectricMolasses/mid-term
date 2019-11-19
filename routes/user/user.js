@@ -137,7 +137,7 @@ module.exports = (db, twilio) => {
           );
           `, [orderId, item])
             .then(query => {
-              console.log(query.rows);
+              res.json(orderId);
               return query.rows;
             })
             .catch(err => {
