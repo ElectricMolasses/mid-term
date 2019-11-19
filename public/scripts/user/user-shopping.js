@@ -1,3 +1,35 @@
+<<<<<<< HEAD
+// template for Order Cart
+const templateOrder = `
+  
+<div class="user-order1">
+    <span class="user-item-name"></span>
+    <span class="user-order-quantity"></span>
+    <span>
+      <img class="user-item-remove"src="/resources/minus.png">
+    </span>
+    <span class="user-item-price"></span>
+    <span>
+      <img class="user-item-add" src="/resources/plus.png">
+    </span>
+</div>
+<div class="footer">
+  <span class="order-subtotal">Subtotal: </span>
+  <span class="order-tax">Tax: </span>
+  <span class="order-total">Total: </span>
+</div>
+<input class="user-order-submit" type="submit" value="Place Order"></input>
+`;
+
+//helpers funtions 
+
+//sum up total of each order to show in order cart
+
+const totalOrder = (orders) => {
+  let subTotal = 0;
+  for (let order in orders) {
+    subTotal += orders[order]["price"] * orders[order]["quantity"];
+=======
 //helpers function
 
 const addToOrder = (food,order) => {
@@ -24,10 +56,39 @@ const updateCart = (cart, item) => {
        cart .splice(0,1);
        return cart;
     }
+>>>>>>> 327513ea3cc78a09f2e33825dcdac6a1e1fd4401
   }
-  // return cart;
+  $(".order-subtotal").text(subTotal.toFixed(2));
+  $(".order-tax").text((subTotal * 0.05).toFixed(2));
+  $(".order-total").text((subTotal + (subTotal * 0.05)).toFixed(2));
 }
 
+<<<<<<< HEAD
+//add all order items to order cart template
+
+const addToCart = (orders) => {
+  for (let order in orders) {    
+    const $temp = $(templateOrder);
+    console.log(typeof orders[order]);
+    $temp.find(".user-item-name").append(orders[order]["name"]);
+    $temp.find(".user-order-quantity").append(orders[order]["quantity"]);
+    $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
+    
+    $(".footer, input").detach();
+    $(".user-order").append($temp);
+  }
+  totalOrder(orders);
+};
+
+//------------------
+
+// Pick items from menu and add to order cart or increase qty in order cart
+
+const orderSum = () => {
+  
+  let orderItems = [];
+  let $foodName = {};
+=======
 const templateOrder = `
 
   <table class="user-order1">
@@ -80,11 +141,34 @@ const orderSum = () => {
   let yourOrder = [];
   let orderItems = []; //send to server
 
+>>>>>>> 327513ea3cc78a09f2e33825dcdac6a1e1fd4401
   $("body").on('click', ".user-item-add", function(event) {
-    console.log('test')
-    // let subTotal = 0;
     event.preventDefault();
     $(".user-order1").detach();
+<<<<<<< HEAD
+    const $name = $(this).closest('div').find(".user-item-name").text();
+    orderItems.push($name);
+    if (Object.keys($foodName).length === 0) {
+      $foodName[$name] = { 
+        name: $name,
+        quantity: 1,
+        price: $((this).closest('div')).find(".user-item-price").text() / 100
+      }
+    } else {
+      if ($foodName.hasOwnProperty($name)) {
+        $foodName[$name].quantity += 1;
+      } else {
+        $foodName[$name] = { 
+          name: $name,
+          quantity: 1,
+          price: $((this).closest('div')).find(".user-item-price").text() / 100
+        };
+      }
+    }
+    addToCart($foodName);   //add food item to cart
+
+    //submit order to server
+=======
 
     let $foodName = {};
     $foodName["name"] = $(this).closest('tr').find(".user-item-name").text();
@@ -115,22 +199,28 @@ const orderSum = () => {
 
 
 
+>>>>>>> 327513ea3cc78a09f2e33825dcdac6a1e1fd4401
 
-     //submit order to server
-    orderItems.push($foodName["name"]);
     $(".user-order-submit").on('click', ((event) => {
+<<<<<<< HEAD
+      $.ajax("user/order", {
+=======
       // event.preventDefault();
 
       console.log($(".user-order").val());
       console.log('test');
       $.ajax("user/order", {
 
+>>>>>>> 327513ea3cc78a09f2e33825dcdac6a1e1fd4401
         method: 'POST',
         dataType: "json",
         data: {
           items: orderItems,
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 327513ea3cc78a09f2e33825dcdac6a1e1fd4401
         }
       }).done((res) => {
         console.log(data);
@@ -138,28 +228,33 @@ const orderSum = () => {
         console.log(res.rows);
       })
     }))
-  });
+  })
 
-  $(document).on('click', ".user-item-remove", function(event) {
+  //remove items from order cart
+  //change the arr of order items sent to server
+  //update the quantity, price and total of order
+
+  $("body").on('click', ".user-item-remove", function(event) {
     event.preventDefault();
-    // $this = $(".user-item-remove");
-    $item = $(this).closest('tr').find(".user-item-name").text();
-    console.log($item);
-    $qty = Number($(this).closest('tr').find(".user-order-quantity").text());
-    $price = Number($(this).closest('tr').find(".user-item-price").text());
-    $unitPrice = ($price / $qty).toFixed(2);
+
+    $item = $(this).closest('div').find(".user-item-name").text();
+    $qty = Number($(this).closest('div').find(".user-order-quantity").text());
+
     if ($qty <= 1) {
-      $(".user-order1").remove();
+      delete $foodName[$item];
+      $(this).closest(".user-order1").detach();
+      orderItems.splice(orderItems.indexOf($item), 1);
+      totalOrder($foodName);
     } else {
-      // updateCart(orderItems, $item);
-      // console.log(updateCart(orderItems, $item));
       $qty -= 1;
-      console.log('2', $unitPrice, $qty);
-      $this.closest('tr').find(".user-order-quantity").text($qty);
-      $this.closest('tr').find(".user-item-price").text($qty * $unitPrice);
-      // $(".user-order").find(".order-subtotal").text(Number($(".order-subtotal").text()) - $qty * $unitPrice);
+      orderItems.splice(orderItems.indexOf($item), 1);
+      $foodName[$item]["quantity"] = $qty;
+      $(this).closest('div').find(".user-order-quantity").text($foodName[$item]["quantity"]);
+      $(this).closest('div').find(".user-item-price").text($foodName[$item]["price"] * $qty);
+      totalOrder($foodName);
     }
   })
+  
 
 };
 

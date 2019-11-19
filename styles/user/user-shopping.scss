@@ -5,10 +5,19 @@
   display: block;
   margin: 0 auto;
   background: #ffffff;
-  width: 600px;
+  width: 500px;
   height: auto;
   margin-bottom: 20px;
-  span {
+  .user-order1 {
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .footer span{
     display: block;
   }
+  input {
+    display: block;
+  }
+
 }
