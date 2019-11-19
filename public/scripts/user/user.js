@@ -5,8 +5,10 @@ $(() => {
   $(".user-login").on('click',(() => {
     if ($(".user-login-form").hasClass('visible')) {
       $(".user-login-form").hide().removeClass('visible');
+      
     } else {
       $(".user-login-form").show().addClass('visible');
+      $(".user-signup-form").hide().removeClass('visible');
     }
   })
   );
@@ -16,11 +18,30 @@ $(() => {
     if ($(".user-signup-form").hasClass('visible')) {
       $(".user-signup-form").hide().removeClass('visible');
     } else {
+      $(".user-login-form").hide().removeClass('visible');
+      $(".user-signup-form").show().addClass('visible');
+    }
+  })
+  );
+  //CANCEL BUTTON: close the form
+  $(".user-close-form").on('click',(() => {
+    if ($(".user-login-form").hasClass('visible')) {
+      $(".user-login-form").hide().removeClass('visible');
+    } else {
+      $(".user-login-form").show().addClass('visible');
+    }
+  })
+  );
+  $(".user-close-form1").on('click',(() => {
+    if ($(".user-signup-form").hasClass('visible')) {
+      $(".user-signup-form").hide().removeClass('visible');
+    } else {
       $(".user-signup-form").show().addClass('visible');
     }
   })
   );
 
+  
   //LOGOUT BUTTON: stretch work
 
   //SHOPPING CART: Order Summary Popup
