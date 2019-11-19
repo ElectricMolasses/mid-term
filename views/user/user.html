@@ -43,7 +43,11 @@
     <div class="user-logged">
         <span class="user-email1">hello</span>
         <span class="user-logout">Log out</span>
-        <span><img src="/resources/cart-outline.png"></span>
+        <span class="order-cart-icon">
+          <img src="/resources/cart-outline.png">
+          <a class ="item-total"></a>
+          <a class="total"></a>
+        </span>
     </div>
   </nav>
 
@@ -63,7 +67,7 @@
   </div>
 
   <div class="user-signup-form">
-      <img class="user-close-form1" src="/resources/cancel.png">
+      <img class="user-close-form" src="/resources/cancel.png">
       <input type="email" placeholder="Email Address"></input>
       <input type="password" placeholder="Password"></input>
       <input class="user-signup-button" type="submit" value="Register"></input>
@@ -88,12 +92,14 @@
   </div>
 
   <div class="user-order">
+      <img class="user-close-form" src="/resources/cancel.png">
       <h2>Order Summary</h2>
     <!--add to order cart  -->
   </div>
 
   <!-- pop up order confirmation -->
   <div class="order-confirmation">
+      <img class="user-close-form" src="/resources/cancel.png">
     <h2>Thank you for your order</h2>
     <p>Thai-Tanic is confirming your oder</p>
     <p class="user-time-confirm"></p>
