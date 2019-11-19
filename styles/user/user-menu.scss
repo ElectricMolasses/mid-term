@@ -1,18 +1,23 @@
+.user-nav-menu {
+  position: fixed;
+  display: grid;
+}
 .user-menu {
   background-color: palegreen;
-  width: 50%;
+  width: 70%;
   margin-left: 20%;
   .user-menu-table  td{
     display: flex;
     justify-content: space-between;
   }
-  td {
-    display: block;
-    width: 50%;
-  }
     a{
-      display: block;
+      display: inline-block;
     }
+
+
 }
-  
-  
+.user-item-add, .user-item-remove{
+  margin: 5px;
+  width: 15px;
+  height: 15px;
+}

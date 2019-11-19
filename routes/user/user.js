@@ -56,8 +56,21 @@ module.exports = (db, twilio) => {
       });
   });
 
-  router.get("/update", (req, res) => {
-    const orders = req.body.orders; // Will be an array of orderId's.
+  router.post("/update", (req, res) => {
+    const order = req.body.order;
+    console.log('body', req.body);
+    console.log('orderId', order)
+    return db.query(`
+    SELECT time_confirmed
+    FROM orders
+    WHERE id = $1;
+    `, [order])
+      .then((query) => {
+        res.json(query.rows[0]);
+        // console.log(res.json(query.rows[0]));
+        console.log(query.rows[0]);
+      });
+      
   });
 
   router.post("/login", (req, res) => {
@@ -72,6 +85,7 @@ module.exports = (db, twilio) => {
         .then(query => {
           req.session.userToken = query.rows[0].user_token;
           res.send({ success: "Logged in" });
+          console.log(res.send({ success: "Logged in" }));
         })
         .catch(err => {
           res.send({ error: err.message });
@@ -96,8 +110,8 @@ module.exports = (db, twilio) => {
     // payment or anything initially.
     const userId = req.session.userToken;
     const orderItems = req.body.items;
+    let phone_number;
     const promises = [];
-
     return db.query(`
     INSERT INTO orders (
       customer_id,
@@ -115,6 +129,7 @@ module.exports = (db, twilio) => {
       .then(query => {
         const orderId = query.rows[0].id;
         
+        
         for (const item of orderItems) {
           console.log(item);
           db.query(`
@@ -122,32 +137,40 @@ module.exports = (db, twilio) => {
             order_id, item_id
           ) VALUES (
             $1, (SELECT id FROM items WHERE name = $2)
-          )
-          RETURNING *;
+          );
           `, [orderId, item])
             .then(query => {
-              console.log(query.rows);
+              res.json(orderId);
               return query.rows;
             })
             .catch(err => {
               console.log({ error: err.message });
             });
         }
-
-        Promise.all(promises)
-          .then((query) => {
-            console.log('THE QUERY', query);
-            res.send('Restaurant is confirming your order');
-            // Bother twilio to send an SMS here.
-            twilio.messages.create({
-              body: 'A new order has been requested.',
-              to: '+19023945393',
-              from: '+12029029010'
-            })
-              .then((mes) => {
-                console.log(mes.sid);
+        db.query(`
+        SELECT phone_number
+        FROM users
+        WHERE user_token = $1;
+        `, [userId])
+          .then(query => {
+            phone_number = query.rows[0].phone_number;
+          }).then(() => {
+            Promise.all(promises)
+              .then((query) => {
+                console.log('THE QUERY', query);
+                res.send('Restaurant is confirming your order');
+                // Bother twilio to send an SMS here.
+                twilio.messages.create({
+                  body: 'A new order has been requested.',
+                  to: phone_number,
+                  from: '+12029029010'
+                })
+                  .then((mes) => {
+                    console.log(mes.sid);
+                  });
               });
           });
+        
       })
       .catch(err => {
         console.log(err.message);

@@ -54,14 +54,16 @@
   </div>
   <!-- login/register popup form -->
 
-  <div class="user-login-form"></div>
+  <div class="user-login-form">
     <a class="user-error-message"></a>
+    <img class="user-close-form" src="/resources/cancel.png">
     <input class="user-email" type="email" placeholder="Email Address"></input>
     <input class="user-password" type="password" placeholder="Password"></input>
     <input class="user-login-button" type="submit" value="Sign In"></input>
   </div>
 
   <div class="user-signup-form">
+      <img class="user-close-form1" src="/resources/cancel.png">
       <input type="email" placeholder="Email Address"></input>
       <input type="password" placeholder="Password"></input>
       <input class="user-signup-button" type="submit" value="Register"></input>
@@ -87,9 +89,15 @@
 
   <div class="user-order">
       <h2>Order Summary</h2>
-    
+    <!--add to order cart  -->
   </div>
 
+  <!-- pop up order confirmation -->
+  <div class="order-confirmation">
+    <h2>Thank you for your order</h2>
+    <p>Thai-Tanic is confirming your oder</p>
+    <p class="user-time-confirm"></p>
+  </div>
 
 </body>
 

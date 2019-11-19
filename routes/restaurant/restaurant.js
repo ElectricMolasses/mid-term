@@ -10,7 +10,21 @@ const router  = express.Router();
 const path = require('path');
 const moment = require('moment');
 
+
+
 module.exports = (db, twilio) => {
+  const getUserNumber = (order_id) => {
+    return db.query(`
+    SELECT phone_number
+    FROM users
+      JOIN orders ON customer_id = users.id
+    WHERE orders.id = $1;
+    `, [order_id])
+      .then((query) => {
+        return query.rows[0];
+      });
+  };
+
   router.get("/test", (req, res) => {
     res.sendFile(path.resolve('./views/restaurant/test.html'));
   });
@@ -81,14 +95,17 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_confirmed = NOW(),
             time_estimate = $2
-          WHERE id = $1;
+          WHERE id = $1
+          RETURNING id;
         `, [request.orderId, request.time_estimate])
-          .then(() => {
+          .then(query => getUserNumber(query.rows[0].id))
+          .then((id) => {
+            console.log(id);
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `Your order has been confirmed.
                     It should be ready in ${moment(request.time_estimate).fromNow()}`,
-              to: `+19023945393`,
+              to: id.phone_number,
               from: `+12029029010`
             })
               .then((mes) => {
@@ -96,36 +113,42 @@ module.exports = (db, twilio) => {
               });
           });
         break;
+        
       case 'deny':
         db.query(`
           UPDATE orders
             SET time_confirmed = 'infinity',
             time_complete = 'infinity'
-          WHERE id = $1;
+          WHERE id = $1
+          RETURNING id;
         `, [request.orderId])
-          .then(() => {
-            res.json({ status: 'success' });
-            twilio.messages.create({
-              body: `Your order has been declined.`,
-              to: `+19023945393`,
-              from: `+12029029010`
-            })
-              .then((mes) => {
-                console.log(mes.sid);
-              });
-          });
+          .then(query => getUserNumber(query.rows[0].id)
+            .then(id => {
+              res.json({ status: 'success' });
+              twilio.messages.create({
+                body: `Your order has been declined.`,
+                to: id.phone_number,
+                from: `+12029029010`
+              })
+                .then((mes) => {
+                  console.log(mes.sid);
+                });
+            }));
         break;
+
       case 'cancel':
         db.query(`
           UPDATE orders
             SET time_complete = 'infinity'
-          WHERE id = $1;
+          WHERE id = $1
+          RETURNING id;
         `, [request.orderId])
-          .then(() => {
+          .then(query => getUserNumber(query.rows[0].id))
+          .then(id => {
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `Your order has been cancelled.`,
-              to: `+19023945393`,
+              to: id.phone_number,
               from: `+12029029010`
             })
               .then((mes) => {
@@ -133,13 +156,16 @@ module.exports = (db, twilio) => {
               });
           });
         break;
+
       case 'estimate':
         db.query(`
           UPDATE orders
             SET time_estimate = $2
-          WHERE id = $1;
+          WHERE id = $1
+          RETURNING id;
         `, [request.orderId, moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")])
-          .then(() => {
+          .then(query => getUserNumber(query.rows[0].id))
+          .then(id => {
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `The restaurant has changed the estimated time of completion on your order.
@@ -149,7 +175,7 @@ module.exports = (db, twilio) => {
                 ).fromNow()
               }
               `,
-              to: `+19023945393`,
+              to: id.phone_number,
               from: `+12029029010`
             })
               .then((mes) => {
@@ -157,18 +183,21 @@ module.exports = (db, twilio) => {
               });
           });
         break;
+
       case 'complete':
         db.query(`
           UPDATE orders
             SET time_complete = NOW()
           WHERE id = $1
+          RETURNING id;
         `, [request.orderId])
-          .then(() => {
+          .then(query => getUserNumber(query.rows[0].id))
+          .then(id => {
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `Your order has been complete and is ready for pick up!`,
-              to: `+19023945393`,
-              from: `+12029029010`
+              to: id.phone_number,
+              from: `+120329029010`
             })
               .then((mes) => {
                 console.log(mes.sid);
@@ -221,7 +250,7 @@ module.exports = (db, twilio) => {
                 return order.rows;
               }));
           }
-          
+
         }
         Promise.all(newOrders)
           .then((values) => {

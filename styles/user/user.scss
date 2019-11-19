@@ -1,4 +1,6 @@
-@import '../base';
+@use '../base';
+
+$base-color: base;
 
 body {
   background-color: $base-color;
@@ -39,6 +41,7 @@ body {
   }
   .user-logged {
     display: none;
+    margin-right:10px;
   }
 }
 
@@ -56,21 +59,36 @@ body {
 .user-login-form, .user-signup-form {
   display: none;
   position: fixed;
+  width: 300px;
   margin: 0 auto;
+  margin-right:10px;
   padding: 5% 7%;
   top:30%;
   left: 50%;
   background-color: #ffffff;  
   z-index: 9;
-
+  img {
+    width: 30px;
+    height: 30px;
+    float: right;
+  }
   input, button {
     display: block;
     width: 250px;
   }
 }
 
+.order-confirmation {
+  display: none;
+  position: fixed;
+  top: 300px;
+  background-color: red;
+  width: 300px;
+  height: auto;
+}
 //unhide forms
 
 .visible {
   display: block;
 }
+
