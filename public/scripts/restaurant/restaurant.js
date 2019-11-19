@@ -4,12 +4,15 @@ let pushArray = [];
 let IdArray = [];
 
 $("document").ready(function() {
+  // setInterval(loadOrders, 5000);
+  loadOrders();
   $("#restaurant-deny-order").hide();
   $(".deny-orders").on("click", function() {
     $("#restaurant-deny-order").slideToggle("fast", function() {
       //animation complete
     })
   })
+
 
 // UPDATE ORDER TIME TO COMPLETE;
 // function updateTimeEstamate() {
@@ -87,9 +90,8 @@ function parseTimeStamp(time) {
 function renderOrder(orders) {
   const appendTothis = document.querySelector("#restaurant-incoming");
   for (i = 0; i < orders.length; i++) {
-    appendTothis.append(createOrder(orders[i]));
-  }
-  return console.log("orders loaded");
+      appendTothis.append(createOrder(orders[i]));
+    }
 }
 
 function generateLi(orderItemsObject) {
@@ -133,24 +135,10 @@ function createOrder(i) {
   object[div.getAttribute("id")] = div;
   div.addEventListener('dragstart', dragStart);
   div.addEventListener('dragend', dragEnd);
-  if (checkOrderIfLoaded(i.id)) {
-    console.log("order alreay loaded");
-  } else {
-    IdArray.push(i.id);
-    return div;
-  }
+  IdArray.push(i.id);
+  return div;
 }
 
-function checkOrderIfLoaded(id) {
-  //loop through id array to check if ID Is there
-  for (const i of IdArray) {
-    if (i === id) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
 
 const deny = document.querySelector("#restaurant-deny-order");
 deny.addEventListener('dragover', dragOver);
@@ -221,6 +209,5 @@ function dragDrop(event) {
   });
 });
 
-  loadOrders()
 });
 
