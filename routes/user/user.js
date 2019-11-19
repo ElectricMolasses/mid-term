@@ -115,7 +115,7 @@ module.exports = (db, twilio) => {
       restaurant_id,
       time_placed
     ) VALUES (
-      (SELECT id, phone_number
+      (SELECT id
         FROM users
         WHERE user_token = $1),
       1,
@@ -125,7 +125,7 @@ module.exports = (db, twilio) => {
     `, [userId])
       .then(query => {
         const orderId = query.rows[0].id;
-        phone_number = query.rows[0].id;
+        
         
         for (const item of orderItems) {
           console.log(item);
