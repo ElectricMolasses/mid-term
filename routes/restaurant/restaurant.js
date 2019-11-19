@@ -145,11 +145,10 @@ module.exports = (db, twilio) => {
               body: `The restaurant has changed the estimated time of completion on your order.
               The new time estimate is ${
                 moment(
-                moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")
+                  moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")
                 ).fromNow()
               }
-                    `,
-                    
+              `,
               to: `+19023945393`,
               from: `+12029029010`
             })
@@ -191,10 +190,11 @@ module.exports = (db, twilio) => {
     // Needs to be notified when a user makes an order to this database.  Going to build the users order query first, then work on this.
     // Will repeat polls to the db as an update loop.  Since order ID's are always unique, it will check them against a Set, and if anything
     // has changed, one of the ID's the user provides won't match.
-    const restCache = req.body.orderIds;  // Will be a Set.
+    const restCache = new Set(req.body.orderIds);
+    const newOrders = [];
 
     return db.query(`
-    SELECT id,
+    SELECT id
     FROM orders;
     `, [])
       .then(query => {
@@ -202,13 +202,35 @@ module.exports = (db, twilio) => {
         for (const result of dbCache) {
           if (!restCache.has(result.id)) {
             // There's been an update, re-render page.
-            res.redirect("/orders");
-            return;
+            newOrders.push(db.query(`
+              SELECT orders.id AS id,
+                CONCAT(users.first_name, ' ',
+                    INITCAP(LEFT(users.last_name, 1))) AS customer,
+                users.phone_number, orders.id,
+                items.name AS order_item, items.cost AS item_cost,
+                time_placed, time_confirmed, time_complete
+              FROM restaurants
+                JOIN orders ON (restaurant_id = restaurants.id)
+                JOIN users ON (customer_id = users.id)
+                JOIN order_items ON (order_id = orders.id)
+                JOIN items ON (item_id = items.id)
+              WHERE orders.id = $1;
+              `, [result.id])
+              .then((order) => {
+                console.log(order.rows);
+                return order.rows;
+              }));
           }
+          
         }
-        res.json({ success: 'Up to date' });
+        Promise.all(newOrders)
+          .then((values) => {
+            console.log(values);
+            res.json(values);
+          });
       })
       .catch(err => {
+        console.log(err.message);
         res
           .status(500)
           .json({ error: err.message });

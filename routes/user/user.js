@@ -46,6 +46,7 @@ module.exports = (db, twilio) => {
       WHERE user_token = $1;
     `, [req.session.userToken])
       .then(query => {
+        console.log((query.rows[0]));
         res.json(query.rows[0]);
       })
       .catch(err => {
