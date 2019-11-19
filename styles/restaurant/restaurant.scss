@@ -94,28 +94,45 @@ h2 {
 }
 
 .restaurant-empty {
-  display: inline-block;
+  // display: inline-block;
   height: 500px;
   width: 80%;
-  overflow: auto;;
+  overflow: auto;
   border-radius: 5px;
   align-self: center;
   padding: 20px;
   background: $background-secondary;
+  resize: vertical;
+  box-shadow: inset 0px 0px 0px 1px $card-shadow,
+              inset 0px 0px 0px -1px $card-shadow;
 }
 
 .restaurant-empty::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;  
+  background: $background-secondary;
 }
 
 .restaurant-empty::-webkit-scrollbar-track {
-  background-color: transparent;
+  background-color: $background-secondary;
 }
 
 .restaurant-empty::-webkit-scrollbar-thumb {
   background-color: $card-bg;
   border-radius: 5px;
 }
+
+.restaurant-empty::-webkit-scrollbar-corner {
+  background-color: $background-secondary;
+}
+
+.restaurant-empty::-webkit-resizer { 
+  background-image: url(/resources/resize.png); /* Create proper image for resize later. */
+  background-repeat: no-repeat; 
+  background-position: bottom right; 
+}
+
+
+
 
 .hold {
   border: solid lightgrey 4px;
