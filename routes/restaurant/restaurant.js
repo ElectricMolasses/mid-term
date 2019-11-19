@@ -145,11 +145,10 @@ module.exports = (db, twilio) => {
               body: `The restaurant has changed the estimated time of completion on your order.
               The new time estimate is ${
                 moment(
-                moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")
+                  moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")
                 ).fromNow()
               }
-                    `,
-                    
+              `,
               to: `+19023945393`,
               from: `+12029029010`
             })
