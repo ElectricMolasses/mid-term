@@ -40,11 +40,11 @@ $(() => {
           $temp.find(".user-menu-category"). text($category);
           $temp.find(".user-item-name").text(data[index].name);
           $temp.find(".user-item-description").text(data[index].description);
-          $temp.find(".user-item-price").text(data[index].cost);
+          $temp.find(".user-item-price").text((Number(data[index].cost) / 100).toFixed(2));
         } else {
           $temp.find(".user-item-name").text(data[index].name);
           $temp.find(".user-item-description").text(data[index].description);
-          $temp.find(".user-item-price").text(data[index].cost);
+          $temp.find(".user-item-price").text((Number(data[index].cost) / 100).toFixed(2));
         }
         
         $(".user-menu").append($temp);
@@ -53,6 +53,7 @@ $(() => {
       $.each(category, (index) => {
         $(".user-nav-menu").append("<span>",category[index],"</span>");
       });
+      $(".user-order-now").hide().addClass('visible');
 
       orderSum();
 
