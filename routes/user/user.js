@@ -57,7 +57,7 @@ module.exports = (db, twilio) => {
   });
 
   router.get("/update", (req, res) => {
-    const orders = req.body.orders; // Will be an array of orderId's.
+    const orders = req.body.order; // Will be an array of orderId's.
   });
 
   router.post("/login", (req, res) => {
@@ -96,6 +96,7 @@ module.exports = (db, twilio) => {
     // payment or anything initially.
     const userId = req.session.userToken;
     const orderItems = req.body.items;
+    let phone_number;
     const promises = [];
 
     return db.query(`
@@ -104,7 +105,7 @@ module.exports = (db, twilio) => {
       restaurant_id,
       time_placed
     ) VALUES (
-      (SELECT id
+      (SELECT id, phone_number
         FROM users
         WHERE user_token = $1),
       1,
@@ -114,6 +115,7 @@ module.exports = (db, twilio) => {
     `, [userId])
       .then(query => {
         const orderId = query.rows[0].id;
+        phone_number = query.rows[0].id;
         
         for (const item of orderItems) {
           console.log(item);
@@ -141,7 +143,7 @@ module.exports = (db, twilio) => {
             // Bother twilio to send an SMS here.
             twilio.messages.create({
               body: 'A new order has been requested.',
-              to: '+19023945393',
+              to: phone_number,
               from: '+12029029010'
             })
               .then((mes) => {
