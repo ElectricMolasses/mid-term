@@ -41,6 +41,7 @@ body {
   }
   .user-logged {
     display: none;
+    margin-right:10px;
   }
 }
 
@@ -60,6 +61,7 @@ body {
   position: fixed;
   width: 300px;
   margin: 0 auto;
+  margin-right:10px;
   padding: 5% 7%;
   top:30%;
   left: 50%;
@@ -76,6 +78,14 @@ body {
   }
 }
 
+.order-confirmation {
+  display: none;
+  position: fixed;
+  top: 300px;
+  background-color: red;
+  width: 300px;
+  height: auto;
+}
 //unhide forms
 
 .visible {
