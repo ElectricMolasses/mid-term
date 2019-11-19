@@ -1,25 +1,39 @@
 // import { object } from "twilio/lib/base/serialize";
+let object = {};
+let pushArray = [];
+let IdArray = [];
+
 $("document").ready(function() {
   $("#restaurant-deny-order").hide();
-
   $(".deny-orders").on("click", function() {
     $("#restaurant-deny-order").slideToggle("fast", function() {
       //animation complete
     })
   })
-let object = {};
-let pushArray = [];
 
-function updateTimeEstamate() {
+// UPDATE ORDER TIME TO COMPLETE;
+// function updateTimeEstamate() {
+//   $.ajax('/restaurant/orders', {
+//     method: 'PUT',
+//     data: {
+//       orderId: 3,
+//       orderStatus: 'estimate',
+//       time_estimate: new Date(2019, 10, 18, 12, 15, 0)
+//     }
+//   })
+// }
+
+function confirmOrderAccepted () {
   $.ajax('/restaurant/orders', {
     method: 'PUT',
     data: {
       orderId: 3,
-      orderStatus: 'estimate',
-      time_estimate: new Date(2019, 10, 18, 12, 15, 0)
+      orderStatus: 'confirm',
+      time_estimate: moment(new Date(1995, 5, 1, 12, 12, 12)).format("YYYY-MM-DD HH:mm:ss")
     }
-  })
+  });
 }
+
 
 function loadOrders() {
   $.ajax('/restaurant/orders/', {
@@ -60,15 +74,15 @@ function parseTimeStamp(time) {
 }
 
 //Generate a Random Id for each Html Element
-function randomId() {
-  let random = "";
-  const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-    'g', 'h', 'r', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  for (let i = 0; i < 7; i++) {
-    random += values[Math.floor(Math.random() * (values.length - 1))];
-  }
-  return random;
-}
+// function randomId() {
+//   let random = "";
+//   const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+//     'g', 'h', 'r', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+//   for (let i = 0; i < 7; i++) {
+//     random += values[Math.floor(Math.random() * (values.length - 1))];
+//   }
+//   return random;
+// }
 
 function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
@@ -90,7 +104,7 @@ function createOrder(i) {
   let timeStamp = i.time_placed.slice(0, 19);
   let div = document.createElement('div');
   div.setAttribute('draggable', 'true');
-  div.setAttribute('id', `${randomId()}`);
+  div.setAttribute('id', `${i.id}`);
   div.setAttribute('class', 'restaurant-fill');
   div.innerHTML = (`<div class="restaurant-name-display">
   <p>Name</p>
@@ -115,11 +129,29 @@ function createOrder(i) {
   <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
   </div>`);
 
+
   object[div.getAttribute("id")] = div;
   div.addEventListener('dragstart', dragStart);
   div.addEventListener('dragend', dragEnd);
-  return div;
+  if (checkOrderIfLoaded(i.id)) {
+    console.log("order alreay loaded");
+  } else {
+    IdArray.push(i.id);
+    return div;
+  }
 }
+
+function checkOrderIfLoaded(id) {
+  //loop through id array to check if ID Is there
+  for (const i of IdArray) {
+    if (i === id) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 const deny = document.querySelector("#restaurant-deny-order");
 deny.addEventListener('dragover', dragOver);
 deny.addEventListener('dragenter', dragEnter);
@@ -166,6 +198,7 @@ function dragDrop(event) {
       $("#restaurant-incoming").append($(`#${pushArray[0]}`));
     } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
       $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
+      confirmOrderAccepted();
     } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
       $("#restaurant-complete").append($(`#${pushArray[0]}`));
       $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
@@ -179,7 +212,7 @@ function dragDrop(event) {
   }
 }
 
-  loadOrders();
+
   $(".restaurant-login-form").hide();
   //Click log in button to dsiplay form
   $(".restaurant-login-button").on("click", function() {
@@ -188,6 +221,6 @@ function dragDrop(event) {
   });
 });
 
-
+  loadOrders()
 });
 
