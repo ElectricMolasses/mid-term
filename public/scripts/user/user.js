@@ -75,14 +75,8 @@ $(() => {
         password: $(".user-password").val()
       }
     }).done((res) => {
-        if (res === "Invalid Email") {
-          $(".user-error-message").text("Invalid Email/Password");
-        } else if (res === "Invalid Password") {
-          $(".user-error-message").text("Invalid Email/Password");
-        } else {
-          $(".user-login-form").hide().removeClass('visible');
-          $(".user-order-now").trigger('click'); // menu section pop up once click login
-        }
+        $(".user-login-form").hide().removeClass('visible');
+        $(".user-order-now").trigger('click'); // menu section pop up once click login
         
       }).then (() => {
         $.ajax('/user/profile', {
@@ -94,7 +88,6 @@ $(() => {
           $(".user-logged").show().addClass('visible');
         });
       })
-
   }));
 });
 

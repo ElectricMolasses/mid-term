@@ -81,6 +81,7 @@ module.exports = (db, twilio) => {
         .then(query => {
           req.session.userToken = query.rows[0].user_token;
           res.send({ success: "Logged in" });
+          console.log(res.send({ success: "Logged in" }));
         })
         .catch(err => {
           res.send({ error: err.message });
@@ -107,7 +108,7 @@ module.exports = (db, twilio) => {
     const orderItems = req.body.items;
     let phone_number;
     const promises = [];
-
+    console.log(userId);
     return db.query(`
     INSERT INTO orders (
       customer_id,
@@ -133,8 +134,7 @@ module.exports = (db, twilio) => {
             order_id, item_id
           ) VALUES (
             $1, (SELECT id FROM items WHERE name = $2)
-          )
-          RETURNING *;
+          );
           `, [orderId, item])
             .then(query => {
               console.log(query.rows);

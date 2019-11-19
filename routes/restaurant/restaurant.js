@@ -197,7 +197,7 @@ module.exports = (db, twilio) => {
             twilio.messages.create({
               body: `Your order has been complete and is ready for pick up!`,
               to: id.phone_number,
-              from: `+12029029010`
+              from: `+120329029010`
             })
               .then((mes) => {
                 console.log(mes.sid);
