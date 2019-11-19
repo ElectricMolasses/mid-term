@@ -3,21 +3,56 @@
   display: grid;
 }
 .user-menu {
-  background-color: palegreen;
-  width: 70%;
-  margin-left: 20%;
-  .user-menu-table  td{
-    display: flex;
+  background-color: #63422E;
+  padding: 15px;
+  width: 80%;
+  margin: auto;
+  // Grid to properly space out menu items.
+  .user-menu-table .user-item {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-areas: "category"
+                         "item";
+    margin: 10px 0px;
     justify-content: space-between;
-  }
-    a{
-      display: inline-block;
+
+    .user-menu-category {
+      grid-area: category;
+      padding-bottom: 10px;
     }
 
+    .item-card.user-item-add {
 
-}
-.user-item-add, .user-item-remove{
-  margin: 5px;
-  width: 15px;
-  height: 15px;
+      display: grid;
+      grid-area: item;
+      grid-template-columns: auto-fill auto-fill;
+      grid-auto-rows: auto;
+      grid-row-gap: 5px;
+      grid-template-areas: "name price"
+                           "description description";
+
+      background: rgb(58, 38, 26);
+      border-radius: 3px;
+      padding: 12px;
+      box-shadow: 0px 1px 0px 1px rgba(40, 26, 18, 0.267),
+                  inset 0px 0px px -1px rgba(99, 66, 46, 0.37);
+
+      .user-item-name {
+        grid-area: name;
+      }
+
+      .user-item-description {
+        grid-area: description;
+      }
+
+      .user-item-price {
+        grid-area: price;
+        text-align: right;
+      }
+    }
+  }
+  
+  a {
+    display: inline-block;
+  }
 }

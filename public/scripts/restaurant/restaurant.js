@@ -10,24 +10,17 @@ $("document").ready(function() {
   .then(function() {
     setInterval(sendOrderIds, 10000);
   });
-  // loadOrders();
-  // $("#restaurant-deny-order").hide();
-  // $(".deny-orders").on("click", function() {
-  //   $("#restaurant-deny-order").slideToggle("fast", function() {
-  //     //animation complete
-  //   });
-  // });
 
-  function confirmOrderAccepted(id) {
+  function confirmOrderAccepted(id, time) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
         orderId: id,
         orderStatus: 'confirm',
-        time_estimate: moment(new Date(1995, 5, 1, 12, 12, 12)).format("YYYY-MM-DD HH:mm:ss")
+        time_estimate: time
       }
     });
-    console.log("done");
+    console.log(time);
   }
 
   function loadOrders() {
@@ -87,10 +80,10 @@ $("document").ready(function() {
     const deny = document.querySelector("#restaurant-deny-order");
     for (let i = 0; orders.length; i++) {
       console.log(orders[i].time_confirmed);
-      if (orders[i].time_complete) {
-        complete.append(createOrder(orders[i]));
-      } else if(orders[i].time_confirmed == "infinity") {
+      if (orders[i].time_confirmed == "infinity") {
         deny.append(createOrder(orders[i]));
+      } else if (orders[i].time_complete) {
+        complete.append(createOrder(orders[i]));
       } else if (orders[i].time_confirmed) {
         inProgress.append(createOrder(orders[i]));
       } else {
@@ -109,7 +102,8 @@ $("document").ready(function() {
 
   function createOrder(i) {
     let time = i.time_placed.slice(0, 19);
-    let timeStamp = time
+    let timeStamp = time;
+    console.log(timeStamp);
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -134,7 +128,7 @@ $("document").ready(function() {
       </div>
       <div class="restaurant-current-time-holder">
       <p class="restaurant-current-time-elasped">Time Elapsed</p>
-      <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
+      <span class="restaurant-current-time">${moment(timeStamp).fromNow()}<span>
       </div>`);
 
 
@@ -191,8 +185,11 @@ $("document").ready(function() {
       if (this === document.getElementById("restaurant-incoming") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-incoming").append($(`#${pushArray[0]}`));
       } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
+        $(".restaurant-pop-up").show();
+        $("#restaurant-pop-submit").on("click", () => {
+          confirmOrderAccepted(pushArray[0], $(".restaurant-time-data").val());
+        })
         $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
-        confirmOrderAccepted(pushArray[0]);
       } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-complete").append($(`#${pushArray[0]}`));
         $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
@@ -205,8 +202,11 @@ $("document").ready(function() {
       this.className = "restaurant-empty";
     }
   }
-
+  $(".restaurant-pop-up").hide();
   $(".restaurant-login-form").hide();
+
+
+
   //Click log in button to dsiplay form
   $(".restaurant-login-button").on("click", function() {
     $(".restaurant-login-form").slideToggle("slow", function() {
@@ -215,4 +215,8 @@ $("document").ready(function() {
   });
 
 });
+
+
+
+
 

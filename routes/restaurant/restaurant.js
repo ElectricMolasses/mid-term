@@ -13,6 +13,8 @@ const moment = require('moment');
 
 
 module.exports = (db, twilio) => {
+  console.log('TESTING MOMENT');
+
   const getUserNumber = (order_id) => {
     return db.query(`
     SELECT phone_number
@@ -91,20 +93,24 @@ module.exports = (db, twilio) => {
       switch (request.orderStatus) {
       case 'confirm':
         console.log(request.time_estimate);
+        const NOW = moment.now();
+        const estimate = moment(NOW)
+          .add(request.time_estimate, 'minutes')
+          .format("YYYY-MM-DD HH:mm:ss");
         db.query(`
           UPDATE orders
             SET time_confirmed = NOW(),
             time_estimate = $2
           WHERE id = $1
           RETURNING id;
-        `, [request.orderId, request.time_estimate])
+        `, [request.orderId, estimate])
           .then(query => getUserNumber(query.rows[0].id))
           .then((id) => {
             console.log(id);
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `Your order has been confirmed.
-                    It should be ready in ${moment(request.time_estimate).fromNow()}`,
+                    It should be ready in ${moment(estimate).fromNow()}`,
               to: id.phone_number,
               from: `+12029029010`
             })

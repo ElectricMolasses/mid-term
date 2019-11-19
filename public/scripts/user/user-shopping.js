@@ -1,8 +1,8 @@
 // template for Order Cart
 const templateOrder = `
-  
+
 <div class="user-order1">
-  
+
   <span class="user-item-name"></span>
   <span class="user-order-quantity"></span>
   <span>
@@ -50,8 +50,8 @@ const addToCart = (orders) => {
     $temp.find(".user-item-name").append(orders[order]["name"]);
     $temp.find(".user-order-quantity").append(orders[order]["quantity"]);
     $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
-    
-    
+
+
     $(".footer, input").detach();
     $(".user-order").append($temp);
   }
@@ -73,7 +73,7 @@ const renderCookieCart = () => {
 
 
 const orderSum = () => {
-    
+
   let orderItems = [];
   let $foodName = {};
   let storage = JSON.parse(localStorage.getItem('sessionCart'));
@@ -104,9 +104,9 @@ const orderSum = () => {
         };
       }
     }
-    
+
     addToCart($foodName);   //add food item to cart
-    
+
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
 
 
