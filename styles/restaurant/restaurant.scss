@@ -51,6 +51,7 @@ body {
 #restaurant-order-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin-top: 80px;
 
   h2 {
@@ -66,23 +67,14 @@ h2 {
 
 /* draggable css */
 
-#restaurant-deny-order {
-  display: inline-block;
-  height: 200px;
-  width: 80%;
-  border-radius: 3px;
-  align-self: center;
-  padding: 20px;
-  overflow: auto;
-}
 
 .restaurant-fill {
   display: grid;
   padding: 0px 10px;
-  grid-template-columns: 15% 15% 30% 15% 15% 10%;
+  grid-template-columns: 15% 15% 40% 15% 15%;
   grid-template-rows: 50% 50%;
   justify-content: space-evenly;
-  margin: 10px auto;
+  margin: 10px 10px;
   background-color: $card-bg;
   color: $text-secondary;
   font-family: monospace;
@@ -90,24 +82,33 @@ h2 {
   cursor: pointer;
   box-shadow: 0px 2px $card-shadow,
               inset 0px 1px 0px $card-shadow-inverse;
-
-  h6 {
-    font-size : 10px;
-  }
 }
 
 .restaurant-empty {
-  // display: inline-block;
   height: 300px;
-  width: 80%;
   overflow: auto;
   border-radius: 5px;
   align-self: center;
-  padding: 20px;
   background: $background-secondary;
   resize: vertical;
-  box-shadow: inset 0px 0px 0px 1px $card-shadow,
-              inset 0px 0px 0px -1px $card-shadow;
+}
+
+.container-wrapper {
+  position: relative;
+  margin: auto;
+  width: 80%;
+}
+
+.container-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 0px 1px $card-shadow,
+              inset 0 0 0px -1px $card-shadow;
+  pointer-events: none;
 }
 
 ::-webkit-scrollbar {
