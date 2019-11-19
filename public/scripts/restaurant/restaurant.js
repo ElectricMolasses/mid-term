@@ -94,8 +94,6 @@ function createOrder(i) {
   <div class="restaurant-current-time-holder">
   <p class="restaurant-current-time-elasped">Time Elapsed</p>
   <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
-  </div>
-  <div class="restaurant-deny-orders"><button class="restaurant-deny-order"></button>
   </div>`);
 
   object[div.getAttribute("id")] = div;
@@ -103,6 +101,11 @@ function createOrder(i) {
   div.addEventListener('dragend', dragEnd);
   return div;
 }
+const deny = document.querySelector("#restaurant-deny-order");
+deny.addEventListener('dragover', dragOver);
+deny.addEventListener('dragenter', dragEnter);
+deny.addEventListener('dragleave', dragLeave);
+deny.addEventListener('drop', dragDrop);
 
 const empties = document.querySelectorAll(".restaurant-empty");
 for (const empty of empties) {
@@ -149,6 +152,8 @@ function dragDrop(event) {
       $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
       $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
       orderComplete();
+    } else if (this === document.getElementById("restaurant-deny-order") && pushArray[pushArray.length - 1] === i) {
+      $("#restaurant-deny-order").append($(`#${pushArray[0]}`));
     }
     this.className = "restaurant-empty";
   }
@@ -162,6 +167,12 @@ function dragDrop(event) {
           //animation complete;
   });
 });
+  $("#restaurant-deny-order").hide();
+  $(".deny-orders").on("click", function() {
+    $("#restaurant").slidetoggle("fast", function() {
+      //animation complete
+    })
+  })
 
 });
 
