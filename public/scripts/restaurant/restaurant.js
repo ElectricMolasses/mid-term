@@ -3,11 +3,12 @@ function parseTimeStamp(time) {
   const properTime = time.slice(11,19);
   return properTime;
 }
+
 //Generate a Random Id for each Html Element
 function randomId() {
   let random = "";
   const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-  'g', 'h', 'r', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    'g', 'h', 'r', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   for (let i = 0; i < 7; i++) {
     random += values[Math.floor(Math.random() * (values.length - 1))];
   }
@@ -18,17 +19,17 @@ function renderOrder(orders) {
   const appendTothis = document.querySelector(".restaurant-empty");
   for (i = 0; i < orders.length; i++) {
     appendTothis.append(createOrder(orders[i]));
-  };
+  }
   return console.log("orders loaded");
 }
 
 function loadOrders() {
   $.ajax('/restaurant/orders/', {
-  method: 'GET'
-})
-  .done((data, status, xhr) => {
+    method: 'GET'
+  })
+    .done((data, status, xhr) => {
       renderOrder(data);
-  }).catch(() => {
+    }).catch(() => {
       console.log('failed');
     });
 }
@@ -36,16 +37,16 @@ function loadOrders() {
 function generateLi(orderItemsObject) {
   let itemHTML = ``;
   for (const i of orderItemsObject) {
-    itemHTML += `<li>${i.name}</li> `
+    itemHTML += `<li>${i.name}</li> `;
   }
-return itemHTML;
+  return itemHTML;
 }
 
 function createOrder(i) {
   let timeStamp = i.time_placed.slice(0, 19);
   let div = document.createElement('div');
   div.setAttribute('draggable', 'true');
-  div.setAttribute('id', `${randomId()}`)
+  div.setAttribute('id', `${randomId()}`);
   div.setAttribute('class', 'restaurant-fill');
   div.innerHTML = (`<div class="restaurant-name-display">
   <p>Name</p>
@@ -79,65 +80,65 @@ function createOrder(i) {
     }, 0);
   });
 
-  div.addEventListener('dragend', () => {
+  div.addEventListener('dragend', (event) => {
     div.className = 'restaurant-empty';
-    let ID = div.getAttribute("id");
-    console.log(ID);
+    console.log(div.parentElement.getAttribute("id"));
+    $(`#${div.parentElement.getAttribute("id")}`).append(div);
   });
-    return div;
-  }
+  return div;
+}
 
 $("document").ready(function() {
   loadOrders();
   $.ajax('/restaurant/orders/', {
     method: 'GET'
   })
-  .done((data, status, xhr) => {
-  $(".restaurant-login-form").hide();
-  //Click log in button to dsiplay form
-  $(".restaurant-login-button").on("click", function() {
-  $(".restaurant-login-form").slideToggle("slow", function() {
-      //animation complete;
-  });
-  })
+    .done((data, status, xhr) => {
+      $(".restaurant-login-form").hide();
+      //Click log in button to dsiplay form
+      $(".restaurant-login-button").on("click", function() {
+        $(".restaurant-login-form").slideToggle("slow", function() {
+          //animation complete;
+        });
+      });
 
-    const empties = document.querySelectorAll(".restaurant-empty");
-    for (const empty of empties) {
-      empty.addEventListener('dragover', dragOver);
-      empty.addEventListener('dragenter', dragEnter);
-      empty.addEventListener('dragleave', dragLeave);
-      empty.addEventListener('drop', dragDrop);
-    }
-
-    function dragOver(e) {
-      e.preventDefault();
-    }
-
-    function dragEnter(e) {
-      e.preventDefault();
-      this.className += ' hovered';
+      const empties = document.querySelectorAll(".restaurant-empty");
+      for (const empty of empties) {
+        empty.addEventListener('dragover', dragOver);
+        empty.addEventListener('dragenter', dragEnter);
+        empty.addEventListener('dragleave', dragLeave);
+        empty.addEventListener('drop', dragDrop);
       }
 
-    function dragLeave() {
-      this.className = 'restaurant-empty';
-    }
+      function dragOver(e) {
+        e.preventDefault();
+      }
 
-    function dragDrop() {
-      if (this === document.getElementById("restaurant-incoming")) {
+      function dragEnter(e) {
+        e.preventDefault();
+        this.className += ' hovered';
+      }
+
+      function dragLeave() {
+        this.className = 'restaurant-empty';
+      }
+
+      function dragDrop() {
+        if (this === document.getElementById("restaurant-incoming")) {
           console.log("drop-1");
-      } else if (this === document.getElementById("restaurant-in-progress")) {
-        console.log("drop-2");
-      } else if (this === document.getElementById("restaurant-complete")) {
-        console.log("drop 3");
-        $(".restaurant-time-started").text(moment());
-        $(".restaurant-time-status").text("Time Complete");
+        } else if (this === document.getElementById("restaurant-in-progress")) {
+          console.log("drop-2");
+        } else if (this === document.getElementById("restaurant-complete")) {
+          console.log("drop 3");
+          $(".restaurant-time-started").text(moment());
+          $(".restaurant-time-status").text("Time Complete");
+        }
+        this.className = "restaurant-empty";
+        this.append($('.restaurant-fill'));
+
       }
-      this.className = "restaurant-empty";
-      this.append($('.restaurant-fill'));
 
-    }
-
-  }).catch(() => {
+    }).catch(() => {
       console.log('failed');
     });
 
