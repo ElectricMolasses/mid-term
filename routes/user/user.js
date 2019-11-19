@@ -58,7 +58,7 @@ module.exports = (db, twilio) => {
 
   router.get("/update", (req, res) => {
     const order = req.body.order;
-
+    console.log(order)
     return db.query(`
     SELECT time_confirmed
     FROM orders
@@ -66,7 +66,9 @@ module.exports = (db, twilio) => {
     `, [order])
       .then((query) => {
         res.json(query.rows[0]);
+        console.log(res.json(query.rows[0]));
       });
+      
   });
 
   router.post("/login", (req, res) => {
@@ -108,7 +110,6 @@ module.exports = (db, twilio) => {
     const orderItems = req.body.items;
     let phone_number;
     const promises = [];
-    console.log(userId);
     return db.query(`
     INSERT INTO orders (
       customer_id,

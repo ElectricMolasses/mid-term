@@ -53,6 +53,9 @@ const addToCart = (orders) => {
 
 // Pick items from menu and add to order cart or increase qty in order cart
 
+
+
+
 const orderSum = () => {
   
   let orderItems = [];
@@ -85,33 +88,47 @@ const orderSum = () => {
 
     $(".user-order-submit").on('click', ((event) => {
       event.preventDefault();
+      
       $.ajax("user/order", {
         method: 'POST',
         dataType: "json",
         data: {
           items: orderItems,
         }
-      }).done((res) => {
+      })  
+      .done((res) => {
         // if (res === 500) {
         //   alert("Please sign in to place order");
         // } else {
           console.log(data);
           console.log($(".user-order").val());
           console.log(res.rows);
+          
         // })
       //get update on order confirmation
       })
-      .then(() => {
-        $.ajax('/user/profile', {
-          method: 'GET',
-          dataType: "json"
-        }).done((res) => {
-          console.log(res.rows[0]);
-        })
-      })
+
+      setInterval(() => {checkData()}, 5000);
 
     }))
+
+    function checkData(){
+      $.ajax('/user/update', {
+        method: 'GET',
+        dataType: "json",
+        data: {
+          order: id
+        }
+      }).done((data) => {
+        console.log("hello");
+        console.log(data);
+      })
+              
+    }
+
   })
+
+
 
   //remove items from order cart
   //change the arr of order items sent to server
