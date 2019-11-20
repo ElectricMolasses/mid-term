@@ -215,13 +215,74 @@ module.exports = (db, twilio) => {
   //     console.log(mes.sid);
   //   });
 
-  router.get("/update", (req, res) => {
+  router.post("/update", (req, res) => {
     // Needs to be notified when a user makes an order to this database.  Going to build the users order query first, then work on this.
     // Will repeat polls to the db as an update loop.  Since order ID's are always unique, it will check them against a Set, and if anything
     // has changed, one of the ID's the user provides won't match.
-    const restCache = new Set(req.body.orderIds);
+    const restCache = req.body.orderIds;
     const newOrders = [];
+    const uniqueNewOrders = {};
+    let exceptionString = '';
 
+    if (restCache.length > 0) {
+      exceptionString += `WHERE id != `;
+    }
+
+    for (let i = 0; i < restCache.length; i++) {
+      exceptionString += restCache[i];
+      if (i < restCache.length - 1) {
+        exceptionString += ' AND ';
+      }
+    }
+
+    return db.query(`
+    SELECT orders.id AS id,
+      CONCAT(users.first_name, ' ',
+          INITCAP(LEFT(users.last_name, 1))) AS customer,
+       users.phone_number, orders.id,
+       items.name AS order_item, items.cost AS item_cost,
+       time_placed, time_confirmed, time_complete
+    FROM restaurants
+      JOIN orders ON (restaurant_id = restaurants.id)
+      JOIN users ON (customer_id = users.id)
+      JOIN order_items ON (order_id = orders.id)
+      JOIN items ON (item_id = items.id)
+    $1;
+    `, [exceptionString])
+      .then(query => {
+        const data = query.rows;
+        const uniqueOrders = {};
+        const formattedOutput = [];
+
+        for (const order of data) {
+          if (!uniqueOrders.hasOwnProperty(order.id)) {
+            uniqueOrders[order.id] = order;
+            uniqueOrders[order.id].items = [{
+              name: order.order_item,
+              cost: order.item_cost
+            }];
+            delete uniqueOrders[order.id].order_item;
+            delete uniqueOrders[order.id].item_cost;
+          } else {
+            uniqueOrders[order.id].items.push({
+              name: order.order_item,
+              cots: order.item_cost
+            });
+          }
+        }
+        for (const order in uniqueOrders) {
+          formattedOutput.push(uniqueOrders[order]);
+        }
+
+        res.json(formattedOutput);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+
+    /*
     return db.query(`
     SELECT id
     FROM orders;
@@ -246,7 +307,7 @@ module.exports = (db, twilio) => {
               WHERE orders.id = $1;
               `, [result.id])
               .then((order) => {
-                console.log(order.rows);
+                //console.log(order.rows);
                 return order.rows;
               }));
           }
@@ -254,8 +315,20 @@ module.exports = (db, twilio) => {
         }
         Promise.all(newOrders)
           .then((values) => {
-            console.log(values);
-            res.json(values);
+            for (const value of values) {
+              console.log(value[0].id);
+              if (!uniqueNewOrders.hasOwnProperty(value[0].id)) {
+                console.log('NEW', value[0].id);
+                uniqueNewOrders[value[0].id] = value[0];
+                uniqueNewOrders[value[0].id].items = [value[0].order_item];
+              } else {
+                console.log('ADDITION', value[0].id);
+                uniqueNewOrders[value[0].id].items.push(value[0].order_item);
+              }
+            }
+            for (const order of uniqueNewOrders) {
+              console.log(order);
+            }
           });
       })
       .catch(err => {
@@ -264,6 +337,7 @@ module.exports = (db, twilio) => {
           .status(500)
           .json({ error: err.message });
       });
+      */
   });
 
   router.post("/login", (req, res) => {
