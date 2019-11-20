@@ -3,7 +3,7 @@
 $base-color: base;
 
 body {
-  background-color: $uc1;
+  background-color: #63422E;;
   width: 100%;
   align-content: center;
   color: #fdbb12;
@@ -96,7 +96,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 10px;  
-  background: $uc2;
+  background: #432C04;
 }
 
 ::-webkit-scrollbar-track {
@@ -104,12 +104,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: $uc2;
+  background-color: #432C04;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-corner {
-  background-color: $background-secondary;
+  background-color: #21313f;
 }
 
 ::-webkit-resizer { 
