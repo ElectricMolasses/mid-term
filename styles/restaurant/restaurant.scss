@@ -96,7 +96,6 @@ h2 {
   resize: vertical;
 }
 
-<<<<<<< HEAD
 .container-wrapper {
   position: relative;
   margin: auto;
@@ -117,10 +116,6 @@ h2 {
 
 ::-webkit-scrollbar {
   width: 10px;  
-=======
-.restaurant-empty::-webkit-scrollbar {
-  width: 10px;
->>>>>>> beta
   background: $background-secondary;
 }
 
@@ -137,17 +132,10 @@ h2 {
   background-color: $background-secondary;
 }
 
-<<<<<<< HEAD
 ::-webkit-resizer { 
   background-image: url(/resources/resize.png);
   background-repeat: no-repeat; 
   background-position: bottom right; 
-=======
-.restaurant-empty::-webkit-resizer {
-  background-image: url(/resources/resize.png); /* Create proper image for resize later. */
-  background-repeat: no-repeat;
-  background-position: bottom right;
->>>>>>> beta
 }
 
 .hold {
@@ -162,7 +150,6 @@ h2 {
 .invisible {
   display: none;
 }
-<<<<<<< HEAD
 
 @media only screen and (min-width: 1000px) {
   .column-switcher {
@@ -199,5 +186,3 @@ h2 {
               inset 0px 1px 0px $card-shadow-inverse;
 }
 */
-=======
->>>>>>> beta
