@@ -119,7 +119,7 @@ module.exports = (db, twilio) => {
           UPDATE orders
             SET time_confirmed = 'infinity',
             time_complete = 'infinity'
-          WHERE id = $1s
+          WHERE id = $1
           RETURNING id;
         `, [request.orderId])
           .then(query => getUserNumber(query.rows[0].id)
