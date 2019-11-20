@@ -59,7 +59,7 @@ module.exports = (db, twilio) => {
   router.post("/update", (req, res) => {
     const order = req.body.order;
     console.log('body', req.body);
-    console.log('orderId', order)
+    console.log('orderId', order);
     return db.query(`
     SELECT time_confirmed
     FROM orders
