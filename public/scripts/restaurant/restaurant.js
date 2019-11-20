@@ -2,21 +2,34 @@
 let object = {};
 let pushArray = [];
 let IdArray = [];
-let dataCount = 0;
+let currentDataCount = 0;
+let previousDataCount = 0;
+let DataCount = 0;
 
-// function updateOrdersCount(num) {
 
-// }
+
+
 
 $("document").ready(function() {
-  // setInterval(loadOrders, 5000);
-  loadOrders();
+  setInterval(loadOrders, 5000);
+  // loadOrders();
   $("#restaurant-deny-order").hide();
   $(".deny-orders").on("click", function() {
     $("#restaurant-deny-order").slideToggle("fast", function() {
       //animation complete
     });
   });
+
+
+
+  function updateOrdersCount(num) {
+    if (DataCount === 0) {
+      DataCount += 1;
+      return 0;
+    } else {
+      return num;
+    }
+  }
 
 
   // UPDATE ORDER TIME TO COMPLETE;
@@ -48,11 +61,23 @@ $("document").ready(function() {
       method: 'GET'
     })
       .done((data, status, xhr) => {
-        renderOrder(data);
+        if (previousDataCount === data.length || previousDataCount === 0) {
+          let sliceIndex = updateOrdersCount(data.length);
+          console.log(sliceIndex);
+          renderOrder(data.slice(sliceIndex));
+        } else {
+          console.log(previousDataCount);
+          renderOrder(data.slice(previousDataCount + 1));
+        }
+        previousDataCount = data.length;
       }).catch(() => {
         console.log('failed');
       });
   }
+  //slice at 0
+  //slice at data.length
+  //slice at data.length of previous ajax call
+  //slice at data.length
 
   function orderComplete() {
     $.ajax('/restaurant/orders', {
