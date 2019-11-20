@@ -117,8 +117,8 @@ module.exports = (db, twilio) => {
       case 'deny':
         db.query(`
           UPDATE orders
-            SET time_confirmed = 'infinity',
-            time_complete = 'infinity'
+            SET time_confirmed = '1 BC',
+            time_complete = '1 BC'
           WHERE id = $1s
           RETURNING id;
         `, [request.orderId])
@@ -139,7 +139,7 @@ module.exports = (db, twilio) => {
       case 'cancel':
         db.query(`
           UPDATE orders
-            SET time_complete = 'infinity'
+            SET time_complete = '1 BC'
           WHERE id = $1
           RETURNING id;
         `, [request.orderId])
