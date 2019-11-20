@@ -3,11 +3,11 @@
 $(() => {
   $(".user-order-now").on('click', ((event) => {
     event.preventDefault();
-  }));  
+  }));
 
   $(".user-order-submit").on('click', ((event) => {
     event.preventDefault();
-  })); 
+  }));
 
   //template for full menu
   const template = `
@@ -25,8 +25,7 @@ $(() => {
   //get data from GET /menu
   //loop through data and render to table
 
-  $(".user-order-now").on('click', ((event) => {
-    // event.preventDefault();
+  $(".user-order-now").on('click', (() => {
     let category = [];
     $.ajax("user/menu", {
       method: 'GET',
@@ -34,7 +33,7 @@ $(() => {
     }).done((data) => {
       $.each(data, (index) => {
         const $temp = $(template);
-        let $category = data[index].menu_category
+        let $category = data[index].menu_category;
         if (!category.includes($category)) {
           category.push($category);
           
@@ -53,16 +52,12 @@ $(() => {
       });
       $.each(category, (index) => {
         $(".user-nav-menu").append("<span>",category[index],"</span>");
-      })
+      });
 
-      // renderCookieCart();
       orderSum();
 
     });
   }));
-
-  // renderCookieCart();
-  // localStorage.clear();
 
 
 });
