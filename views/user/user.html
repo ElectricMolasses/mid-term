@@ -2,6 +2,8 @@
 <html>
 <head>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!-- CSS -->
   <link type="text/css" href="styles/user/user.css" rel="stylesheet">
   <link type="text/css" href="styles/user/user-menu.css" rel="stylesheet">
@@ -25,10 +27,7 @@
   <nav class="user-header">
     <div class="user-navbar">
       <a>THAI-TANIC</a>
-      <span>About Us</span>
-      <span>Menu</span>
-      <span>Reservation</span>
-      <span>Contact Us</span>
+      
       <!-- //shopping cart always show -->
       <span class="order-cart-icon"> 
         <img src="/resources/cart-outline.png">
@@ -48,7 +47,7 @@
     <!-- Invisible unless logged in -->
     <div class="user-logged">
         <span class="user-email1">hello</span>
-        <form class="user-logout" method="POST" action="user/logout" value="Log Out"><button type="submit">Log Out</button></form>
+        <form class="user-logout" value="Log Out"><button type="submit">Log Out</button></form>
     </div>
   </nav>
 
@@ -102,7 +101,6 @@
   <div class="order-confirmation">
       <img class="user-close-form" src="/resources/cancel.png">
     <h2>Thank you for your order</h2>
-    <p>Thai-Tanic is confirming your oder</p>
     <p class="user-time-confirm"></p>
   </div>
 

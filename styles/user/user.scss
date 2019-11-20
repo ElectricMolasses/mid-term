@@ -1,12 +1,13 @@
-@use '../base';
+@import '../base';
 
 $base-color: base;
 
 body {
-  background-color: $base-color;
+  background-color: $uc1;
   width: 100%;
   align-content: center;
   color: #fdbb12;
+  margin: 0;
 }
 
 .user-header {
@@ -17,27 +18,15 @@ body {
   justify-content: space-between;
   width: 100%;
   height: 60px;
-  font-size: 24px;
-  background-color: #ffffff;
+  background: rgba(67, 44, 4, 0.445);
+  box-shadow: 0px 0px 0px 1px rgba(67, 44, 4, 0.445);
 
   .user-navbar {
-    a {
-      font-size: 40px;
-      margin-right: 10px;
-    }
-    span {
-      margin-right: 20px;
-    }
+    // Header bar at the top.
   }
 
   .user-access {
-    display: block;
-    span {
-      margin-right: 20px;
-    }
-    .user-login, .user-signup :hover {
-      opacity: 1;
-    }
+    // Sign in and out boxes.
   }
   .user-logged {
     display: none;
@@ -50,15 +39,14 @@ body {
 }
 
 .user-photoheader {
-  
-  margin: 0 auto;
-  // display: lex;
-  // justify-content: center;
+
   img {
     width: 100%;
   }
 
 }
+
+// Pop up windows for user sign in and sign out.
 
 .user-login-form, .user-signup-form {
   display: none;
@@ -81,10 +69,14 @@ body {
     width: 250px;
   }
 }
+// This is the x in the corner of the screen for the login box.
 .user-close-form {
   width: 15px;
   height: 15px;
 }
+
+// Restaurant is confirming your order box.
+
 .order-confirmation {
   display: none;
   position: fixed;
@@ -100,3 +92,28 @@ body {
   display: block;
 }
 
+// Scroll bar styling.
+
+::-webkit-scrollbar {
+  width: 10px;  
+  background: $uc2;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(136, 89, 62, 0.726);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $uc2;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: $background-secondary;
+}
+
+::-webkit-resizer { 
+  background-image: url(/resources/resize.png);
+  background-repeat: no-repeat; 
+  background-position: bottom right; 
+}
