@@ -72,7 +72,7 @@ module.exports = (db, twilio) => {
         // console.log(res.json(query.rows[0]));
         console.log(query.rows[0]);
       });
-      
+
   });
 
   router.post("/login", (req, res) => {
@@ -130,8 +130,8 @@ module.exports = (db, twilio) => {
     `, [userId])
       .then(query => {
         const orderId = query.rows[0].id;
-        
-        
+
+
         for (const item of orderItems) {
           console.log(item);
           db.query(`
@@ -172,7 +172,7 @@ module.exports = (db, twilio) => {
                   });
               });
           });
-        
+
       })
       .catch(err => {
         console.log(err.message);
