@@ -1,8 +1,8 @@
 // template for Order Cart
 const templateOrder = `
-  
+
 <div class="user-order1">
-  
+
   <span class="user-item-name"></span>
   <span class="user-order-quantity"></span>
   <span>
@@ -21,7 +21,7 @@ const templateOrder = `
 <input class="user-order-submit" type="submit" value="Place Order"></input>
 `;
 
-//helpers funtions 
+//helpers funtions
 
 //sum up total of each order to show in order cart
 
@@ -45,29 +45,29 @@ const renderCookieCart = () => {
   const cartLocalStorage = JSON.parse(localStorage.getItem('sessionCart'));
   console.log(cartLocalStorage);
   if (cartLocalStorage !== null) {
-    for (let order in cartLocalStorage) {    
+    for (let order in cartLocalStorage) {
       const $temp = $(templateOrder);
       $temp.find(".user-item-name").append(cartLocalStorage[order]["name"]);
       $temp.find(".user-order-quantity").append(cartLocalStorage[order]["quantity"]);
       $temp.find(".user-item-price").append((cartLocalStorage[order]["price"] * cartLocalStorage[order]["quantity"]) .toFixed(2));
-      
+
       $(".footer, input").detach();
       $(".user-order").append($temp);
-    }  
+    }
   }
   totalOrder(cartLocalStorage);
 }
 
 //add all order items to order cart template
 const addToCart = (orders) => {
-  
-  for (let order in orders) {    
+
+  for (let order in orders) {
     const $temp = $(templateOrder);
     $temp.find(".user-item-name").append(orders[order]["name"]);
     $temp.find(".user-order-quantity").append(orders[order]["quantity"]);
     $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
-    
-    
+
+
     $(".footer, input").detach();
     $(".user-order").append($temp);
   }
@@ -81,7 +81,7 @@ const addToCart = (orders) => {
 
 
 const orderSum = () => {
-    
+
   let orderItems = [];
   let $foodName = {};
   let storage = JSON.parse(localStorage.getItem('sessionCart'));
@@ -97,7 +97,7 @@ const orderSum = () => {
     const $name = $(this).closest('div').find(".user-item-name").text();
     orderItems.push($name);
     if (Object.keys($foodName).length === 0) {
-      $foodName[$name] = { 
+      $foodName[$name] = {
         name: $name,
         quantity: 1,
         price: $((this).closest('div')).find(".user-item-price").text() / 100
@@ -106,16 +106,16 @@ const orderSum = () => {
       if ($foodName.hasOwnProperty($name)) {
         $foodName[$name].quantity += 1;
       } else {
-        $foodName[$name] = { 
+        $foodName[$name] = {
           name: $name,
           quantity: 1,
           price: $((this).closest('div')).find(".user-item-price").text() / 100
         };
       }
     }
-    
+
     addToCart($foodName);   //add food item to cart
-    
+
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
 
 
@@ -137,7 +137,7 @@ const orderSum = () => {
         data: {
           items: orderItems,
         }
-      })  
+      })
       .done((res) => {
         if (res === 500) {
           alert("Please sign in to place order");
