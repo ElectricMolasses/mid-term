@@ -1,11 +1,22 @@
 
 $(() => {
 
+  $.ajax('/user/profile', {
+    method: 'GET',
+    dataType: "json"
+  }).done((data) => {
+    $(".user-access").hide().removeClass('visible');
+    $(".user-email1").text(data.first_name);
+    $(".user-logged").show().addClass('visible');
+  });
+
+
   //LOGIN BUTTON: get login form popup
-  $(".user-login").on('click',(() => {
+  $(".user-login").on('click', (() => {
     if ($(".user-login-form").hasClass('visible')) {
       $(".user-login-form").hide().removeClass('visible');
-      
+      $(".user-access").hide().removeClass('visible');
+      $(".user-logged").show().addClass('visible');
     } else {
       $(".user-login-form").show().addClass('visible');
       $(".user-signup-form").hide().removeClass('visible');
@@ -14,7 +25,7 @@ $(() => {
   );
 
   //SIGNUP BUTTON: get signup form popup
-  $(".user-signup").on('click',(() => {
+  $(".user-signup").on('click', (() => {
     if ($(".user-signup-form").hasClass('visible')) {
       $(".user-signup-form").hide().removeClass('visible');
     } else {
@@ -23,23 +34,21 @@ $(() => {
     }
   })
   );
- 
+
   //CLOSE BUTTON
 
   $("body").on('click', ".user-close-form", () => {
-    let $this = $(".user-close-form")
+    let $this = $(".user-close-form");
     if ($this.closest("div").hasClass('visible')) {
       $this.closest("div").hide().removeClass('visible');
     } else {
       $this.closest("div").show().addClass('visible');
     }
-  })
-  
-  //LOGOUT BUTTON: stretch work
+  });
 
   //SHOPPING CART: Order Summary Popup
 
-  $(".order-cart-icon").on('click',(() => {
+  $(".order-cart-icon").on('click', (() => {
     if ($(".user-order").hasClass('visible')) {
       $(".user-order").hide().removeClass('visible');
     } else {
@@ -67,20 +76,20 @@ $(() => {
         email: $(".user-email").val(),
         password: $(".user-password").val()
       }
-    }).done((res) => {
-        $(".user-login-form").hide().removeClass('visible');
-        $(".user-order-now").trigger('click'); // menu section pop up once click login
-        
-      }).then (() => {
-        $.ajax('/user/profile', {
-          method: 'GET',
-          dataType: "json"
-        }).done((data) => {
-          $(".user-access").hide().removeClass('visible');
-          $(".user-email1").text(data.first_name);
-          $(".user-logged").show().addClass('visible');
-        });
-      })
+    }).done(() => {
+      $(".user-login-form").hide().removeClass('visible');
+      $(".user-order-now").trigger('click'); // menu section pop up once click login
+
+    }).then(() => {
+      $.ajax('/user/profile', {
+        method: 'GET',
+        dataType: "json"
+      }).done((data) => {
+        $(".user-access").hide().removeClass('visible');
+        $(".user-email1").text(data.first_name);
+        $(".user-logged").show().addClass('visible');
+      });
+    });
   }));
 });
 
