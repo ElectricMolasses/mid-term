@@ -11,12 +11,12 @@ $("document").ready(function() {
     setInterval(sendOrderIds, 10000);
   });
   // loadOrders();
-  $("#restaurant-deny-order").hide();
-  $(".deny-orders").on("click", function() {
-    $("#restaurant-deny-order").slideToggle("fast", function() {
-      //animation complete
-    });
-  });
+  // $("#restaurant-deny-order").hide();
+  // $(".deny-orders").on("click", function() {
+  //   $("#restaurant-deny-order").slideToggle("fast", function() {
+  //     //animation complete
+  //   });
+  // });
 
   function confirmOrderAccepted(id) {
     $.ajax('/restaurant/orders', {
