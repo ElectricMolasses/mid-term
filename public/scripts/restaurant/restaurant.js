@@ -11,7 +11,6 @@ $("document").ready(function() {
     setInterval(sendOrderIds, 10000);
   });
 
-
   function confirmOrderAccepted(id) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
@@ -185,6 +184,7 @@ $("document").ready(function() {
       if (this === document.getElementById("restaurant-incoming") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-incoming").append($(`#${pushArray[0]}`));
       } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
+        $(".restaurant-pop-up").show();
         $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
         confirmOrderAccepted(pushArray[0]);
       } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
@@ -199,8 +199,13 @@ $("document").ready(function() {
       this.className = "restaurant-empty";
     }
   }
-
+  $(".restaurant-pop-up").hide();
   $(".restaurant-login-form").hide();
+
+  //Click to submit order time
+  $("#restaurant-pop-submit").on("click", () => {
+    alert("hello");
+  })
   //Click log in button to dsiplay form
   $(".restaurant-login-button").on("click", function() {
     $(".restaurant-login-form").slideToggle("slow", function() {
