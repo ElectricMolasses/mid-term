@@ -12,6 +12,8 @@ const path = require('path');
 module.exports = (db, twilio) => {
   router.get("/", (req, res) => {
     console.log(req.data);
+    //test cookies
+    req.session
     res.sendFile(path.resolve('./views/user/user.html'));
   }),
 
@@ -61,7 +63,7 @@ module.exports = (db, twilio) => {
     console.log('body', req.body);
     console.log('orderId', order)
     return db.query(`
-    SELECT time_confirmed
+    SELECT time_estimate
     FROM orders
     WHERE id = $1;
     `, [order])

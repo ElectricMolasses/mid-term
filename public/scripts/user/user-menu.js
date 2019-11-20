@@ -54,11 +54,15 @@ $(() => {
       $.each(category, (index) => {
         $(".user-nav-menu").append("<span>",category[index],"</span>");
       })
+
+      // renderCookieCart();
       orderSum();
 
     });
   }));
 
+  // renderCookieCart();
+  // localStorage.clear();
 
 
 });

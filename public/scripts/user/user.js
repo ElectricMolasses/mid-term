@@ -23,30 +23,23 @@ $(() => {
     }
   })
   );
-  //CANCEL BUTTON: close the form
-  $(".user-close-form").on('click',(() => {
-    if ($(".user-login-form").hasClass('visible')) {
-      $(".user-login-form").hide().removeClass('visible');
-    } else {
-      $(".user-login-form").show().addClass('visible');
-    }
-  })
-  );
-  $(".user-close-form1").on('click',(() => {
-    if ($(".user-signup-form").hasClass('visible')) {
-      $(".user-signup-form").hide().removeClass('visible');
-    } else {
-      $(".user-signup-form").show().addClass('visible');
-    }
-  })
-  );
+ 
+  //CLOSE BUTTON
 
+  $("body").on('click', ".user-close-form", () => {
+    let $this = $(".user-close-form")
+    if ($this.closest("div").hasClass('visible')) {
+      $this.closest("div").hide().removeClass('visible');
+    } else {
+      $this.closest("div").show().addClass('visible');
+    }
+  })
   
   //LOGOUT BUTTON: stretch work
 
   //SHOPPING CART: Order Summary Popup
 
-  $(".user-logged img").on('click',(() => {
+  $(".order-cart-icon").on('click',(() => {
     if ($(".user-order").hasClass('visible')) {
       $(".user-order").hide().removeClass('visible');
     } else {
