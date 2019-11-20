@@ -117,9 +117,15 @@ module.exports = (db, twilio) => {
       case 'deny':
         db.query(`
           UPDATE orders
+<<<<<<< HEAD
             SET time_confirmed = 'infinity',
             time_complete = 'infinity'
           WHERE id = $1
+=======
+            SET time_confirmed = '1 BC',
+            time_complete = '1 BC'
+          WHERE id = $1s
+>>>>>>> 807f70b232f1ed78fd5862d0c6ef489cbefdca40
           RETURNING id;
         `, [request.orderId])
           .then(query => getUserNumber(query.rows[0].id)
@@ -139,7 +145,7 @@ module.exports = (db, twilio) => {
       case 'cancel':
         db.query(`
           UPDATE orders
-            SET time_complete = 'infinity'
+            SET time_complete = '1 BC'
           WHERE id = $1
           RETURNING id;
         `, [request.orderId])
