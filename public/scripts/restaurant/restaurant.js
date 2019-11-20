@@ -4,10 +4,6 @@
 let object = {};
 let pushArray = [];
 let IdArray = [];
-let hours = 0;
-let minutes = 0;
-let seconds = 0;
-let timeOut = 1000;
 
 $("document").ready(function() {
   loadOrders()
@@ -15,19 +11,6 @@ $("document").ready(function() {
     setInterval(sendOrderIds, 10000);
   });
 
-  setInterval(() => {
-    seconds++;
-    if (seconds === 60) {
-      minutes += 1;
-      seconds = 0;
-    }
-    if (minutes === 60) {
-      minutes = 0;
-      hours += 1;
-    }
-    $(".restaurant-current-time").text(`${minutes}:${seconds}`);
-
-  }, timeOut);
 
   function confirmOrderAccepted(id) {
     $.ajax('/restaurant/orders', {
@@ -97,10 +80,10 @@ $("document").ready(function() {
     const deny = document.querySelector("#restaurant-deny-order");
     for (let i = 0; orders.length; i++) {
       console.log(orders[i].time_confirmed);
-      if (orders[i].time_complete) {
-        complete.append(createOrder(orders[i]));
-      } else if(orders[i].time_confirmed == "infinity") {
+      if (orders[i].time_confirmed == "infinity") {
         deny.append(createOrder(orders[i]));
+      } else if (orders[i].time_complete) {
+        complete.append(createOrder(orders[i]));
       } else if (orders[i].time_confirmed) {
         inProgress.append(createOrder(orders[i]));
       } else {
@@ -119,7 +102,8 @@ $("document").ready(function() {
 
   function createOrder(i) {
     let time = i.time_placed.slice(0, 19);
-    let timeStamp = time
+    let timeStamp = time;
+    console.log(timeStamp);
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -144,7 +128,7 @@ $("document").ready(function() {
       </div>
       <div class="restaurant-current-time-holder">
       <p class="restaurant-current-time-elasped">Time Elapsed</p>
-      <span class="restaurant-current-time">${(moment(timeStamp).fromNow())}<span>
+      <span class="restaurant-current-time">${moment(timeStamp).fromNow()}<span>
       </div>`);
 
 
