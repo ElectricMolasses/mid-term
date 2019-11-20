@@ -3,11 +3,11 @@
 // import { object } from "twilio/lib/base/serialize";
 let object = {};
 let originList = [];
-let completedList = [];
-let incomingList = [];
 let inprogressList = [];
-let denyList = [];
 let IdArray = [];
+// let denyList = [];
+// let completedList = [];
+// let incomingList = [];
 
 $("document").ready(function() {
   loadOrders()
@@ -93,19 +93,6 @@ $("document").ready(function() {
         incoming.append(createOrder(order));
       }
     })
-    // for (let i = 0; orders.length - 1; i++) {
-    //   console.log("orders of i", orders[i]);
-    //   // console.log('id', orders[i].id, 'time_confirmed', orders[i].time_confirmed, 'time_complete', orders[i].time_complete)
-    //   if (orders[i].time_confirmed === "1990-01-01T00:00:00.000Z") {
-    //     deny.append(createOrder(orders[i]));
-    //   } else if (orders[i].time_complete) {
-    //     complete.append(createOrder(orders[i]));
-    //   } else if (orders[i].time_confirmed) {
-    //     inProgress.append(createOrder(orders[i]));
-    //   } else {
-    //     incoming.append(createOrder(orders[i]));
-    //   }
-    // }
   }
 
   function generateLi(orderItemsObject) {
@@ -180,9 +167,9 @@ $("document").ready(function() {
     // if (event.path[1].attributes[0].nodeValue === "restaurant-deny-order") {
     //   denyList.push(event.path[1].attributes[0].nodeValue);
     // }
-    if (event.path[1].attributes[0].nodeValue === "restaurant-in-progress") {
-      inprogressList.push(event.path[1].attributes[0].nodeValue);
-    }
+    // if (event.path[1].attributes[0].nodeValue === "restaurant-in-progress") {
+    //   inprogressList.push(event.path[1].attributes[0].nodeValue);
+    // }
     this.className += ' hold';
     setTimeout(() => {
       this.className = 'invisible';
@@ -192,18 +179,6 @@ $("document").ready(function() {
   function dragEnd() {
     this.className = 'restaurant-fill';
     originList.pop();
-    // if (incomingList[0] === "restaurant-incoming") {
-    //   incomingList.pop();
-    // }
-    // if (completedList[0] === "restaurant-complete") {
-    //   completedList.pop();
-    // }
-    // if (denyList[0] === "restaurant-deny-order") {
-    //   denyList.pop();
-    // }
-    // if (inprogressList[0] === "restaurant-in-progress") {
-    //   inprogressList.pop();
-    // }
   }
 
   function dragOver(e) {
