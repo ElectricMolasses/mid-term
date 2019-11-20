@@ -220,22 +220,7 @@ module.exports = (db, twilio) => {
     // Will repeat polls to the db as an update loop.  Since order ID's are always unique, it will check them against a Set, and if anything
     // has changed, one of the ID's the user provides won't match.
     const restCache = req.body.orderIds;
-    const newOrders = [];
-    const uniqueNewOrders = {};
-    let exceptionString = '';
-
-    if (restCache.length > 0) {
-      exceptionString += `WHERE id != `;
-    }
-
-    for (let i = 0; i < restCache.length; i++) {
-      exceptionString += restCache[i];
-      if (i < restCache.length - 1) {
-        exceptionString += ' AND ';
-      }
-    }
-
-    return db.query(`
+    let exceptionString = `
     SELECT orders.id AS id,
       CONCAT(users.first_name, ' ',
           INITCAP(LEFT(users.last_name, 1))) AS customer,
@@ -247,8 +232,25 @@ module.exports = (db, twilio) => {
       JOIN users ON (customer_id = users.id)
       JOIN order_items ON (order_id = orders.id)
       JOIN items ON (item_id = items.id)
-    $1;
-    `, [exceptionString])
+
+    `;
+    console.log(restCache);
+
+    if (restCache.length > 0) {
+      exceptionString += `WHERE orders.id != `;
+    }
+
+    for (let i = 0; i < restCache.length; i++) {
+      exceptionString += restCache[i];
+      if (i < restCache.length - 1) {
+        exceptionString += ' AND orders.id != ';
+      } else {
+        exceptionString += `;`;
+      }
+    }
+    console.log(exceptionString);
+
+    return db.query(exceptionString)
       .then(query => {
         const data = query.rows;
         const uniqueOrders = {};
@@ -277,6 +279,7 @@ module.exports = (db, twilio) => {
         res.json(formattedOutput);
       })
       .catch(err => {
+        console.log(err.message);
         res
           .status(500)
           .json({ error: err.message });
