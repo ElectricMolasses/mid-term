@@ -108,7 +108,7 @@ h2 {
 }
 
 .restaurant-empty::-webkit-scrollbar {
-  width: 10px;  
+  width: 10px;
   background: $background-secondary;
 }
 
@@ -125,10 +125,10 @@ h2 {
   background-color: $background-secondary;
 }
 
-.restaurant-empty::-webkit-resizer { 
+.restaurant-empty::-webkit-resizer {
   background-image: url(/resources/resize.png); /* Create proper image for resize later. */
-  background-repeat: no-repeat; 
-  background-position: bottom right; 
+  background-repeat: no-repeat;
+  background-position: bottom right;
 }
 
 

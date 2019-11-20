@@ -6,26 +6,17 @@ let pushArray = [];
 let IdArray = [];
 
 $("document").ready(function() {
-  // setInterval(loadOrders, 5000);
-  loadOrders();
+  loadOrders()
+  .then(function () {
+    setInterval(sendOrderIds, 5000);
+  });
+  // loadOrders();
   $("#restaurant-deny-order").hide();
   $(".deny-orders").on("click", function() {
     $("#restaurant-deny-order").slideToggle("fast", function() {
       //animation complete
     });
   });
-
-  // UPDATE ORDER TIME TO COMPLETE;
-  // function updateTimeEstamate() {
-  //   $.ajax('/restaurant/orders', {
-  //     method: 'PUT',
-  //     data: {
-  //       orderId: 3,
-  //       orderStatus: 'estimate',
-  //       time_estimate: new Date(2019, 10, 18, 12, 15, 0)
-  //     }
-  //   })
-  // }
 
   function confirmOrderAccepted() {
     $.ajax('/restaurant/orders', {
@@ -39,16 +30,28 @@ $("document").ready(function() {
   }
 
   function loadOrders() {
-    $.ajax('/restaurant/orders/', {
+    return $.ajax('/restaurant/orders/', {
       method: 'GET'
     })
       .done((data, status, xhr) => {
-        console.log(data);
         renderOrder(data);
       }).catch(() => {
         console.log('failed');
       });
+
+}
+
+  function sendOrderIds() {
+    $.ajax('/restaurant/update', {
+      data: {
+        orderIds: IdArray
+      }
+    }).then((data) => {
+      console.log(data)
+      renderOrder(data);
+    })
   }
+
 
   function orderComplete() {
     $.ajax('/restaurant/orders', {
@@ -80,10 +83,8 @@ $("document").ready(function() {
   function renderOrder(orders) {
     const incoming = document.querySelector("#restaurant-incoming");
     const complete = document.querySelector("#restaurant-complete");
-    // const inprogress = document.querySelector("#restaurant-in-progress");
-    // const deny
     for (let i = 0; orders.length; i++) {
-      if (orders[i].time_complete !== null) {
+      if (orders[i].time_complete) {
         complete.append(createOrder(orders[i]));
       } else {
         incoming.append(createOrder(orders[i]));
@@ -196,7 +197,6 @@ $("document").ready(function() {
       this.className = "restaurant-empty";
     }
   }
-
 
   $(".restaurant-login-form").hide();
   //Click log in button to dsiplay form
