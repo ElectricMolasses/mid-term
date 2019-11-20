@@ -1,6 +1,13 @@
 .user-nav-menu {
   position: fixed;
-  display: grid;
+  // display: grid;
+  display:inline-flex;
+  background-color: #63422E;
+  opacity: 50%;
+  span {
+    margin: 0 10px;
+  }
+
 }
 .user-menu {
   background-color: #63422E;
