@@ -2,7 +2,11 @@
 
 // import { object } from "twilio/lib/base/serialize";
 let object = {};
-let pushArray = [];
+let originList = [];
+let completedList = [];
+let incomingList = [];
+let inprogressList = [];
+let denyList = [];
 let IdArray = [];
 
 $("document").ready(function() {
@@ -12,6 +16,8 @@ $("document").ready(function() {
   });
 
   function confirmOrderAccepted(id, time) {
+    console.log('id', id);
+    console.log('time', time);
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
@@ -76,18 +82,30 @@ $("document").ready(function() {
     const complete = document.querySelector("#restaurant-complete");
     const inProgress = document.querySelector("#restaurant-in-progress");
     const deny = document.querySelector("#restaurant-deny-order");
-    for (let i = 0; orders.length; i++) {
-      console.log('id', orders[i].id, 'time_confirmed', orders[i].time_confirmed, 'time_complete', orders[i].time_complete)
-      if (orders[i].time_confirmed === "1990-01-01T00:00:00.000Z") {
-        deny.append(createOrder(orders[i]));
-      } else if (orders[i].time_complete) {
-        complete.append(createOrder(orders[i]));
-      } else if (orders[i].time_confirmed) {
-        inProgress.append(createOrder(orders[i]));
+    orders.forEach(order => {
+      if (order.time_confirmed === "1990-01-01T00:00:00.000Z") {
+        deny.append(createOrder(order));
+      } else if (order.time_complete) {
+        complete.append(createOrder(order));
+      } else if (order.time_confirmed) {
+        inProgress.append(createOrder(order));
       } else {
-        incoming.append(createOrder(orders[i]));
+        incoming.append(createOrder(order));
       }
-    }
+    })
+    // for (let i = 0; orders.length - 1; i++) {
+    //   console.log("orders of i", orders[i]);
+    //   // console.log('id', orders[i].id, 'time_confirmed', orders[i].time_confirmed, 'time_complete', orders[i].time_complete)
+    //   if (orders[i].time_confirmed === "1990-01-01T00:00:00.000Z") {
+    //     deny.append(createOrder(orders[i]));
+    //   } else if (orders[i].time_complete) {
+    //     complete.append(createOrder(orders[i]));
+    //   } else if (orders[i].time_confirmed) {
+    //     inProgress.append(createOrder(orders[i]));
+    //   } else {
+    //     incoming.append(createOrder(orders[i]));
+    //   }
+    // }
   }
 
   function generateLi(orderItemsObject) {
@@ -152,7 +170,19 @@ $("document").ready(function() {
   }
 
   function dragStart() {
-    pushArray.push(event.toElement.attributes.id.nodeValue);
+    originList.push(event.toElement.attributes.id.nodeValue);
+    // if (event.path[1].attributes[0].nodeValue === "restaurant-incoming") {
+    //   incomingList.push(event.path[1].attributes[0].nodeValue);
+    // }
+    // if (event.path[1].attributes[0].nodeValue === "restaurant-complete") {
+    //   completedList.push(event.path[1].attributes[0].nodeValue);
+    // }
+    // if (event.path[1].attributes[0].nodeValue === "restaurant-deny-order") {
+    //   denyList.push(event.path[1].attributes[0].nodeValue);
+    // }
+    if (event.path[1].attributes[0].nodeValue === "restaurant-in-progress") {
+      inprogressList.push(event.path[1].attributes[0].nodeValue);
+    }
     this.className += ' hold';
     setTimeout(() => {
       this.className = 'invisible';
@@ -161,7 +191,19 @@ $("document").ready(function() {
 
   function dragEnd() {
     this.className = 'restaurant-fill';
-    pushArray.pop();
+    originList.pop();
+    // if (incomingList[0] === "restaurant-incoming") {
+    //   incomingList.pop();
+    // }
+    // if (completedList[0] === "restaurant-complete") {
+    //   completedList.pop();
+    // }
+    // if (denyList[0] === "restaurant-deny-order") {
+    //   denyList.pop();
+    // }
+    // if (inprogressList[0] === "restaurant-in-progress") {
+    //   inprogressList.pop();
+    // }
   }
 
   function dragOver(e) {
@@ -179,23 +221,25 @@ $("document").ready(function() {
 
   function dragDrop(event) {
     for (const i in object) {
-      if (this === document.getElementById("restaurant-incoming") && pushArray[pushArray.length - 1] === i) {
-        $("#restaurant-incoming").append($(`#${pushArray[0]}`));
-      } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
+      if (this === document.getElementById("restaurant-incoming") && originList[originList.length - 1] === i) {
+        $("#restaurant-incoming").append($(`#${originList[0]}`));
+      } else if (this === document.getElementById("restaurant-in-progress") && originList[originList.length - 1] === i) {
         $(".restaurant-pop-up").show();
+        inprogressList.push(originList[0]);
+        $("#restaurant-in-progress").append($(`#${originList[0]}`));
 
-        $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
         $("#restaurant-pop-submit").on("click", () => {
-          confirmOrderAccepted(pushArray[0], $(".restaurant-time-data").val());
+          confirmOrderAccepted(inprogressList[0], $(".restaurant-time-data").val());
+          inprogressList.pop();
         })
-      } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
-        $("#restaurant-complete").append($(`#${pushArray[0]}`));
-        $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
-        $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
+      } else if (this === document.getElementById("restaurant-complete") && originList[originList.length - 1] === i) {
+        $("#restaurant-complete").append($(`#${originList[0]}`));
+        $(`#${originList[0]} .restaurant-time-started`).text(moment());
+        $(`#${originList[0]} .restaurant-time-status`).text("Time Complete");
         orderComplete();
-      } else if (this === document.getElementById("restaurant-deny-order") && pushArray[pushArray.length - 1] === i) {
-        denyOrder(pushArray[0]);
-        $("#restaurant-deny-order").append($(`#${pushArray[0]}`));
+      } else if (this === document.getElementById("restaurant-deny-order") && originList[originList.length - 1] === i) {
+        denyOrder(originList[0]);
+        $("#restaurant-deny-order").append($(`#${originList[0]}`));
       }
       this.className = "restaurant-empty";
     }
