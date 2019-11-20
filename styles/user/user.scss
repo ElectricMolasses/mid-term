@@ -29,7 +29,7 @@ body {
     // Sign in and out boxes.
   }
   .user-logged {
-    display: none;
+    visibility: hidden;
     margin-right:70px;
     position: fixed;
     .user-logout {
@@ -49,24 +49,33 @@ body {
 // Pop up windows for user sign in and sign out.
 
 .user-login-form, .user-signup-form {
-  display: none;
+  visibility: hidden;
   position: fixed;
-  width: 300px;
-  margin: 0 auto;
-  margin-right:10px;
-  padding: 5% 7%;
+  width: 50%;
+  margin: auto;
+  padding: 0px;
   top:30%;
-  left: 50%;
-  background-color: #ffffff;  
+  left: 20%;
+  background-color: $background-user-secondary;  
+  border: 1px solid $uc2;
+  border-radius: 3px;
   z-index: 9;
+  
   img {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     float: right;
+    margin: 3px;
   }
+
   input, button {
     display: block;
-    width: 250px;
+    width: 70%;
+    margin: 3px;
+  }
+
+  button {
+    border-radius: 3px;
   }
 }
 // This is the x in the corner of the screen for the login box.
@@ -78,7 +87,7 @@ body {
 // Restaurant is confirming your order box.
 
 .order-confirmation {
-  display: none;
+  visibility: hidden;
   position: fixed;
   top: 300px;
   background-color: red;
@@ -89,7 +98,7 @@ body {
 //unhide forms
 
 .visible {
-  display: block;
+  visibility: visible;
 }
 
 // Scroll bar styling.
