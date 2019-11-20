@@ -4,19 +4,30 @@
 let object = {};
 let pushArray = [];
 let IdArray = [];
+let hours = 0;
+let minutes = 0;
+let seconds = 0;
+let timeOut = 1000;
 
 $("document").ready(function() {
   loadOrders()
   .then(function() {
     setInterval(sendOrderIds, 10000);
   });
-  // loadOrders();
-  // $("#restaurant-deny-order").hide();
-  // $(".deny-orders").on("click", function() {
-  //   $("#restaurant-deny-order").slideToggle("fast", function() {
-  //     //animation complete
-  //   });
-  // });
+
+  setInterval(() => {
+    seconds++;
+    if (seconds === 60) {
+      minutes += 1;
+      seconds = 0;
+    }
+    if (minutes === 60) {
+      minutes = 0;
+      hours += 1;
+    }
+    $(".restaurant-current-time").text(`${minutes}:${seconds}`);
+
+  }, timeOut);
 
   function confirmOrderAccepted(id) {
     $.ajax('/restaurant/orders', {
@@ -27,7 +38,6 @@ $("document").ready(function() {
         time_estimate: moment(new Date(1995, 5, 1, 12, 12, 12)).format("YYYY-MM-DD HH:mm:ss")
       }
     });
-    console.log("done");
   }
 
   function loadOrders() {
@@ -215,4 +225,8 @@ $("document").ready(function() {
   });
 
 });
+
+
+
+
 
