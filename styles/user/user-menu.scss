@@ -10,7 +10,7 @@
   // Grid to properly space out menu items.
   .user-menu-table .user-item {
     display: grid;
-    grid-template-rows: 20% 80%;
+    grid-template-rows: 30% 70%;
     grid-template-areas: "category"
                          "item";
     margin: 10px 0px;
@@ -18,14 +18,15 @@
 
     .user-menu-category {
       grid-area: category;
+      padding-bottom: 10px;
     }
 
-    .item-card {
+    .item-card.user-item-add {
 
       display: grid;
       grid-area: item;
-      grid-template-columns: 25% 25% 25% 25%;
-      grid-template-areas: "name description price add";
+      grid-template-columns: 15% 72% 13%;
+      grid-template-areas: "name description price";
 
       .user-item-name {
         grid-area: name;
@@ -39,18 +40,10 @@
         grid-area: price;
         text-align: center;
       }
-
-      .user-item-add {
-        grid-area: add;
-      }
     }
   }
+  
   a {
     display: inline-block;
   }
-}
-.user-item-add, .user-item-remove{
-  margin: 5px;
-  width: 15px;
-  height: 15px;
 }

@@ -14,11 +14,10 @@ $(() => {
   <div class="user-menu-table">
   <span class="user-item">
       <span class="user-menu-category"></span>
-      <div class="item-card">
+      <div class="item-card user-item-add">
         <a class="user-item-name">name</a>
         <a class="user-item-description">description</a>
         <a class="user-item-price">$</a>
-        <img class="user-item-add"src="/resources/plus.png">
       </div>
     </span>
   </div>
