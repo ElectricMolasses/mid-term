@@ -65,16 +65,14 @@ $("document").ready(function() {
     });
   }
 
-  function denyOrder() {
-    event.preventDefault();
+  function denyOrder(id) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
-        orderId: 3,
+        orderId: id,
         orderStatus: 'deny'
       }
     });
-    console.log("deny-Order has been called!");
   }
 
   function parseTimeStamp(time) {
@@ -88,6 +86,7 @@ $("document").ready(function() {
     const inProgress = document.querySelector("#restaurant-in-progress");
     const deny = document.querySelector("#restaurant-deny-order");
     for (let i = 0; orders.length; i++) {
+      console.log(orders[i].time_confirmed);
       if (orders[i].time_complete) {
         complete.append(createOrder(orders[i]));
       } else if(orders[i].time_confirmed == "infinity") {
@@ -111,7 +110,6 @@ $("document").ready(function() {
   function createOrder(i) {
     let time = i.time_placed.slice(0, 19);
     let timeStamp = time
-    console.log(timeStamp);
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -195,14 +193,13 @@ $("document").ready(function() {
       } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
         confirmOrderAccepted(pushArray[0]);
-        console.log(pushArray[0]);
       } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-complete").append($(`#${pushArray[0]}`));
         $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
         $(`#${pushArray[0]} .restaurant-time-status`).text("Time Complete");
         orderComplete();
       } else if (this === document.getElementById("restaurant-deny-order") && pushArray[pushArray.length - 1] === i) {
-        denyOrder();
+        denyOrder(pushArray[0]);
         $("#restaurant-deny-order").append($(`#${pushArray[0]}`));
       }
       this.className = "restaurant-empty";
