@@ -69,8 +69,6 @@ h2 {
   margin-left: 10%;
 }
 
-/* draggable css */
-
 .restaurant-fill {
   display: grid;
   padding: 0px 10px;
@@ -158,31 +156,35 @@ h2 {
     grid-template-columns: 33% 33% 33%;
 
     .restaurant-fill {
-      grid-template-columns: 33% 33% 33%;
-      grid-template-rows: 25% 25% 25% 25%;
+      grid-template-columns: 20% 60% 20%;
+      grid-template-rows: 50% 50%;
       grid-template-areas:
         "name menu-items time"
-        "name menu-items time"
-        "name menu-items time"
-        "name menu-items time";
+        "phone menu-items curtime";
+
+        .restaurant-name-display {
+          grid-area: name;
+        }
+      
+        .restaurant-phonenumber {
+          grid-area: phone;
+          visibility: hidden;
+        }
+      
+        .restaurant-menu-items {
+          grid-area: menu-items;
+        }
+      
+        .restaurant-time-display {
+          grid-area: time;
+        }
+      
+        .restaurant-current-time-holder {
+          grid-area: curtime;
+          visibility: hidden;
+        }
     }
   }
-}
 
-/*
-.restaurant-fill {
-  display: grid;
-  padding: 0px 10px;
-  grid-template-columns: 15% 15% 40% 15% 15%;
-  grid-template-rows: 50% 50%;
-  justify-content: space-evenly;
-  margin: 10px 10px;
-  background-color: $card-bg;
-  color: $text-secondary;
-  font-family: monospace;
-  border-radius: 13px;
-  cursor: pointer;
-  box-shadow: 0px 2px $card-shadow,
-              inset 0px 1px 0px $card-shadow-inverse;
+
 }
-*/
