@@ -13,6 +13,8 @@ const moment = require('moment');
 
 
 module.exports = (db, twilio) => {
+  console.log('TESTING MOMENT');
+
   const getUserNumber = (order_id) => {
     return db.query(`
     SELECT phone_number
@@ -91,6 +93,10 @@ module.exports = (db, twilio) => {
       switch (request.orderStatus) {
       case 'confirm':
         console.log(request.time_estimate);
+        let NOW = moment.now();
+        const estimate = moment(NOW)
+          .add(request.time_estimate, 'minutes')
+          .format("YYYY-MM-DD HH:mm:ss");
         db.query(`
           UPDATE orders
             SET time_confirmed = NOW(),

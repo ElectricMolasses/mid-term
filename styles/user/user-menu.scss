@@ -10,7 +10,7 @@
   // Grid to properly space out menu items.
   .user-menu-table .user-item {
     display: grid;
-    grid-template-rows: 30% 70%;
+    grid-auto-rows: auto;
     grid-template-areas: "category"
                          "item";
     margin: 10px 0px;
@@ -25,8 +25,17 @@
 
       display: grid;
       grid-area: item;
-      grid-template-columns: 15% 72% 13%;
-      grid-template-areas: "name description price";
+      grid-template-columns: auto-fill auto-fill;
+      grid-auto-rows: auto;
+      grid-row-gap: 5px;
+      grid-template-areas: "name price"
+                           "description description";
+
+      background: rgb(58, 38, 26);
+      border-radius: 3px;
+      padding: 12px;
+      box-shadow: 0px 1px 0px 1px rgba(40, 26, 18, 0.267),
+                  inset 0px 0px px -1px rgba(99, 66, 46, 0.37);
 
       .user-item-name {
         grid-area: name;
@@ -38,7 +47,7 @@
 
       .user-item-price {
         grid-area: price;
-        text-align: center;
+        text-align: right;
       }
     }
   }
