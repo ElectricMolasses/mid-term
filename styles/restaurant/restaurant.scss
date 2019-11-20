@@ -217,12 +217,28 @@ h2 {
 /* ========================= */
 /* ========================= */
 
-.restaurant-pop-up {
-  margin: 70px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 5px;
-  width: 30%;
-  position: relative;
+.restaurant-pop-up-form-holder {
+  display: flex;
+  flex-direction: column-reverse;
 }
+
+.restaurant-pop-up-holder {
+  margin: 27em 27em;
+  position: fixed;
+  width: 300px;
+  padding: 5% 7%;
+  background-color: #ffffff;
+  z-index: 9;
+  img {
+    width: 30px;
+    height: 30px;
+    float: right;
+  }
+  input, button {
+    display: block;
+    width: 250px;
+  }
+}
+
+
 
