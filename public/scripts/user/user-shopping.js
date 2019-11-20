@@ -2,15 +2,16 @@
 const templateOrder = `
   
 <div class="user-order1">
-    <span class="user-item-name"></span>
-    <span class="user-order-quantity"></span>
-    <span>
-      <img class="user-item-remove"src="/resources/minus.png">
-    </span>
-    <span class="user-item-price"></span>
-    <span>
-      <img class="user-item-add" src="/resources/plus.png">
-    </span>
+  
+  <span class="user-item-name"></span>
+  <span class="user-order-quantity"></span>
+  <span>
+    <img class="user-item-remove"src="/resources/minus.png">
+  </span>
+  <span class="user-item-price"></span>
+  <span>
+    <img class="user-item-add" src="/resources/plus.png">
+  </span>
 </div>
 <div class="footer">
   <span class="order-subtotal">Subtotal: </span>
@@ -26,22 +27,45 @@ const templateOrder = `
 
 const totalOrder = (orders) => {
   let subTotal = 0;
+  let totalItem = 0;
   for (let order in orders) {
     subTotal += orders[order]["price"] * orders[order]["quantity"];
+    totalItem += orders[order]["quantity"];
   }
   $(".order-subtotal").text(subTotal.toFixed(2));
   $(".order-tax").text((subTotal * 0.05).toFixed(2));
   $(".order-total").text((subTotal + (subTotal * 0.05)).toFixed(2));
+  $(".item-total").text(totalItem);
+  $(".total").text((subTotal + (subTotal * 0.05)).toFixed(2));
+}
+
+//render orders in local storage
+const renderCookieCart = () => {
+  const cartLocalStorage = JSON.parse(localStorage.getItem('sessionCart'));
+  console.log(cartLocalStorage);
+  if (cartLocalStorage !== null) {
+    for (let order in cartLocalStorage) {    
+      const $temp = $(templateOrder);
+      $temp.find(".user-item-name").append(cartLocalStorage[order]["name"]);
+      $temp.find(".user-order-quantity").append(cartLocalStorage[order]["quantity"]);
+      $temp.find(".user-item-price").append((cartLocalStorage[order]["price"] * cartLocalStorage[order]["quantity"]) .toFixed(2));
+      
+      $(".footer, input").detach();
+      $(".user-order").append($temp);
+    }  
+  }
+  totalOrder(cartLocalStorage);
 }
 
 //add all order items to order cart template
-
 const addToCart = (orders) => {
+  
   for (let order in orders) {    
     const $temp = $(templateOrder);
     $temp.find(".user-item-name").append(orders[order]["name"]);
     $temp.find(".user-order-quantity").append(orders[order]["quantity"]);
     $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
+    
     
     $(".footer, input").detach();
     $(".user-order").append($temp);
@@ -49,14 +73,20 @@ const addToCart = (orders) => {
   totalOrder(orders);
 };
 
+
 //------------------
 
 // Pick items from menu and add to order cart or increase qty in order cart
 
+
 const orderSum = () => {
-  
+
+
+    
   let orderItems = [];
   let $foodName = {};
+  
+  renderCookieCart();
   $("body").on('click', ".user-item-add", function(event) {
     event.preventDefault();
     $(".user-order1").detach();
@@ -79,39 +109,65 @@ const orderSum = () => {
         };
       }
     }
+    
     addToCart($foodName);   //add food item to cart
-
+    
+    localStorage.setItem('sessionCart', JSON.stringify($foodName));
+    
     //submit order to server
 
+    let id;
     $(".user-order-submit").on('click', ((event) => {
       event.preventDefault();
+      
       $.ajax("user/order", {
         method: 'POST',
         dataType: "json",
         data: {
           items: orderItems,
         }
-      }).done((res) => {
-        // if (res === 500) {
-        //   alert("Please sign in to place order");
-        // } else {
-          console.log(data);
-          console.log($(".user-order").val());
-          console.log(res.rows);
-        // })
+      })  
+      .done((res) => {
+        if (res === 500) {
+          alert("Please sign in to place order");
+        } else {
+          // console.log(data);
+          // console.log($(".user-order").val());
+          // console.log(res.rows);
+          id = res;
+
+        }
       //get update on order confirmation
       })
-      .then(() => {
-        $.ajax('/user/profile', {
-          method: 'GET',
-          dataType: "json"
-        }).done((res) => {
-          console.log(res.rows[0]);
-        })
-      })
+      $(".user-order").hide().removeClass('visible');
+      $(".order-confirmation").show().addClass('visible');
+      setInterval(() => {checkData()}, 5000);
+      
 
     }))
+
+    function checkData(){
+      console.log(id);
+      $.ajax('/user/update', {
+        method: 'POST',
+        dataType: "json",
+        data: {
+          order: id
+        }
+      }).then((data) => {
+        const time = (data.time_estimate).substring(11, 16);
+        $(".user-time-confirm").text(`Your order was confirmed. The estimate time is ${time}.`);
+      })
+              
+    }
+    function stopInterval() {
+      clearInterval(myVar);
+    }
+
   })
+
+
+  
 
   //remove items from order cart
   //change the arr of order items sent to server
@@ -138,8 +194,9 @@ const orderSum = () => {
     }
   })
   
+
+  
   
 
 
 };
-

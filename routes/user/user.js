@@ -12,6 +12,8 @@ const path = require('path');
 module.exports = (db, twilio) => {
   router.get("/", (req, res) => {
     console.log(req.data);
+    //test cookies
+    req.session
     res.sendFile(path.resolve('./views/user/user.html'));
   }),
 
@@ -56,17 +58,21 @@ module.exports = (db, twilio) => {
       });
   });
 
-  router.get("/update", (req, res) => {
+  router.post("/update", (req, res) => {
     const order = req.body.order;
-
+    console.log('body', req.body);
+    console.log('orderId', order)
     return db.query(`
-    SELECT time_confirmed
+    SELECT time_estimate
     FROM orders
     WHERE id = $1;
     `, [order])
       .then((query) => {
         res.json(query.rows[0]);
+        // console.log(res.json(query.rows[0]));
+        console.log(query.rows[0]);
       });
+      
   });
 
   router.post("/login", (req, res) => {
@@ -108,7 +114,6 @@ module.exports = (db, twilio) => {
     const orderItems = req.body.items;
     let phone_number;
     const promises = [];
-    console.log(userId);
     return db.query(`
     INSERT INTO orders (
       customer_id,
