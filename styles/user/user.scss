@@ -44,6 +44,8 @@ body {
 
 }
 
+// Pop up windows for user sign in and sign out.
+
 .user-login-form, .user-signup-form {
   display: none;
   position: fixed;
@@ -65,10 +67,14 @@ body {
     width: 250px;
   }
 }
+// This is the x in the corner of the screen for the login box.
 .user-close-form {
   width: 15px;
   height: 15px;
 }
+
+// Restaurant is confirming your order box.
+
 .order-confirmation {
   display: none;
   position: fixed;
@@ -84,6 +90,7 @@ body {
   display: block;
 }
 
+// Scroll bar styling.
 
 ::-webkit-scrollbar {
   width: 10px;  

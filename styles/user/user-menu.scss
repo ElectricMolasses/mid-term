@@ -5,30 +5,49 @@
 .user-menu {
   background-color: #63422E;
   padding: 15px;
-  width: 50%;
+  width: 80%;
   margin: auto;
-  .user-menu-table {
+  // Grid to properly space out menu items.
+  .user-menu-table .user-item {
     display: grid;
-    grid-template-columns: 10% 90%;
-    grid-template-rows: 100%;
-    grid-template-areas:
-      "category e e e e";
-    grid-row-gap: 10%;
+    grid-template-rows: 20% 80%;
+    grid-template-areas: "category"
+                         "item";
+    margin: 10px 0px;
     justify-content: space-between;
 
-    .user-item {
-      grid-area: e;
+    .user-menu-category {
+      grid-area: category;
+    }
+
+    .item-card {
+
       display: grid;
-      grid-template-columns: 20% 61% 10% 5%;
-      grid-template-rows: 100%;
-      grid-column-gap: 1%;
+      grid-area: item;
+      grid-template-columns: 25% 25% 25% 25%;
+      grid-template-areas: "name description price add";
+
+      .user-item-name {
+        grid-area: name;
+      }
+
+      .user-item-description {
+        grid-area: description;
+      }
+
+      .user-item-price {
+        grid-area: price;
+        text-align: center;
+      }
+
+      .user-item-add {
+        grid-area: add;
+      }
     }
   }
-    a{
-      display: inline-block;
-    }
-
-
+  a {
+    display: inline-block;
+  }
 }
 .user-item-add, .user-item-remove{
   margin: 5px;
