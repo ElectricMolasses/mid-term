@@ -7,7 +7,7 @@ let IdArray = [];
 
 $("document").ready(function() {
   loadOrders()
-  .then(function () {
+  .then(function() {
     setInterval(sendOrderIds, 5000);
   });
   // loadOrders();
