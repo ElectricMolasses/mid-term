@@ -30,6 +30,9 @@
       border-radius: 3px;
       padding: 10px;
 
+      box-shadow: 0px 1px 0px 1px rgba(40, 26, 18, 0.753),
+                  inset 0px 1px 0px rgba(85, 55, 37, 0.753);
+
       .user-item-name {
         grid-area: name;
         margin-bottom: 10px;
