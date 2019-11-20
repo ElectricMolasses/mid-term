@@ -104,8 +104,7 @@ $("document").ready(function() {
   }
 
   function createOrder(i) {
-    let time = i.time_placed.slice(0, 19);
-    let timeStamp = time;
+    console.log(i);
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -129,8 +128,8 @@ $("document").ready(function() {
       <span class="restaurant-phone">${i.phone_number}</span>
       </div>
       <div class="restaurant-current-time-holder">
-      <p class="restaurant-current-time-elasped">Time Elapsed</p>
-      <span class="restaurant-current-time">${moment(timeStamp).fromNow()}<span>
+      <p class="restaurant-current-time-elasped">Time complete</p>
+      <span class="restaurant-current-time">${parseTimeStamp(i.time_complete)}<span>
       </div>`);
 
 
