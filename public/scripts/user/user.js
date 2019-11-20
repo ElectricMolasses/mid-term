@@ -1,6 +1,15 @@
 
 $(() => {
 
+  //show total saved in localstorage
+  const total = localStorage.getItem('cartTotal');
+  const item = localStorage.getItem('cartItems');
+
+  $(".item-total").text(item);
+  $(".total").text(total);
+
+  //get "/" when user cookie exists
+
   $.ajax('/user/profile', {
     method: 'GET',
     dataType: "json"
@@ -48,14 +57,27 @@ $(() => {
 
   //SHOPPING CART: Order Summary Popup
 
-  $(".order-cart-icon").on('click', (() => {
+  $(".order-cart-icon").on('click', ((event) => {
     if ($(".user-order").hasClass('visible')) {
       $(".user-order").hide().removeClass('visible');
     } else {
       $(".user-order").show().addClass('visible');
+      $(".user-order1").show().addClass('visible');
     }
   })
   );
+
+  //LOGOUT: logout, clear all localStorage (total, item, cart)
+
+  $(".user-logout").on('click', (() => {
+    localStorage.clear();
+    $.ajax('/user/logout', {
+      method: 'POST',
+      dataType: "json",
+    }).done((res) => {
+      console.log(res);
+    });
+  }));
 
 
   /*POST signin data.
@@ -75,11 +97,14 @@ $(() => {
       data: {
         email: $(".user-email").val(),
         password: $(".user-password").val()
+      },
+    }).done((res) => {
+      if (res["success"] === "Logged in") {
+        $(".user-login-form").hide().removeClass('visible');
+        $(".user-order-now").trigger('click'); // menu section pop up once click login
+      } else {
+        alert("Your email/password is wrong. Please try again!");
       }
-    }).done(() => {
-      $(".user-login-form").hide().removeClass('visible');
-      $(".user-order-now").trigger('click'); // menu section pop up once click login
-
     }).then(() => {
       $.ajax('/user/profile', {
         method: 'GET',
