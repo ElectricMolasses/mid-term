@@ -8,8 +8,11 @@
   width: 80%;
   margin: auto;
   // Grid to properly space out menu items.
+  .user-menu-table {  //SN
+    margin-bottom: 2.5px;
+   } 
   .user-menu-table .user-item {
-    display: grid;
+    // display: grid;
     grid-template-areas: "category"
                          "item";
     grid-column: auto-fill;
@@ -26,7 +29,7 @@
       grid-area: item;
       grid-template-areas: "name price"
                             "desc desc";
-      grid-column: auto-fill;
+      // grid-column: auto-fill;
       background: #281A12;
       border-radius: 3px;
       padding: 10px;
