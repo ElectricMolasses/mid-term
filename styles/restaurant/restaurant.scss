@@ -46,7 +46,11 @@ body {
   background-color: $form-color;
 }
 
+/* ========================= */
+/* ========================= */
 /* ORDER SECTION STARTS HERE */
+/* ========================= */
+/* ========================= */
 
 #restaurant-order-container {
   display: flex;
@@ -148,7 +152,37 @@ h2 {
 }
 
 @media only screen and (min-width: 1000px) {
-  .container-wrapper {
-    
+  .column-switcher {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 33% 33% 33%;
+
+    .restaurant-fill {
+      grid-template-columns: 33% 33% 33%;
+      grid-template-rows: 25% 25% 25% 25%;
+      grid-template-areas:
+        "name menu-items time"
+        "name menu-items time"
+        "name menu-items time"
+        "name menu-items time";
+    }
   }
 }
+
+/*
+.restaurant-fill {
+  display: grid;
+  padding: 0px 10px;
+  grid-template-columns: 15% 15% 40% 15% 15%;
+  grid-template-rows: 50% 50%;
+  justify-content: space-evenly;
+  margin: 10px 10px;
+  background-color: $card-bg;
+  color: $text-secondary;
+  font-family: monospace;
+  border-radius: 13px;
+  cursor: pointer;
+  box-shadow: 0px 2px $card-shadow,
+              inset 0px 1px 0px $card-shadow-inverse;
+}
+*/
