@@ -1,36 +1,19 @@
+// import { create } from "domain";
+
 // import { object } from "twilio/lib/base/serialize";
 let object = {};
 let pushArray = [];
 let IdArray = [];
-let currentDataCount = 0;
-let previousDataCount = 0;
-let DataCount = 0;
-
-
-
-
 
 $("document").ready(function() {
-  setInterval(loadOrders, 5000);
-  // loadOrders();
+  // setInterval(loadOrders, 5000);
+  loadOrders();
   $("#restaurant-deny-order").hide();
   $(".deny-orders").on("click", function() {
     $("#restaurant-deny-order").slideToggle("fast", function() {
       //animation complete
     });
   });
-
-
-
-  function updateOrdersCount(num) {
-    if (DataCount === 0) {
-      DataCount += 1;
-      return 0;
-    } else {
-      return num;
-    }
-  }
-
 
   // UPDATE ORDER TIME TO COMPLETE;
   // function updateTimeEstamate() {
@@ -55,29 +38,17 @@ $("document").ready(function() {
     });
   }
 
-
   function loadOrders() {
     $.ajax('/restaurant/orders/', {
       method: 'GET'
     })
       .done((data, status, xhr) => {
-        if (previousDataCount === data.length || previousDataCount === 0) {
-          let sliceIndex = updateOrdersCount(data.length);
-          console.log(sliceIndex);
-          renderOrder(data.slice(sliceIndex));
-        } else {
-          console.log(previousDataCount);
-          renderOrder(data.slice(previousDataCount + 1));
-        }
-        previousDataCount = data.length;
+        console.log(data);
+        renderOrder(data);
       }).catch(() => {
         console.log('failed');
       });
   }
-  //slice at 0
-  //slice at data.length
-  //slice at data.length of previous ajax call
-  //slice at data.length
 
   function orderComplete() {
     $.ajax('/restaurant/orders', {
@@ -106,21 +77,17 @@ $("document").ready(function() {
     return properTime;
   }
 
-  //Generate a Random Id for each Html Element
-  // function randomId() {
-  //   let random = "";
-  //   const values = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-  //     'g', 'h', 'r', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-  //   for (let i = 0; i < 7; i++) {
-  //     random += values[Math.floor(Math.random() * (values.length - 1))];
-  //   }
-  //   return random;
-  // }
-
   function renderOrder(orders) {
-    const appendTothis = document.querySelector("#restaurant-incoming");
+    const incoming = document.querySelector("#restaurant-incoming");
+    const complete = document.querySelector("#restaurant-complete");
+    // const inprogress = document.querySelector("#restaurant-in-progress");
+    // const deny
     for (let i = 0; orders.length; i++) {
-      appendTothis.append(createOrder(orders[i]));
+      if (orders[i].time_complete !== null) {
+        complete.append(createOrder(orders[i]));
+      } else {
+        incoming.append(createOrder(orders[i]));
+      }
     }
   }
 
