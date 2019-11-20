@@ -11,15 +11,16 @@ $("document").ready(function() {
     setInterval(sendOrderIds, 10000);
   });
 
-  function confirmOrderAccepted(id) {
+  function confirmOrderAccepted(id, time) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
         orderId: id,
         orderStatus: 'confirm',
-        time_estimate: moment(new Date(1995, 5, 1, 12, 12, 12)).format("YYYY-MM-DD HH:mm:ss")
+        time_estimate: time
       }
     });
+    console.log(time);
   }
 
   function loadOrders() {
@@ -185,8 +186,10 @@ $("document").ready(function() {
         $("#restaurant-incoming").append($(`#${pushArray[0]}`));
       } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
         $(".restaurant-pop-up").show();
+        $("#restaurant-pop-submit").on("click", () => {
+          confirmOrderAccepted(pushArray[0], $(".restaurant-time-data").val());
+        })
         $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
-        confirmOrderAccepted(pushArray[0]);
       } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-complete").append($(`#${pushArray[0]}`));
         $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
@@ -202,10 +205,8 @@ $("document").ready(function() {
   $(".restaurant-pop-up").hide();
   $(".restaurant-login-form").hide();
 
-  //Click to submit order time
-  $("#restaurant-pop-submit").on("click", () => {
-    alert("hello");
-  })
+
+
   //Click log in button to dsiplay form
   $(".restaurant-login-button").on("click", function() {
     $(".restaurant-login-form").slideToggle("slow", function() {
