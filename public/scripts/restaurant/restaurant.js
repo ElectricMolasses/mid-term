@@ -19,8 +19,7 @@ $("document").ready(function() {
         orderStatus: 'confirm',
         time_estimate: time
       }
-    });
-    console.log(time);
+    })
   }
 
   function loadOrders() {
@@ -28,7 +27,6 @@ $("document").ready(function() {
       method: 'GET'
     })
       .done((data, status, xhr) => {
-        console.log(data);
         renderOrder(data);
       }).catch(() => {
         console.log('failed');
@@ -79,8 +77,8 @@ $("document").ready(function() {
     const inProgress = document.querySelector("#restaurant-in-progress");
     const deny = document.querySelector("#restaurant-deny-order");
     for (let i = 0; orders.length; i++) {
-      console.log(orders[i].time_confirmed);
-      if (orders[i].time_confirmed == "infinity") {
+      console.log('id', orders[i].id, 'time_confirmed', orders[i].time_confirmed, 'time_complete', orders[i].time_complete)
+      if (orders[i].time_confirmed === "1990-01-01T00:00:00.000Z") {
         deny.append(createOrder(orders[i]));
       } else if (orders[i].time_complete) {
         complete.append(createOrder(orders[i]));
@@ -103,7 +101,6 @@ $("document").ready(function() {
   function createOrder(i) {
     let time = i.time_placed.slice(0, 19);
     let timeStamp = time;
-    console.log(timeStamp);
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -186,10 +183,11 @@ $("document").ready(function() {
         $("#restaurant-incoming").append($(`#${pushArray[0]}`));
       } else if (this === document.getElementById("restaurant-in-progress") && pushArray[pushArray.length - 1] === i) {
         $(".restaurant-pop-up").show();
+
+        $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
         $("#restaurant-pop-submit").on("click", () => {
           confirmOrderAccepted(pushArray[0], $(".restaurant-time-data").val());
         })
-        $("#restaurant-in-progress").append($(`#${pushArray[0]}`));
       } else if (this === document.getElementById("restaurant-complete") && pushArray[pushArray.length - 1] === i) {
         $("#restaurant-complete").append($(`#${pushArray[0]}`));
         $(`#${pushArray[0]} .restaurant-time-started`).text(moment());
