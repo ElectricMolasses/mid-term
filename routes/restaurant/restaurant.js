@@ -110,7 +110,7 @@ module.exports = (db, twilio) => {
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `Your order has been confirmed.
-                    It should be ready in ${moment(request.time_estimate).fromNow()}`,
+                    It should be ready in ${moment(estimate).fromNow()}`,
               to: id.phone_number,
               from: `+12029029010`
             })
