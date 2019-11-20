@@ -13,7 +13,7 @@ $(() => {
   const template = `
   <div class="user-menu-table">
     <span class="user-menu-category"></span>
-    <span>
+    <span class="user-item">
       <a class="user-item-name">name</a>
       <a class="user-item-description">description</a>
       <a class="user-item-price">$</a>

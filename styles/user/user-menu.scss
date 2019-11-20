@@ -7,9 +7,22 @@
   padding: 15px;
   width: 50%;
   margin: auto;
-  .user-menu-table  td{
-    display: flex;
+  .user-menu-table {
+    display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-rows: 100%;
+    grid-template-areas:
+      "category e e e e";
+    grid-row-gap: 10%;
     justify-content: space-between;
+
+    .user-item {
+      grid-area: e;
+      display: grid;
+      grid-template-columns: 20% 61% 10% 5%;
+      grid-template-rows: 100%;
+      grid-column-gap: 1%;
+    }
   }
     a{
       display: inline-block;
