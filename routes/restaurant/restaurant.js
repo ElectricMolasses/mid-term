@@ -93,7 +93,7 @@ module.exports = (db, twilio) => {
       switch (request.orderStatus) {
       case 'confirm':
         console.log(request.time_estimate);
-        let NOW = moment.now();
+        const NOW = moment.now();
         const estimate = moment(NOW)
           .add(request.time_estimate, 'minutes')
           .format("YYYY-MM-DD HH:mm:ss");
@@ -103,7 +103,7 @@ module.exports = (db, twilio) => {
             time_estimate = $2
           WHERE id = $1
           RETURNING id;
-        `, [request.orderId, request.time_estimate])
+        `, [request.orderId, estimate])
           .then(query => getUserNumber(query.rows[0].id))
           .then((id) => {
             console.log(id);
