@@ -43,11 +43,11 @@ $("document").ready(function() {
 
   function sendOrderIds() {
     $.ajax('/restaurant/update', {
+      method: "POST",
       data: {
         orderIds: IdArray
       }
     }).then((data) => {
-      console.log(data)
       renderOrder(data);
     })
   }
