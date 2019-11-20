@@ -113,13 +113,13 @@ module.exports = (db, twilio) => {
               });
           });
         break;
-        
+
       case 'deny':
         db.query(`
           UPDATE orders
             SET time_confirmed = 'infinity',
             time_complete = 'infinity'
-          WHERE id = $1
+          WHERE id = $1s
           RETURNING id;
         `, [request.orderId])
           .then(query => getUserNumber(query.rows[0].id)
