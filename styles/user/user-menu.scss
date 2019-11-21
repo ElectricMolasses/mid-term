@@ -8,24 +8,17 @@
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
-  
   padding: 5px 10px;
 
   span {
-    // display: inline-block;
-    // padding: 10px;
     margin: 0px 100px;
     justify-content: center;
     opacity: 100%;
     a {
       text-decoration: none;
-      
       color: #ca9714;
     }
   }
-
-
-
 }
 
 // .user-nav-menu span:nth-child(2):target ~ .user-menu-category:nth-child(8) {
@@ -94,4 +87,20 @@
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+@media only screen and (min-width: 800px) {
+  
+  .user-nav-menu {
+    overflow-x: visible;
+    white-space: normal;
+    -webkit-overflow-scrolling: auto;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+  
+    span {
+      margin: 0px 0px;
+    }
+  }
 }
