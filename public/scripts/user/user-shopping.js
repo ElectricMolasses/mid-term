@@ -30,7 +30,7 @@ const totalOrder = (orders) => {
   $(".order-subtotal").text(`SubTotal: ${subTotal.toFixed(2)}`);
   $(".order-tax").text(`Tax: ${(subTotal * 0.05).toFixed(2)}`);
   $(".order-total").text(`Total: ${(subTotal + (subTotal * 0.05)).toFixed(2)}`);
-  $(".item-total").text(totalItem);
+  $(".cart").attr('data',`${totalItem}`);
   $(".total").text((subTotal + (subTotal * 0.05)).toFixed(2));
 
   localStorage.setItem('cartItems', totalItem);
@@ -47,7 +47,8 @@ const addToCart = (orders) => {
     $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
 
 
-    $(".footer, input").detach();
+    $(".footer").detach();
+    $(".user-order-submit").detach();
     $(".user-order").append($temp);
   }
   totalOrder(orders);
@@ -127,9 +128,12 @@ const orderSum = () => {
           console.log(id);
           $(".user-time-confirm").text(`Restaurant is confirming your order`);
           //get update on order confirmation
+
         });
+      blurOff();
       $(".user-order").hide().removeClass('visible');
       $(".order-confirmation").show().addClass('visible');
+      blurOff();
       setInterval(() => {
         checkData();
       }, 5000);
@@ -145,7 +149,7 @@ const orderSum = () => {
       }).then((data) => {
         const time = (data.time_estimate).substring(11, 16);
         console.log('test');
-        $(".user-time-confirm").text(`Your order was confirmed. The estimate time is ${time}.`);
+        $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
       });
     }
   });
@@ -170,10 +174,51 @@ const orderSum = () => {
       orderItems.splice(orderItems.indexOf($item), 1);
       $foodName[$item]["quantity"] = $qty;
       $(this).closest('div').find(".user-order-quantity").text($foodName[$item]["quantity"]);
-      $(this).closest('div').find(".user-item-price").text($foodName[$item]["price"] * $qty);
+      $(this).closest('div').find(".user-item-price").text(($foodName[$item]["price"] * $qty).toFixed(2));
       totalOrder($foodName);
     }
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
   });
 
 };
+
+const blurOn = function() {
+  const elements = document.querySelectorAll("body > *");
+
+  for (let element of elements) {
+    element.className += " blurred";
+    //element.style.filter = "blur(1px)";
+  }
+
+  let noBlur = document.getElementsByClassName('noblur');
+
+  for (const element of noBlur) {
+    recursiveBlurOff(element);
+  }
+};
+
+const recursiveBlurOff = function(element) {
+  element.classList.remove("blurred");
+  //element.style.filter = "blur(0px)";
+
+  for (const child of element.children) {
+    recursiveBlurOff(child);
+  }
+};
+
+const blurOff = function() {
+  const elements = document.getElementsByTagName("*");
+
+  for (let element of elements) {
+    element.style.filter = '';
+  }
+};
+
+// document.querySelector(".user-order-submit")
+//   .addEventListener("submit", (event) => {
+//     event.preventDefault();
+//     document.querySelector(".user-order")
+//       .style.display = "none";
+//       recursiveBlurOff(document.querySelector("HTML"));
+//   });
+

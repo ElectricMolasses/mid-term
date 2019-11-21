@@ -7,6 +7,7 @@ $(() => {
 
   $(".item-total").text(item);
   $(".total").text(total);
+  $(".user-logout").hide();
 
   //get "/" when user cookie exists
 
@@ -14,35 +15,46 @@ $(() => {
     method: 'GET',
     dataType: "json"
   }).done((data) => {
+    
     $(".user-access").hide().removeClass('visible');
     $(".user-email1").text(data.first_name);
     $(".user-logged").show().addClass('visible');
   });
 
 
+  //toggle nav bar for logout button
+
+  $(".menu-nav-icon").on('click', () => {
+    $(".user-logout").slideToggle("slow"), () => {
+      $(".user-logout").show();
+    }
+  })
+
+  
   //LOGIN BUTTON: get login form popup
-  $(".user-login").on('click', (() => {
+  $(".user-login").on('click', ((event) => {
+    event.preventDefault();
     if ($(".user-login-form").hasClass('visible')) {
       $(".user-login-form").hide().removeClass('visible');
-      $(".user-access").hide().removeClass('visible');
-      $(".user-logged").show().addClass('visible');
+
     } else {
       $(".user-login-form").show().addClass('visible');
-      $(".user-signup-form").hide().removeClass('visible');
+
+      // $(".user-signup-form").hide().removeClass('visible');
     }
   })
   );
 
   //SIGNUP BUTTON: get signup form popup
-  $(".user-signup").on('click', (() => {
-    if ($(".user-signup-form").hasClass('visible')) {
-      $(".user-signup-form").hide().removeClass('visible');
-    } else {
-      $(".user-login-form").hide().removeClass('visible');
-      $(".user-signup-form").show().addClass('visible');
-    }
-  })
-  );
+  // $(".user-signup").on('click', (() => {
+  //   if ($(".user-signup-form").hasClass('visible')) {
+  //     $(".user-signup-form").hide().removeClass('visible');
+  //   } else {
+  //     $(".user-login-form").hide().removeClass('visible');
+  //     $(".user-signup-form").show().addClass('visible');
+  //   }
+  // })
+  // );
 
   //CLOSE BUTTON
 
@@ -76,6 +88,8 @@ $(() => {
       dataType: "json",
     }).done((res) => {
       console.log(res);
+      // $(".user-logout").removeClass(".user-logout")
+      // $(".user-logout").addClass(".user-login")
     });
   }));
 
@@ -113,9 +127,15 @@ $(() => {
         $(".user-access").hide().removeClass('visible');
         $(".user-email1").text(data.first_name);
         $(".user-logged").show().addClass('visible');
+        
       });
     });
   }));
+
+  document.querySelectorAll(".user-nav-menu > span")
+    .forEach((element) => {
+      console.log(element);
+    });
 });
 
 

@@ -14,8 +14,6 @@ body {
   position: fixed;
   z-index: 1000;
   top: 0;
-  display: grid;
-  justify-content: space-between;
   width: 100%;
   height: 60px;
   background: rgba(67, 44, 4, 0.445);
@@ -24,7 +22,19 @@ body {
 
 
   .user-navbar {
-    grid-template-areas: "rest cart"
+    display: grid;
+    grid-template-columns: 25% auto 25%;
+    justify-content: space-between;
+    padding: 0 10px;
+    align-items: center;
+    font-family: Bebas Neue;
+    backdrop-filter: blur(2px);
+    .user-email1 {
+      font-size: 20px;
+    }
+    #restaurant-name {
+      font-size: 50px;
+    }
     // "blank login";
     // Header bar at the top.
   }
@@ -32,14 +42,42 @@ body {
   .user-access {
     // Sign in and out boxes.
   }
-  .user-logged {
-    visibility: hidden;
-    // margin-right:70px;
-    position: fixed;
-    .user-logout {
-      margin-right: 40px;
+  .menu-nav-icon {
+    height: 40px;
+    width: auto;
+    margin: 0 -15px;
+  }
+
+  img {
+    cursor: pointer;
+    height: 40px;
+    width: auto;
+  }
+  .order-cart-icon {
+    justify-self: end;
+    justify-content: space-evenly;
+    .cart[data]:after {
+      // position:absolute;
+      right: 0%;
+      top: 1%;
+      content: attr(data);
+      font-size: 50%;
+      padding: 0.7em;
+      border-radius: 50%;
+      margin-left: -1.5em;
+      line-height: .8em;
+      color: #F90308;;
+      background:#DAD7C7;
+      text-align:center;
+      min-width:  1em;
+      font-weight: bold;
+
+    }
+    .total {
+      padding-left: -1em;
     }
   }
+
 }
 
 .user-photoheader {
@@ -47,9 +85,30 @@ body {
   img {
     width: 100%;
   }
-
+  div {
+    z-index: 40;
+    top: 200px;
+  }
 }
 
+.user-logout {
+  top: 60px !important;
+  left:10px;
+  display: flex;
+  flex-direction: column;
+  position: absolute !important;
+  cursor: pointer;
+  button {
+    width: 100px;
+    color: #ffffff;
+    background-color: #ca9714;
+    border: none;
+    border-radius: 0px 0px 5px 5px;
+    cursor: pointer;
+  }
+
+
+}
 // Pop up windows for user sign in and sign out.
 
 .user-login-form, .user-signup-form {
@@ -60,11 +119,11 @@ body {
   padding: 0px;
   top:30%;
   left: 20%;
-  background-color: $background-user-secondary;  
+  background-color: $background-user-secondary;
   border: 1px solid $uc2;
   border-radius: 3px;
   z-index: 9;
-  
+
   img {
     width: 20px;
     height: 20px;
@@ -93,10 +152,23 @@ body {
 .order-confirmation {
   visibility: hidden;
   position: fixed;
+  border-radius: 15px;
+  border: 1px solid black;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.516);
   top: 300px;
   background-color: red;
   width: 300px;
   height: auto;
+  font-family: Bebas Neue;
+  font-size: 20px;
+
+  h2 {
+    margin-left: 10px;
+  }
+
+  .user-time-confirm {
+    margin-left: 10px;
+  }
 }
 
 //unhide forms
@@ -108,7 +180,7 @@ body {
 // Scroll bar styling.
 
 ::-webkit-scrollbar {
-  width: 10px;  
+  width: 10px;
   background: #432C04;
 }
 
@@ -125,8 +197,10 @@ body {
   background-color: #21313f;
 }
 
-::-webkit-resizer { 
+::-webkit-resizer {
   background-image: url(/resources/resize.png);
-  background-repeat: no-repeat; 
-  background-position: bottom right; 
+  background-repeat: no-repeat;
+  background-position: bottom right;
 }
+
+

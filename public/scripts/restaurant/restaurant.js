@@ -38,6 +38,7 @@ $("document").ready(function() {
       method: 'GET'
     })
       .done((data, status, xhr) => {
+        console.log(data);
         renderOrder(data);
       }).catch(() => {
         console.log('failed');
@@ -159,18 +160,6 @@ $("document").ready(function() {
 
   function dragStart() {
     originList.push(event.toElement.attributes.id.nodeValue);
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-incoming") {
-    //   incomingList.push(event.path[1].attributes[0].nodeValue);
-    // }
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-complete") {
-    //   completedList.push(event.path[1].attributes[0].nodeValue);
-    // }
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-deny-order") {
-    //   denyList.push(event.path[1].attributes[0].nodeValue);
-    // }
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-in-progress") {
-    //   inprogressList.push(event.path[1].attributes[0].nodeValue);
-    // }
     this.className += ' hold';
     setTimeout(() => {
       this.className = 'invisible';
@@ -224,15 +213,12 @@ $("document").ready(function() {
 
 
 
-
   //Click log in button to dsiplay form
   $(".restaurant-login-button").on("click", function() {
     $(".restaurant-login-form").slideToggle("slow", function() {
       //animation complete;
     });
   });
-
-
   const blurOn = function() {
     const elements = document.querySelectorAll("body > *");
 

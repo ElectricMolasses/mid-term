@@ -2,29 +2,31 @@
   position: -webkit-sticky;
   position: sticky;
   top: 60px;
-  background-color: #63422E;
+  background-color: rgba(67, 44, 4, 0.445);
   box-shadow: 0px 0px 0px 1px #63422E;
   opacity: 80%;
-  overflow-x: auto;
+  overflow: scroll;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   padding: 5px 10px;
+  backdrop-filter: blur(2px);
 
   span {
-    margin: 0px 100px;
+    margin: 0px 40px;
     justify-content: center;
     opacity: 100%;
     a {
       text-decoration: none;
       color: #ca9714;
+      font-weight: bold;
     }
   }
 }
 
-// .user-nav-menu span:nth-child(2):target ~ .user-menu-category:nth-child(8) {
-//   -webkit-transform: translateY( 600px);
-//   transform: translateY( 600px );
-// }
+.user-nav-menu::-webkit-scrollbar {
+  display: none;
+}
+
 .user-header-menu {
   display: none;  //visible when screen > 600px
 }
@@ -34,9 +36,12 @@
   padding: 15px;
   width: 80%;
   margin: auto;
+  cursor: pointer;
   // Grid to properly space out menu items.
+
   .user-menu-table {  //SN
     margin-bottom: 2.5px;
+    padding: 1px 0px;
    }
   .user-menu-table .user-item {
     // display: grid;
@@ -48,7 +53,8 @@
 
     .user-menu-category {
       grid-area: category;
-      padding-bottom: 10px;
+      font-size: 22px;
+      font-weight: bolder;
     }
 
     .item-card {
@@ -67,6 +73,8 @@
       .user-item-name {
         grid-area: name;
         margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 16px;
       }
 
       .user-item-description {
@@ -76,6 +84,8 @@
       .user-item-price {
         grid-area: price;
         text-align: right;
+        font-weight: bold;
+        font-size: 16px;
       }
     }
   }
@@ -85,19 +95,15 @@
   }
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
-
 @media only screen and (min-width: 800px) {
 
   .user-nav-menu {
     overflow-x: visible;
     white-space: normal;
     -webkit-overflow-scrolling: auto;
-    padding: 5px 10px;
+    padding: 5px 0px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 
     span {
       margin: 0px 0px;

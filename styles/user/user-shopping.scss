@@ -1,3 +1,13 @@
+.user-orderHolder {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  height: 450px;
+  z-index: 100000;
+  width: 40%;
+  left: 30%;
+}
+
 .user-close-form {
   margin-top: 10px;
   margin-left: 10px;
@@ -6,24 +16,26 @@
 }
 
 .user-order {
-  text-overflow: auto;
+  overflow-y: auto;
+  height: 450px;
   border-radius: 15px;
   position: fixed;
-  z-index: 6;
-  top: 300px;
+  margin-right: 100px;
+  z-index: 1000;
+  top: 200px;
   display: none;
   margin: 0;
   background-color: #f9f9f9;
-  box-shadow: 13px 13px black;
+  border: 1px solid black;
+  box-shadow: 7px 7px 0px 7px rgba(0, 0, 0, 0.516);
   width: 500px;
-  height: auto;
   margin-bottom: 20px;
   font-family: Bebas Neue;
   .user-order1 {
     display: flex;
-    flex-direction: row-reverse;
+    flex-flow: row-reverse;
     padding: 10px;
-    justify-content: space-around;
+    justify-content: space-between;
     border: 1px solid black;
     border-left: none;
     border-right: none;
@@ -32,13 +44,23 @@
   .footer span{
     display: block;
     margin-left: 10px;
-    font-size: 18px;
+    font-size: 20px;
   }
   input {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    background-color: #f9f9f9; /* Green */
+    border: 2px solid black;
+    border-radius: 10px;;
+    color: #fdbb12;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: Bebas Neue;
     margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 18px;
   }
 
   h2 {
@@ -49,10 +71,14 @@
     height: 15px;
     margin-left: 100px;
   }
-  
+
   .user-item-remove {
     height: 15px;
   }
+}
+
+.blurred {
+  filter: blur(1px);
 }
 
 
