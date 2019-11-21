@@ -213,7 +213,6 @@ $("document").ready(function() {
 
 
 
-
   //Click log in button to dsiplay form
   $(".restaurant-login-button").on("click", function() {
     $(".restaurant-login-form").slideToggle("slow", function() {

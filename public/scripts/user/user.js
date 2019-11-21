@@ -49,8 +49,9 @@ $(() => {
   $("body").on('click', ".user-close-form", () => {
     let $this = $(".user-close-form");
     if ($this.closest("div").hasClass('visible')) {
-      $this.closest("div").hide().removeClass('visible');
       blurOff();
+      console.log("blur off has been hit");
+      $this.closest("div").hide().removeClass('visible');
     } else {
       $this.closest("div").show().addClass('visible');
     }
@@ -64,14 +65,11 @@ $(() => {
     } else {
       $(".user-order").show().addClass('visible');
       $(".user-order1").show().addClass('visible');
+      blurOn();
     }
   })
   );
 
-  // Blur Background
-  $("order-cart-icon").on("click", (event) => {
-    alert("hello");
-  })
 
   //LOGOUT: logout, clear all localStorage (total, item, cart)
 
@@ -122,7 +120,6 @@ $(() => {
       });
     });
   }));
-<<<<<<< HEAD
 
   const anchorOffset = function() {
     document.querySelectorAll(".user-nav-menu")
@@ -158,21 +155,10 @@ $(() => {
   const blurOff = function() {
     const elements = document.getElementsByTagName("*");
 
-    for (let element of elements) {
-      element.style.filter = '';
-    }
+    recursiveBlurOff(document.querySelector("HTML"));
   };
 
-  document.querySelector(".user-close-form")
-    .addEventListener("click", (event) => {
-      document.querySelector(".user-order")
-        .style.display = "none";
-        recursiveBlurOff(document.querySelector("HTML"));
-    });
 
-
-=======
->>>>>>> e39427d251b2d04d9a359f4459a00065938aa29a
 });
 
 
