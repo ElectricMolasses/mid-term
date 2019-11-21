@@ -101,7 +101,7 @@ $(() => {
     }).done((res) => {
       if (res["success"] === "Logged in") {
         $(".user-login-form").hide().removeClass('visible');
-        $(".user-order-now").trigger('click'); // menu section pop up once click login
+        // $(".user-order-now").trigger('click'); // menu section pop up once click login
       } else {
         alert("Your email/password is wrong. Please try again!");
       }
