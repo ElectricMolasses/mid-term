@@ -23,7 +23,7 @@ body {
 
   .user-navbar {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 25% auto 25%;
     justify-content: space-between;
     padding: 0 10px;
     align-items: center;
@@ -47,14 +47,7 @@ body {
     width: auto;
     margin: 0 -15px;
   }
-  .user-logged {
-    visibility: hidden;
-    // margin-right:70px;
-    position: fixed;
-    .user-logout {
-      margin-right: 40px;
-    }
-  }
+
   img {
     cursor: pointer;
     height: 40px;
@@ -62,6 +55,7 @@ body {
   }
   .order-cart-icon {
     justify-self: end;
+    justify-content: space-evenly;
     .cart[data]:after {
       // position:absolute;
       right: 0%;
@@ -79,6 +73,9 @@ body {
       font-weight: bold;
 
     }
+    .total {
+      padding-left: -1em;
+    }
   }
 
 }
@@ -94,6 +91,24 @@ body {
   }
 }
 
+.user-logout {
+  top: 60px !important;
+  left:10px;
+  display: flex;
+  flex-direction: column;
+  position: absolute !important;
+  cursor: pointer;
+  button {
+    width: 100px;
+    color: #ffffff;
+    background-color: #ca9714;
+    border: none;
+    border-radius: 0px 0px 5px 5px;
+    cursor: pointer;
+  }
+
+
+}
 // Pop up windows for user sign in and sign out.
 
 .user-login-form, .user-signup-form {
