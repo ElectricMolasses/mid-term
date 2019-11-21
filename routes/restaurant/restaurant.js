@@ -175,11 +175,7 @@ module.exports = (db, twilio) => {
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `The restaurant has changed the estimated time of completion on your order.
-<<<<<<< HEAD
-              The order should now be ready ${
-=======
               Your order is expected to be ready ${
->>>>>>> 12dc53984160bca52b14eeefb6bb686ec5899301
                 moment(
                   moment(request.time_estimate).format("YYYY-MM-DD HH:mm:ss")
                 ).fromNow()
