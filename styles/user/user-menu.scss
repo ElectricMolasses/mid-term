@@ -32,8 +32,10 @@
   margin: auto;
   cursor: pointer;
   // Grid to properly space out menu items.
+
   .user-menu-table {  //SN
     margin-bottom: 2.5px;
+    padding: 1px 0px;
    }
   .user-menu-table .user-item {
     // display: grid;
@@ -45,7 +47,8 @@
 
     .user-menu-category {
       grid-area: category;
-      padding-bottom: 10px;
+      font-size: 22px;
+      font-weight: bolder;
     }
 
     .item-card {
@@ -64,6 +67,8 @@
       .user-item-name {
         grid-area: name;
         margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 16px;
       }
 
       .user-item-description {
@@ -73,6 +78,8 @@
       .user-item-price {
         grid-area: price;
         text-align: right;
+        font-weight: bold;
+        font-size: 16px;
       }
     }
   }
