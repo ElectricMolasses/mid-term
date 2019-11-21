@@ -110,7 +110,8 @@ module.exports = (db, twilio) => {
     // Submit information to create an order and notify the restaurant.
     // Just going to submit order immediately without checking for
     // payment or anything initially.
-    const userId = req.session.userToken;
+    let userId = req.session.userToken;
+    if (!req.session.userToken) userId = 'SJDGLJ#*@(RJ@#(JRLA';
     const orderItems = req.body.items;
     let phone_number;
     const promises = [];
