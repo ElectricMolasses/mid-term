@@ -1,6 +1,7 @@
 @import '../base';
 
 body {
+  box-sizing: border-box;
   margin: 0;
   background-color: $background;
   padding-bottom: 40px;
@@ -94,8 +95,9 @@ h2 {
 .restaurant-fill {
   display: grid;
   padding: 0px 10px;
-  grid-template-columns: 15% 15% 40% 15% 15%;
+  grid-template-columns: 14% 14% 40% 14% 14%;
   grid-template-rows: 50% 50%;
+  grid-column-gap: 1%;
   justify-content: space-evenly;
   margin: 10px 10px;
   background-color: $card-bg;
@@ -134,8 +136,71 @@ h2 {
   pointer-events: none;
 }
 
+/* ========================= */
+/* ========================= */
+/* POP UP SECTION STARTS HUR */
+/* ========================= */
+/* ========================= */
+
+.restaurant-pop-up-form-holder {
+  margin: auto;
+  text-align: center;
+  .restaurant-pop-up-form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+
+    * {
+      margin: 5px;
+    }
+
+    input {
+      margin: 3px auto;
+      border-style: none;
+      height: 20px;
+      width: 110px;
+      box-shadow: 0px 0px 1px 1px $glow-blue;
+      text-align: center;
+      border-radius: 3px;
+    }
+
+    button {
+      width: 100px;
+      height: 25px;
+      margin: 5px auto;
+      border-style: none;
+      border-radius: 2px;
+      background: $background-secondary;
+      color: $text-secondary;
+      box-shadow: 0px 0px 1px 1px rgba(4, 130, 158, 0.062);
+    }
+  }
+}
+
+.restaurant-pop-up-holder {
+  z-index: 100;
+  position: fixed;
+  top: 42%;
+  left: 42.5%;
+  width: 15%;
+  height: 16%;
+  background: $card-bg;
+  padding: 10px;
+  color: $text-primary;
+  font-family: monospace;
+  display: flex;
+  border-radius: 3px;
+
+  box-shadow: 0px 0px 1px 1px $card-shadow,
+              inset 0px 0px 1px 1px $card-shadow-inverse;
+}
+
+.blurred {
+  filter: blur(1px);
+}
+
 ::-webkit-scrollbar {
-  width: 10px;  
+  width: 10px;
   background: $background-secondary;
 }
 
@@ -152,10 +217,10 @@ h2 {
   background-color: $background-secondary;
 }
 
-::-webkit-resizer { 
+::-webkit-resizer {
   background-image: url(/resources/resize.png);
-  background-repeat: no-repeat; 
-  background-position: bottom right; 
+  background-repeat: no-repeat;
+  background-position: bottom right;
 }
 
 .hold {
@@ -163,12 +228,11 @@ h2 {
 }
 
 .hovered {
-  background: #f4f4f4;
-  border-style: dashed;
+  box-shadow: 0px 0px 3px 3px $glow-blue;
 }
 
 .invisible {
-  display: none;
+  visibility: hidden;
 }
 
 @media only screen and (min-width: 1440px) {
@@ -178,8 +242,9 @@ h2 {
     grid-template-columns: 33% 33% 33%;
 
     .restaurant-fill {
-      grid-template-columns: 20% 60% 20%;
+      grid-template-columns: 20% 57% 20%;
       grid-template-rows: 50% 50%;
+      grid-column-gap: 1%;
       grid-template-areas:
         "name menu-items time"
         "phone menu-items curtime";
@@ -187,20 +252,20 @@ h2 {
         .restaurant-name-display {
           grid-area: name;
         }
-      
+
         .restaurant-phonenumber {
           grid-area: phone;
           visibility: hidden;
         }
-      
+
         .restaurant-menu-items {
           grid-area: menu-items;
         }
-      
+
         .restaurant-time-display {
           grid-area: time;
         }
-      
+
         .restaurant-current-time-holder {
           grid-area: curtime;
           visibility: hidden;

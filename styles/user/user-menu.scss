@@ -1,23 +1,106 @@
 .user-nav-menu {
-  position: fixed;
-  display: grid;
-}
-.user-menu {
-  background-color: palegreen;
-  width: 70%;
-  margin-left: 20%;
-  .user-menu-table  td{
-    display: flex;
-    justify-content: space-between;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px;
+  background-color: #63422E;
+  box-shadow: 0px 0px 0px 1px #63422E;
+  opacity: 80%;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding: 5px 10px;
+
+  span {
+    margin: 0px 100px;
+    justify-content: center;
+    opacity: 100%;
+    a {
+      text-decoration: none;
+      color: #ca9714;
+    }
   }
-    a{
-      display: inline-block;
+}
+
+// .user-nav-menu span:nth-child(2):target ~ .user-menu-category:nth-child(8) {
+//   -webkit-transform: translateY( 600px);
+//   transform: translateY( 600px );
+// }
+.user-header-menu {
+  display: none;  //visible when screen > 600px
+}
+
+.user-menu {
+  background-color: #63422E;
+  padding: 15px;
+  width: 80%;
+  margin: auto;
+  // Grid to properly space out menu items.
+  .user-menu-table {  //SN
+    margin-bottom: 2.5px;
+   }
+  .user-menu-table .user-item {
+    // display: grid;
+    grid-template-areas: "category"
+                         "item";
+    grid-column: auto-fill;
+    margin: 10px 0px;
+    justify-content: space-between;
+
+    .user-menu-category {
+      grid-area: category;
+      padding-bottom: 10px;
     }
 
+    .item-card {
+      display: grid;
+      grid-area: item;
+      grid-template-areas: "name price"
+                            "desc desc";
+      // grid-column: auto-fill;
+      background: #281A12;
+      border-radius: 3px;
+      padding: 10px;
 
+      box-shadow: 0px 1px 0px 1px rgba(40, 26, 18, 0.753),
+                  inset 0px 1px 0px rgba(85, 55, 37, 0.753);
+
+      .user-item-name {
+        grid-area: name;
+        margin-bottom: 10px;
+      }
+
+      .user-item-description {
+        grid-area: desc;
+      }
+
+      .user-item-price {
+        grid-area: price;
+        text-align: right;
+      }
+    }
+  }
+
+  a {
+    display: inline-block;
+  }
 }
-.user-item-add, .user-item-remove{
-  margin: 5px;
-  width: 15px;
-  height: 15px;
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@media only screen and (min-width: 800px) {
+
+  .user-nav-menu {
+    overflow-x: visible;
+    white-space: normal;
+    -webkit-overflow-scrolling: auto;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      margin: 0px 0px;
+    }
+  }
 }

@@ -1,23 +1,60 @@
+.user-close-form {
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 20px;
+  width: 20px;
+}
+
 .user-order {
+  text-overflow: auto;
+  border-radius: 15px;
   position: fixed;
   z-index: 6;
   top: 300px;
   display: none;
-  margin: 0 auto;
-  background: #ffffff;
+  margin: 0;
+  background-color: #f9f9f9;
+  box-shadow: 13px 13px black;
   width: 500px;
   height: auto;
   margin-bottom: 20px;
+  font-family: Bebas Neue;
   .user-order1 {
     display: flex;
-    justify-content: space-between;
-
+    flex-direction: row-reverse;
+    padding: 10px;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-left: none;
+    border-right: none;
+    margin: 10px;
   }
   .footer span{
     display: block;
+    margin-left: 10px;
+    font-size: 18px;
   }
   input {
     display: block;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    margin-left: 10px;
   }
 
+  h2 {
+    margin-left: 15px;
+  }
+
+  .user-item-add {
+    height: 15px;
+    margin-left: 100px;
+  }
+  
+  .user-item-remove {
+    height: 15px;
+  }
 }
+
+
+
+

@@ -2,10 +2,13 @@
 <html>
 <head>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!-- CSS -->
   <link type="text/css" href="styles/user/user.css" rel="stylesheet">
   <link type="text/css" href="styles/user/user-menu.css" rel="stylesheet">
   <link type="text/css" href="styles/user/user-shopping.css" rel="stylesheet">
+
 
   <!-- External JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -16,6 +19,8 @@
   <script src="scripts/user/user.js"></script>
   <script src="scripts/user/user-menu.js"></script>
   <script src="scripts/user/user-shopping.js"></script>
+  <!--Google Fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Abel|Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -25,17 +30,14 @@
   <nav class="user-header">
     <div class="user-navbar">
       <a>THAI-TANIC</a>
-      <span>About Us</span>
-      <span>Menu</span>
-      <span>Reservation</span>
-      <span>Contact Us</span>
+
       <!-- //shopping cart always show -->
-      <span class="order-cart-icon"> 
+      <span class="order-cart-icon">
         <img src="/resources/cart-outline.png">
         <a class ="item-total"></a>
         <a class="total"></a>
       </span>
-    </div>  
+    </div>
 
     <!-- login/sign up button when not log in -->
     <!-- username and shopping cart when log in -->
@@ -48,7 +50,7 @@
     <!-- Invisible unless logged in -->
     <div class="user-logged">
         <span class="user-email1">hello</span>
-        <form class="user-logout" method="POST" action="user/logout" value="Log Out"><button type="submit">Log Out</button></form>
+        <form class="user-logout" value="Log Out"><button type="submit">Log Out</button></form>
     </div>
   </nav>
 
@@ -73,7 +75,6 @@
       <input type="password" placeholder="Password"></input>
       <input class="user-signup-button" type="submit" value="Register"></input>
   </div>
-
   <!-- MENU HEADER -->
 
   <h1 class="user-header-menu">Menu</h1>
@@ -85,27 +86,39 @@
   <div class="user-nav-menu">
   </div>
 
+
+
   <!-- for restaurant full menu -->
   <!-- loop through menu table and render -->
 
   <div class="user-menu">
   <!-- add menu -->
   </div>
-
-  <div class="user-order">
+  <div class="user-orderHolder">
+    <div class="user-order">
       <img class="user-close-form" src="/resources/cancel.png">
       <h2>Order Summary</h2>
-    <!--add to order cart  -->
+      <!--add to order cart  -->
+    </div>
   </div>
+
 
   <!-- pop up order confirmation -->
   <div class="order-confirmation">
       <img class="user-close-form" src="/resources/cancel.png">
     <h2>Thank you for your order</h2>
-    <p>Thai-Tanic is confirming your oder</p>
     <p class="user-time-confirm"></p>
   </div>
+
+  <div class="user-orderHolder">
+      <div class="user-order">
+        <img class="user-close-form" src="/resources/cancel.png">
+        <h2>Order Summary</h2>
+        <!--add to order cart  -->
+      </div>
+    </div>
 
 </body>
 
 </html>
+

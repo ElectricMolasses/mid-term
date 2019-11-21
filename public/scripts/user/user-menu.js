@@ -12,12 +12,13 @@ $(() => {
   //template for full menu
   const template = `
   <div class="user-menu-table">
-    <span class="user-menu-category"></span>
-    <span>
-      <a class="user-item-name">name</a>
-      <a class="user-item-description">description</a>
-      <a class="user-item-price">$</a>
-      <img class="user-item-add"src="/resources/plus.png">
+  <span class="user-item">
+      <span class="user-menu-category"></span>
+      <div class="item-card user-item-add">
+        <a class="user-item-name">name</a>
+        <a class="user-item-description">description</a>
+        <a class="user-item-price">$</a>
+      </div>
     </span>
   </div>
   `;
@@ -36,28 +37,32 @@ $(() => {
         let $category = data[index].menu_category;
         if (!category.includes($category)) {
           category.push($category);
-          
+
           $temp.find(".user-menu-category"). text($category);
+          $temp.find(".user-menu-category").attr('id', $category);
           $temp.find(".user-item-name").text(data[index].name);
           $temp.find(".user-item-description").text(data[index].description);
-          $temp.find(".user-item-price").text(data[index].cost);
+          $temp.find(".user-item-price").text((Number(data[index].cost) / 100).toFixed(2));
         } else {
           $temp.find(".user-item-name").text(data[index].name);
           $temp.find(".user-item-description").text(data[index].description);
-          $temp.find(".user-item-price").text(data[index].cost);
+          $temp.find(".user-item-price").text((Number(data[index].cost) / 100).toFixed(2));
         }
-        
+
         $(".user-menu").append($temp);
-        
+
       });
       $.each(category, (index) => {
-        $(".user-nav-menu").append("<span>",category[index],"</span>");
+        $(".user-nav-menu").append(`<span><a href='#${category[index]}'>${category[index]}</a></span>`);
+        // $(".user-nav-menu span").attr("href",`#${category[index]}`);
       });
+
+
+      $(".user-order-now").hide().addClass('visible');
 
       orderSum();
 
     });
   }));
-
 
 });

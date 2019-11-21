@@ -1,47 +1,40 @@
-@use '../base';
+@import '../base';
 
 $base-color: base;
 
 body {
-  background-color: $base-color;
+  background-color: #63422E;;
   width: 100%;
   align-content: center;
   color: #fdbb12;
+  margin: 0;
 }
 
 .user-header {
   position: fixed;
   z-index: 1000;
   top: 0;
-  display: inline-flex;
+  display: grid;
   justify-content: space-between;
   width: 100%;
   height: 60px;
-  font-size: 24px;
-  background-color: #ffffff;
+  background: rgba(67, 44, 4, 0.445);
+  box-shadow: 0px 0px 0px 1px rgba(67, 44, 4, 0.445);
+
+
 
   .user-navbar {
-    a {
-      font-size: 40px;
-      margin-right: 10px;
-    }
-    span {
-      margin-right: 20px;
-    }
+    grid-template-areas: "rest cart"
+    // "blank login";
+    // Header bar at the top.
   }
 
   .user-access {
-    display: block;
-    span {
-      margin-right: 20px;
-    }
-    .user-login, .user-signup :hover {
-      opacity: 1;
-    }
+    // Sign in and out boxes.
   }
   .user-logged {
-    display: none;
-    margin-right:70px;
+    visibility: hidden;
+    // margin-right:70px;
     position: fixed;
     .user-logout {
       margin-right: 40px;
@@ -50,43 +43,55 @@ body {
 }
 
 .user-photoheader {
-  
-  margin: 0 auto;
-  // display: lex;
-  // justify-content: center;
+
   img {
     width: 100%;
   }
 
 }
 
+// Pop up windows for user sign in and sign out.
+
 .user-login-form, .user-signup-form {
-  display: none;
+  visibility: hidden;
   position: fixed;
-  width: 300px;
-  margin: 0 auto;
-  margin-right:10px;
-  padding: 5% 7%;
+  width: 50%;
+  margin: auto;
+  padding: 0px;
   top:30%;
-  left: 50%;
-  background-color: #ffffff;  
+  left: 20%;
+  background-color: $background-user-secondary;  
+  border: 1px solid $uc2;
+  border-radius: 3px;
   z-index: 9;
+  
   img {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     float: right;
+    margin: 3px;
   }
+
   input, button {
     display: block;
-    width: 250px;
+    width: 70%;
+    margin: 3px;
+  }
+
+  button {
+    border-radius: 3px;
   }
 }
+// This is the x in the corner of the screen for the login box.
 .user-close-form {
   width: 15px;
   height: 15px;
 }
+
+// Restaurant is confirming your order box.
+
 .order-confirmation {
-  display: none;
+  visibility: hidden;
   position: fixed;
   top: 300px;
   background-color: red;
@@ -97,6 +102,31 @@ body {
 //unhide forms
 
 .visible {
-  display: block;
+  visibility: visible;
 }
 
+// Scroll bar styling.
+
+::-webkit-scrollbar {
+  width: 10px;  
+  background: #432C04;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(136, 89, 62, 0.726);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #432C04;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #21313f;
+}
+
+::-webkit-resizer { 
+  background-image: url(/resources/resize.png);
+  background-repeat: no-repeat; 
+  background-position: bottom right; 
+}
