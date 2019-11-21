@@ -21,10 +21,6 @@
   }
 }
 
-// .user-nav-menu span:nth-child(2):target ~ .user-menu-category:nth-child(8) {
-//   -webkit-transform: translateY( 600px);
-//   transform: translateY( 600px );
-// }
 .user-header-menu {
   display: none;  //visible when screen > 600px
 }
@@ -34,6 +30,7 @@
   padding: 15px;
   width: 80%;
   margin: auto;
+  cursor: pointer;
   // Grid to properly space out menu items.
   .user-menu-table {  //SN
     margin-bottom: 2.5px;

@@ -24,7 +24,7 @@ $(() => {
   $(".user-login").on('click', (() => {
     if ($(".user-login-form").hasClass('visible')) {
       $(".user-login-form").hide().removeClass('visible');
-      $(".user-access").hide().removeClass('visible');
+      $(".user-login").hide().removeClass('visible');
       $(".user-logged").show().addClass('visible');
     } else {
       $(".user-login-form").show().addClass('visible');
