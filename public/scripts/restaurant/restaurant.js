@@ -159,18 +159,6 @@ $("document").ready(function() {
 
   function dragStart() {
     originList.push(event.toElement.attributes.id.nodeValue);
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-incoming") {
-    //   incomingList.push(event.path[1].attributes[0].nodeValue);
-    // }
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-complete") {
-    //   completedList.push(event.path[1].attributes[0].nodeValue);
-    // }
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-deny-order") {
-    //   denyList.push(event.path[1].attributes[0].nodeValue);
-    // }
-    // if (event.path[1].attributes[0].nodeValue === "restaurant-in-progress") {
-    //   inprogressList.push(event.path[1].attributes[0].nodeValue);
-    // }
     this.className += ' hold';
     setTimeout(() => {
       this.className = 'invisible';
@@ -231,47 +219,6 @@ $("document").ready(function() {
       //animation complete;
     });
   });
-
-
-  const blurOn = function() {
-    const elements = document.querySelectorAll("body > *");
-
-    for (let element of elements) {
-      element.className += " blurred";
-      //element.style.filter = "blur(1px)";
-    }
-
-    let noBlur = document.getElementsByClassName('noblur');
-
-    for (const element of noBlur) {
-      recursiveBlurOff(element);
-    }
-  };
-
-  const recursiveBlurOff = function(element) {
-    element.classList.remove("blurred");
-    //element.style.filter = "blur(0px)";
-
-    for (const child of element.children) {
-      recursiveBlurOff(child);
-    }
-  };
-
-  const blurOff = function() {
-    const elements = document.getElementsByTagName("*");
-
-    for (let element of elements) {
-      element.style.filter = '';
-    }
-  };
-
-  document.querySelector(".restaurant-pop-up-form")
-    .addEventListener("submit", (event) => {
-      event.preventDefault();
-      document.querySelector(".restaurant-pop-up-holder")
-        .style.display = "none";
-        recursiveBlurOff(document.querySelector("HTML"));
-    });
 
 });
 

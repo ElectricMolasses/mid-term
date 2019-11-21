@@ -5,7 +5,7 @@ INSERT INTO items (
 ), (
   2, 'Spring Rolls (4 pcs)', 'Crispy rolls stuffed with glass noodles and shredded vegetables, served with a Thai plum sauce. One order comes with four pieces.', 10, 750
 ), (
-  2, 'Tofu and DIp (8 pcs)', 'Deep-fried chunks of tofu covered with plum sauce and crushed peanuts. One order comes with eight pieces.', 10, 750
+  2, 'Tofu and Dip (8 pcs)', 'Deep-fried chunks of tofu covered with plum sauce and crushed peanuts. One order comes with eight pieces.', 10, 750
 ), (
   2, 'Chicken Satay (4 pcs)', 'Chicken marinated in coconut milk and Thai barbecue spices, served with peanut sauce. One order comes with four skewers.', 10, 950
 ), (
