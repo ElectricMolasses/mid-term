@@ -30,7 +30,7 @@ const totalOrder = (orders) => {
   $(".order-subtotal").text(`SubTotal: ${subTotal.toFixed(2)}`);
   $(".order-tax").text(`Tax: ${(subTotal * 0.05).toFixed(2)}`);
   $(".order-total").text(`Total: ${(subTotal + (subTotal * 0.05)).toFixed(2)}`);
-  $(".item-total").text(totalItem);
+  $(".cart").attr('data',`${totalItem}`);
   $(".total").text((subTotal + (subTotal * 0.05)).toFixed(2));
 
   localStorage.setItem('cartItems', totalItem);
@@ -145,7 +145,7 @@ const orderSum = () => {
       }).then((data) => {
         const time = (data.time_estimate).substring(11, 16);
         console.log('test');
-        $(".user-time-confirm").text(`Your order was confirmed. The estimate time is ${time}.`);
+        $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
       });
     }
   });

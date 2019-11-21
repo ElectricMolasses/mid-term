@@ -29,35 +29,43 @@
 
   <nav class="user-header">
     <div class="user-navbar">
-      <a>THAI-TANIC</a>
+      <span>
+          <img class="menu-nav-icon" src="/resources/menu-nav-icon.png">
+          <img class="user-login" src="/resources/user.png">
+          <span class="user-email1"></span>
+          
+      </span>
+      
+      <a id="restaurant-name">THAI-TANIC</a>
 
       <!-- //shopping cart always show -->
       <span class="order-cart-icon">
-        <img src="/resources/cart-outline.png">
-        <a class ="item-total"></a>
+        <span class="cart" data="0" ><img class="cart" src="/resources/cart-outline.png"></span>
+        <!-- <a class ="item-total"></a> -->
         <a class="total"></a>
       </span>
-    </div>
 
+    </div>
+  </nav>
     <!-- login/sign up button when not log in -->
     <!-- username and shopping cart when log in -->
-
+  <!-- <nav>
     <div class="user-access">
       <span class="user-login">Login</span>
-      <span class="user-signup">Sign Up</span>
-    </div>
+      <!-- <span class="user-signup">Sign Up</span> -->
+    <!-- </div> --> 
 
     <!-- Invisible unless logged in -->
-    <div class="user-logged">
+    <!-- <div class="user-logged">
         <span class="user-email1">hello</span>
         <form class="user-logout" value="Log Out"><button type="submit">Log Out</button></form>
     </div>
-  </nav>
+  </nav> -->
 
   <!-- homepage photo -->
   <div class="user-photoheader">
-  <img class="user-staticphoto" src="/resources/static_photo.jpeg">
-  <input class="user-order-now" type="submit" value="Order Now"></input>
+    <img class="user-staticphoto" src="/resources/static_photo.jpeg">
+    <div><input class="user-order-now" type="submit" value="Order Now"></input></div>
   </div>
   <!-- login/register popup form -->
 
