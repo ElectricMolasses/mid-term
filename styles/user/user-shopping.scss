@@ -1,3 +1,8 @@
+.user-orderHolder {
+  display: flex;
+  justify-content: center;
+}
+
 .user-close-form {
   margin-top: 10px;
   margin-left: 10px;
@@ -9,6 +14,7 @@
   overflow: auto;
   border-radius: 15px;
   position: fixed;
+  margin-right: 100px;
   z-index: 6;
   top: 200px;
   display: none;
@@ -21,7 +27,7 @@
   font-family: Bebas Neue;
   .user-order1 {
     display: flex;
-    flex-direction: row-reverse;
+    flex-flow: row-reverse;
     padding: 10px;
     justify-content: space-between;
     border: 1px solid black;
