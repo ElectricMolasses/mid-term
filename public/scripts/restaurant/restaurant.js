@@ -89,7 +89,6 @@ $("document").ready(function() {
     orders.forEach(order => {
       if (order.time_confirmed === "1990-01-01T00:00:00.000Z") {
         deny.append(createOrder(order));
-        $(".restaurant-current-time-elasped").text("Order-Denied");
       } else if (order.time_complete) {
         complete.append(createOrder(order));
         $(".restaurant-current-time-elasped").text("Order-Completed");
