@@ -31,6 +31,7 @@ $("document").ready(function() {
         time_estimate: time
       }
     })
+    blurOff();
   }
 
   function loadOrders() {
@@ -205,6 +206,7 @@ $("document").ready(function() {
       } else if (this === document.getElementById("restaurant-in-progress") && originList[originList.length - 1] === i) {
         $("#restaurant-popup").show();
         //insert Blur Show here
+        blurOn();
         inprogressList.push(originList[0]);
         $("#restaurant-in-progress").append($(`#${originList[0]}`));
         $("#restaurant-pop-submit").on("click", () => {
@@ -233,6 +235,47 @@ $("document").ready(function() {
       //animation complete;
     });
   });
+
+
+  const blurOn = function() {
+    const elements = document.querySelectorAll("body > *");
+
+    for (let element of elements) {
+      element.className += " blurred";
+      //element.style.filter = "blur(1px)";
+    }
+
+    let noBlur = document.getElementsByClassName('noblur');
+    
+    for (const element of noBlur) {
+      recursiveBlurOff(element);
+    }
+  };
+
+  const recursiveBlurOff = function(element) {
+    element.classList.remove("blurred");
+    //element.style.filter = "blur(0px)";
+
+    for (const child of element.children) {
+      recursiveBlurOff(child);
+    }
+  };
+
+  const blurOff = function() {
+    const elements = document.getElementsByTagName("*");
+
+    for (let element of elements) {
+      element.style.filter = '';
+    }
+  };
+
+  document.querySelector(".restaurant-pop-up-form")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      document.querySelector(".restaurant-pop-up-holder")
+        .style.display = "none";
+        recursiveBlurOff(document.querySelector("HTML"));
+    });
 
 });
 
