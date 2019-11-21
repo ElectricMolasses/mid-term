@@ -134,7 +134,7 @@ body {
 // Restaurant is confirming your order box.
 
 .order-confirmation {
-  visibility: show;
+  visibility: hidden;
   position: fixed;
   border-radius: 15px;
   border: 1px solid black;
@@ -147,7 +147,10 @@ body {
   font-size: 20px;
 
   h2 {
-    margin-top: 0;
+    margin-left: 10px;
+  }
+
+  .user-time-confirm {
     margin-left: 10px;
   }
 }
