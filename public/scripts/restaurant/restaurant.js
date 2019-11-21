@@ -8,6 +8,11 @@ let IdArray = [];
 // let denyList = [];
 // let completedList = [];
 // let incomingList = [];
+$(() => {
+  //Insert Blur hide here
+  $(".restaurant-login-form").hide();
+  $("#restaurant-popup").hide();
+})
 
 $("document").ready(function() {
   loadOrders()
@@ -198,10 +203,10 @@ $("document").ready(function() {
       if (this === document.getElementById("restaurant-incoming") && originList[originList.length - 1] === i) {
         $("#restaurant-incoming").append($(`#${originList[0]}`));
       } else if (this === document.getElementById("restaurant-in-progress") && originList[originList.length - 1] === i) {
-        $(".restaurant-pop-up").show();
+        $("#restaurant-popup").show();
+        //insert Blur Show here
         inprogressList.push(originList[0]);
         $("#restaurant-in-progress").append($(`#${originList[0]}`));
-
         $("#restaurant-pop-submit").on("click", () => {
           confirmOrderAccepted(inprogressList[0], $(".restaurant-time-data").val());
           inprogressList.pop();
@@ -218,8 +223,7 @@ $("document").ready(function() {
       this.className = "restaurant-empty";
     }
   }
-  $(".restaurant-pop-up").hide();
-  $(".restaurant-login-form").hide();
+
 
 
 
