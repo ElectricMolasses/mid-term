@@ -21,8 +21,6 @@ $("document").ready(function() {
   });
 
   function confirmOrderAccepted(id, time) {
-    console.log('id', id);
-    console.log('time', time);
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
@@ -57,7 +55,6 @@ $("document").ready(function() {
       renderOrder(data);
     })
   }
-
 
   function orderComplete() {
     $.ajax('/restaurant/orders', {
@@ -111,7 +108,6 @@ $("document").ready(function() {
   }
 
   function createOrder(i) {
-    console.log(i);
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -135,15 +131,16 @@ $("document").ready(function() {
       <span class="restaurant-phone">${i.phone_number}</span>
       </div>
       <div class="restaurant-current-time-holder">
-      <p class="restaurant-current-time-elasped">Time complete</p>
-      <span class="restaurant-current-time">${parseTimeStamp(i.time_complete)}<span>
+        <p class="restaurant-current-time-elasped"></p>
       </div>`);
-
 
     object[div.getAttribute("id")] = div;
     div.addEventListener('dragstart', dragStart);
     div.addEventListener('dragend', dragEnd);
     IdArray.push(i.id);
+    if (i.time_complete) {
+      $(".restaurant-current-time-elasped").text("Order-Completed");
+    }
     return div;
   }
 
@@ -216,8 +213,7 @@ $("document").ready(function() {
         })
       } else if (this === document.getElementById("restaurant-complete") && originList[originList.length - 1] === i) {
         $("#restaurant-complete").append($(`#${originList[0]}`));
-        $(`#${originList[0]} .restaurant-time-started`).text(moment());
-        $(`#${originList[0]} .restaurant-time-status`).text("Time Complete");
+        $(`#${originList[0]} .restaurant-current-time-elasped`).text("Order-Completed");
         orderComplete();
       } else if (this === document.getElementById("restaurant-deny-order") && originList[originList.length - 1] === i) {
         denyOrder(originList[0]);
