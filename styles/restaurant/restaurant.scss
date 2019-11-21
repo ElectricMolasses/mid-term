@@ -227,8 +227,7 @@ h2 {
 }
 
 .hovered {
-  background: #f4f4f4;
-  border-style: dashed;
+  box-shadow: 0px 0px 3px 3px $glow-blue;
 }
 
 .invisible {
