@@ -122,6 +122,7 @@ $(() => {
       });
     });
   }));
+<<<<<<< HEAD
 
   const anchorOffset = function() {
     document.querySelectorAll(".user-nav-menu")
@@ -170,6 +171,8 @@ $(() => {
     });
 
 
+=======
+>>>>>>> e39427d251b2d04d9a359f4459a00065938aa29a
 });
 
 
