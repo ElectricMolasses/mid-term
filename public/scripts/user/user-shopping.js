@@ -2,16 +2,11 @@
 const templateOrder = `
 
 <div class="user-order1">
-
   <span class="user-item-name"></span>
   <span class="user-order-quantity"></span>
-  <span>
-    <img class="user-item-remove"src="/resources/minus.png">
-  </span>
   <span class="user-item-price"></span>
-  <span>
-    <img class="user-item-add" src="/resources/plus.png">
-  </span>
+  <img class="user-item-remove"src="/resources/minus.png">
+  <img class="user-item-add" src="/resources/plus.png">
 </div>
 <div class="footer">
   <span class="order-subtotal">Subtotal: </span>
@@ -32,9 +27,9 @@ const totalOrder = (orders) => {
     subTotal += orders[order]["price"] * orders[order]["quantity"];
     totalItem += orders[order]["quantity"];
   }
-  $(".order-subtotal").text(subTotal.toFixed(2));
-  $(".order-tax").text((subTotal * 0.05).toFixed(2));
-  $(".order-total").text((subTotal + (subTotal * 0.05)).toFixed(2));
+  $(".order-subtotal").text(`SubTotal: ${subTotal.toFixed(2)}`);
+  $(".order-tax").text(`Tax: ${(subTotal * 0.05).toFixed(2)}`);
+  $(".order-total").text(`Total: ${(subTotal + (subTotal * 0.05)).toFixed(2)}`);
   $(".item-total").text(totalItem);
   $(".total").text((subTotal + (subTotal * 0.05)).toFixed(2));
 
@@ -44,7 +39,7 @@ const totalOrder = (orders) => {
 
 //add all order items to order cart template
 const addToCart = (orders) => {
-  
+
   for (let order in orders) {
     const $temp = $(templateOrder);
     $temp.find(".user-item-name").append(orders[order]["name"]);
@@ -180,5 +175,5 @@ const orderSum = () => {
     }
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
   });
-  
+
 };
