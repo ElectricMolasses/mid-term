@@ -117,10 +117,13 @@ $(() => {
     });
   }));
 
-  document.querySelectorAll(".user-nav-menu > span")
-    .forEach((element) => {
-      console.log(element);
-    });
+  const anchorOffset = function() {
+    document.querySelectorAll(".user-nav-menu")
+      .forEach((element) => {
+        console.log(element);
+      });
+  };
+  
 });
 
 
