@@ -47,7 +47,7 @@ const addToCart = (orders) => {
     $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
 
 
-    $(".footer, input").detach();
+    $(".footer, user-order-submit").detach();
     $(".user-order").append($temp);
   }
   totalOrder(orders);
@@ -170,7 +170,7 @@ const orderSum = () => {
       orderItems.splice(orderItems.indexOf($item), 1);
       $foodName[$item]["quantity"] = $qty;
       $(this).closest('div').find(".user-order-quantity").text($foodName[$item]["quantity"]);
-      $(this).closest('div').find(".user-item-price").text($foodName[$item]["price"] * $qty);
+      $(this).closest('div').find(".user-item-price").text(($foodName[$item]["price"] * $qty).toFixed(2));
       totalOrder($foodName);
     }
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
