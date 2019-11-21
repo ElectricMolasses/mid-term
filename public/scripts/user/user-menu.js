@@ -39,6 +39,7 @@ $(() => {
           category.push($category);
           
           $temp.find(".user-menu-category"). text($category);
+          // $(".user-menu-category").attr('id', $category);
           $temp.find(".user-item-name").text(data[index].name);
           $temp.find(".user-item-description").text(data[index].description);
           $temp.find(".user-item-price").text((Number(data[index].cost) / 100).toFixed(2));
@@ -62,6 +63,5 @@ $(() => {
 
     });
   }));
-
 
 });
