@@ -242,8 +242,9 @@ h2 {
     grid-template-columns: 33% 33% 33%;
 
     .restaurant-fill {
-      grid-template-columns: 20% 60% 20%;
+      grid-template-columns: 20% 57% 20%;
       grid-template-rows: 50% 50%;
+      grid-column-gap: 1%;
       grid-template-areas:
         "name menu-items time"
         "phone menu-items curtime";
