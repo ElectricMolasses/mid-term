@@ -9,6 +9,7 @@
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   padding: 5px 10px;
+  backdrop-filter: blur(2px);
 
   span {
     margin: 0px 100px;
