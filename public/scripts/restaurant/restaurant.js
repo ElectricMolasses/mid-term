@@ -31,6 +31,7 @@ $("document").ready(function() {
         time_estimate: time
       }
     })
+    $("#restaurant-popup").show();
   }
 
   function loadOrders() {
