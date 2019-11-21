@@ -39,7 +39,11 @@ $(() => {
           category.push($category);
           
           $temp.find(".user-menu-category"). text($category);
+<<<<<<< HEAD
           $temp.find(".user-menu-category").attr('id', $category);
+=======
+          // $(".user-menu-category").attr('id', $category);
+>>>>>>> 5359f42bd832fc880e807004f5727967c4737f31
           $temp.find(".user-item-name").text(data[index].name);
           $temp.find(".user-item-description").text(data[index].description);
           $temp.find(".user-item-price").text((Number(data[index].cost) / 100).toFixed(2));
