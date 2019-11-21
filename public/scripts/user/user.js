@@ -116,14 +116,6 @@ $(() => {
       });
     });
   }));
-
-  const anchorOffset = function() {
-    document.querySelectorAll(".user-nav-menu")
-      .forEach((element) => {
-        console.log(element);
-      });
-  };
-  
 });
 
 
