@@ -8,6 +8,11 @@ let IdArray = [];
 // let denyList = [];
 // let completedList = [];
 // let incomingList = [];
+$(() => {
+  //Insert Blur hide here
+  $(".restaurant-login-form").hide();
+  $("#restaurant-popup").hide();
+})
 
 $("document").ready(function() {
   loadOrders()
@@ -16,8 +21,6 @@ $("document").ready(function() {
   });
 
   function confirmOrderAccepted(id, time) {
-    console.log('id', id);
-    console.log('time', time);
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
@@ -26,6 +29,8 @@ $("document").ready(function() {
         time_estimate: time
       }
     })
+    blurOff();
+    $("#restaurant-popup").show();
   }
 
   function loadOrders() {
@@ -51,12 +56,11 @@ $("document").ready(function() {
     })
   }
 
-
-  function orderComplete() {
+  function orderComplete(id) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
-        orderId: 3,
+        orderId: id,
         orderStatus: 'complete'
       }
     });
@@ -87,6 +91,7 @@ $("document").ready(function() {
         deny.append(createOrder(order));
       } else if (order.time_complete) {
         complete.append(createOrder(order));
+        $(".restaurant-current-time-elasped").text("Order-Completed");
       } else if (order.time_confirmed) {
         inProgress.append(createOrder(order));
       } else {
@@ -104,8 +109,6 @@ $("document").ready(function() {
   }
 
   function createOrder(i) {
-    let time = i.time_placed.slice(0, 19);
-    let timeStamp = time;
     let div = document.createElement('div');
     div.setAttribute('draggable', 'true');
     div.setAttribute('id', `${i.id}`);
@@ -129,10 +132,8 @@ $("document").ready(function() {
       <span class="restaurant-phone">${i.phone_number}</span>
       </div>
       <div class="restaurant-current-time-holder">
-      <p class="restaurant-current-time-elasped">Time Elapsed</p>
-      <span class="restaurant-current-time">${moment(timeStamp).fromNow()}<span>
+        <p class="restaurant-current-time-elasped"></p>
       </div>`);
-
 
     object[div.getAttribute("id")] = div;
     div.addEventListener('dragstart', dragStart);
@@ -199,19 +200,20 @@ $("document").ready(function() {
       if (this === document.getElementById("restaurant-incoming") && originList[originList.length - 1] === i) {
         $("#restaurant-incoming").append($(`#${originList[0]}`));
       } else if (this === document.getElementById("restaurant-in-progress") && originList[originList.length - 1] === i) {
-        $(".restaurant-pop-up").show();
+        $("#restaurant-popup").show();
+        //insert Blur Show here
+        blurOn();
         inprogressList.push(originList[0]);
         $("#restaurant-in-progress").append($(`#${originList[0]}`));
-
         $("#restaurant-pop-submit").on("click", () => {
           confirmOrderAccepted(inprogressList[0], $(".restaurant-time-data").val());
           inprogressList.pop();
         })
       } else if (this === document.getElementById("restaurant-complete") && originList[originList.length - 1] === i) {
+        orderComplete(originList[0]);
         $("#restaurant-complete").append($(`#${originList[0]}`));
-        $(`#${originList[0]} .restaurant-time-started`).text(moment());
-        $(`#${originList[0]} .restaurant-time-status`).text("Time Complete");
-        orderComplete();
+        $(`#${originList[0]} .restaurant-current-time-elasped`).text("Order-Completed");
+
       } else if (this === document.getElementById("restaurant-deny-order") && originList[originList.length - 1] === i) {
         denyOrder(originList[0]);
         $("#restaurant-deny-order").append($(`#${originList[0]}`));
@@ -219,8 +221,7 @@ $("document").ready(function() {
       this.className = "restaurant-empty";
     }
   }
-  $(".restaurant-pop-up").hide();
-  $(".restaurant-login-form").hide();
+
 
 
 
@@ -230,6 +231,47 @@ $("document").ready(function() {
       //animation complete;
     });
   });
+
+
+  const blurOn = function() {
+    const elements = document.querySelectorAll("body > *");
+
+    for (let element of elements) {
+      element.className += " blurred";
+      //element.style.filter = "blur(1px)";
+    }
+
+    let noBlur = document.getElementsByClassName('noblur');
+
+    for (const element of noBlur) {
+      recursiveBlurOff(element);
+    }
+  };
+
+  const recursiveBlurOff = function(element) {
+    element.classList.remove("blurred");
+    //element.style.filter = "blur(0px)";
+
+    for (const child of element.children) {
+      recursiveBlurOff(child);
+    }
+  };
+
+  const blurOff = function() {
+    const elements = document.getElementsByTagName("*");
+
+    for (let element of elements) {
+      element.style.filter = '';
+    }
+  };
+
+  document.querySelector(".restaurant-pop-up-form")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      document.querySelector(".restaurant-pop-up-holder")
+        .style.display = "none";
+        recursiveBlurOff(document.querySelector("HTML"));
+    });
 
 });
 
