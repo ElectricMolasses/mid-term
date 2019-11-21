@@ -116,6 +116,11 @@ $(() => {
       });
     });
   }));
+
+  document.querySelectorAll(".user-nav-menu > span")
+    .forEach((element) => {
+      console.log(element);
+    });
 });
 
 
