@@ -37,7 +37,7 @@
   // Grid to properly space out menu items.
   .user-menu-table {  //SN
     margin-bottom: 2.5px;
-   } 
+   }
   .user-menu-table .user-item {
     // display: grid;
     grid-template-areas: "category"
@@ -79,7 +79,7 @@
       }
     }
   }
-  
+
   a {
     display: inline-block;
   }
@@ -90,7 +90,7 @@
 }
 
 @media only screen and (min-width: 800px) {
-  
+
   .user-nav-menu {
     overflow-x: visible;
     white-space: normal;
@@ -98,7 +98,7 @@
     padding: 5px 10px;
     display: flex;
     justify-content: space-between;
-  
+
     span {
       margin: 0px 0px;
     }

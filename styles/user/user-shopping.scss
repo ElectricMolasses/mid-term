@@ -1,3 +1,10 @@
+.user-close-form {
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 20px;
+  width: 20px;
+}
+
 .user-order {
   text-overflow: auto;
   border-radius: 15px;
@@ -5,8 +12,9 @@
   z-index: 6;
   top: 300px;
   display: none;
-  margin: 0 auto;
-  background: #ffffff;
+  margin: 0;
+  background-color: #f9f9f9;
+  box-shadow: 13px 13px black;
   width: 500px;
   height: auto;
   margin-bottom: 20px;
@@ -36,8 +44,9 @@
   h2 {
     margin-left: 15px;
   }
-
 }
+
+
 
 .user-item-add {
   height: 15px;
