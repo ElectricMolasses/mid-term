@@ -290,63 +290,6 @@ module.exports = (db, twilio) => {
           .status(500)
           .json({ error: err.message });
       });
-
-    /*
-    return db.query(`
-    SELECT id
-    FROM orders;
-    `, [])
-      .then(query => {
-        const dbCache = query.rows;
-        for (const result of dbCache) {
-          if (!restCache.has(result.id)) {
-            // There's been an update, re-render page.
-            newOrders.push(db.query(`
-              SELECT orders.id AS id,
-                CONCAT(users.first_name, ' ',
-                    INITCAP(LEFT(users.last_name, 1))) AS customer,
-                users.phone_number, orders.id,
-                items.name AS order_item, items.cost AS item_cost,
-                time_placed, time_confirmed, time_complete
-              FROM restaurants
-                JOIN orders ON (restaurant_id = restaurants.id)
-                JOIN users ON (customer_id = users.id)
-                JOIN order_items ON (order_id = orders.id)
-                JOIN items ON (item_id = items.id)
-              WHERE orders.id = $1;
-              `, [result.id])
-              .then((order) => {
-                //console.log(order.rows);
-                return order.rows;
-              }));
-          }
-
-        }
-        Promise.all(newOrders)
-          .then((values) => {
-            for (const value of values) {
-              console.log(value[0].id);
-              if (!uniqueNewOrders.hasOwnProperty(value[0].id)) {
-                console.log('NEW', value[0].id);
-                uniqueNewOrders[value[0].id] = value[0];
-                uniqueNewOrders[value[0].id].items = [value[0].order_item];
-              } else {
-                console.log('ADDITION', value[0].id);
-                uniqueNewOrders[value[0].id].items.push(value[0].order_item);
-              }
-            }
-            for (const order of uniqueNewOrders) {
-              console.log(order);
-            }
-          });
-      })
-      .catch(err => {
-        console.log(err.message);
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-      */
   });
 
   router.post("/login", (req, res) => {
