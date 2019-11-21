@@ -49,6 +49,8 @@ $(() => {
   $("body").on('click', ".user-close-form", () => {
     let $this = $(".user-close-form");
     if ($this.closest("div").hasClass('visible')) {
+      blurOff();
+      console.log("blur off has been hit");
       $this.closest("div").hide().removeClass('visible');
     } else {
       $this.closest("div").show().addClass('visible');
@@ -63,9 +65,11 @@ $(() => {
     } else {
       $(".user-order").show().addClass('visible');
       $(".user-order1").show().addClass('visible');
+      blurOn();
     }
   })
   );
+
 
   //LOGOUT: logout, clear all localStorage (total, item, cart)
 
@@ -116,6 +120,45 @@ $(() => {
       });
     });
   }));
+
+  const anchorOffset = function() {
+    document.querySelectorAll(".user-nav-menu")
+      .forEach((element) => {
+        console.log(element);
+      });
+  };
+
+  const blurOn = function() {
+    const elements = document.querySelectorAll("body > *");
+
+    for (let element of elements) {
+      element.className += " blurred";
+      //element.style.filter = "blur(1px)";
+    }
+
+    let noBlur = document.getElementsByClassName('noblur');
+
+    for (const element of noBlur) {
+      recursiveBlurOff(element);
+    }
+  };
+
+  const recursiveBlurOff = function(element) {
+    element.classList.remove("blurred");
+    //element.style.filter = "blur(0px)";
+
+    for (const child of element.children) {
+      recursiveBlurOff(child);
+    }
+  };
+
+  const blurOff = function() {
+    const elements = document.getElementsByTagName("*");
+
+    recursiveBlurOff(document.querySelector("HTML"));
+  };
+
+
 });
 
 
