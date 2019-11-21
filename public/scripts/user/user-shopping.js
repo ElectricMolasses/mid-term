@@ -47,7 +47,8 @@ const addToCart = (orders) => {
     $temp.find(".user-item-price").append((orders[order]["price"] * orders[order]["quantity"]) .toFixed(2));
 
 
-    $(".footer, user-order-submit").detach();
+    $(".footer").detach();
+    $(".user-order-submit").detach();
     $(".user-order").append($temp);
   }
   totalOrder(orders);
@@ -213,11 +214,11 @@ const blurOff = function() {
   }
 };
 
-document.querySelector(".user-order-submit")
-  .addEventListener("submit", (event) => {
-    event.preventDefault();
-    document.querySelector(".user-order")
-      .style.display = "none";
-      recursiveBlurOff(document.querySelector("HTML"));
-  });
+// document.querySelector(".user-order-submit")
+//   .addEventListener("submit", (event) => {
+//     event.preventDefault();
+//     document.querySelector(".user-order")
+//       .style.display = "none";
+//       recursiveBlurOff(document.querySelector("HTML"));
+//   });
 
