@@ -60,7 +60,12 @@ $(() => {
     $(".user-order-now").hide().addClass('visible');
 
     orderSum();
-
+    window.addEventListener("hashchange", anchorOffset);
   });
 
+  const anchorOffset = function() {
+    if (location.hash.length !== 0) {
+      window.scrollTo(window.scrollX, window.scrollY - 90);
+    }
+  };
 });

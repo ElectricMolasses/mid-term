@@ -16,9 +16,9 @@ $(() => {
     dataType: "json"
   }).done((data) => {
     
-    // $(".user-access").hide().removeClass('visible');
+    $(".user-access").hide().removeClass('visible');
     $(".user-email1").text(data.first_name);
-    // $(".user-logged").show().addClass('visible');
+    $(".user-logged").show().addClass('visible');
   });
 
 
@@ -44,7 +44,7 @@ $(() => {
     }
   })
   );
-  console.log(cookies.value)
+
   //SIGNUP BUTTON: get signup form popup
   // $(".user-signup").on('click', (() => {
   //   if ($(".user-signup-form").hasClass('visible')) {
@@ -115,6 +115,7 @@ $(() => {
     }).done((res) => {
       if (res["success"] === "Logged in") {
         $(".user-login-form").hide().removeClass('visible');
+        // $(".user-order-now").trigger('click'); // menu section pop up once click login
       } else {
         alert("Your email/password is wrong. Please try again!");
       }

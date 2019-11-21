@@ -19,6 +19,7 @@
   <script src="scripts/user/user.js"></script>
   <script src="scripts/user/user-menu.js"></script>
   <script src="scripts/user/user-shopping.js"></script>
+  
   <!--Google Fonts-->
   <link href="https://fonts.googleapis.com/css?family=Abel|Bebas+Neue&display=swap" rel="stylesheet">
 </head>
@@ -33,9 +34,9 @@
           <img class="menu-nav-icon" src="/resources/menu-nav-icon.png">
           <img class="user-login" src="/resources/user.png">
           <span class="user-email1"></span>
-          
+
       </span>
-      
+
       <a id="restaurant-name">THAI-TANIC</a>
 
       <!-- //shopping cart always show -->
@@ -50,14 +51,21 @@
 
   <div class="user-menu-navbar">
     <form class="user-logout" value="Log Out"><button type="submit">Log Out</button></form>
+  </div>  
+  <div class="user-orderHolder noblur">
+    <div class="user-order noblur">
+      <img class="user-close-form" src="/resources/cancel.png">
+      <h2>Order Summary</h2>
+      <!--add to order cart  -->
+    </div>
   </div>
     <!-- login/sign up button when not log in -->
     <!-- username and shopping cart when log in -->
   <!-- <nav>
     <div class="user-access">
       <span class="user-login">Login</span>
-      <!-- <span class="user-signup">Sign Up</span> -->
-    <!-- </div> --> 
+      <span class="user-signup">Sign Up</span> -->
+    <!-- </div> -->
 
     <!-- Invisible unless logged in -->
     <!-- <div class="user-logged">
@@ -97,39 +105,24 @@
   <div class="user-nav-menu">
   </div>
 
-
-
   <!-- for restaurant full menu -->
   <!-- loop through menu table and render -->
 
   <div class="user-menu">
   <!-- add menu -->
   </div>
-  <div class="user-orderHolder">
-    <div class="user-order">
-      <img class="user-close-form" src="/resources/cancel.png">
-      <h2>Order Summary</h2>
-      <!--add to order cart  -->
-    </div>
-  </div>
 
 
-  <!-- pop up order confirmation -->
-  <div class="order-confirmation">
+    <!-- pop up order confirmation -->
+    <div class="order-confirmation noblur">
       <img class="user-close-form" src="/resources/cancel.png">
     <h2>Thank you for your order</h2>
     <p class="user-time-confirm"></p>
   </div>
-
-  <div class="user-orderHolder">
-      <div class="user-order">
-        <img class="user-close-form" src="/resources/cancel.png">
-        <h2>Order Summary</h2>
-        <!--add to order cart  -->
-      </div>
-    </div>
-
 </body>
+
+
+
 
 </html>
 

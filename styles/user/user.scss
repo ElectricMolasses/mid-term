@@ -71,7 +71,7 @@ body {
       text-align:center;
       min-width:  1em;
       font-weight: bold;
-  
+
     }
     .total {
       padding-left: -1em;
@@ -119,11 +119,11 @@ body {
   padding: 0px;
   top:30%;
   left: 20%;
-  background-color: $background-user-secondary;  
+  background-color: $background-user-secondary;
   border: 1px solid $uc2;
   border-radius: 3px;
   z-index: 9;
-  
+
   img {
     width: 20px;
     height: 20px;
@@ -152,10 +152,23 @@ body {
 .order-confirmation {
   visibility: hidden;
   position: fixed;
+  border-radius: 15px;
+  border: 1px solid black;
+  box-shadow: 10px 10px rgba(0, 0, 0, 0.516);
   top: 300px;
   background-color: red;
   width: 300px;
   height: auto;
+  font-family: Bebas Neue;
+  font-size: 20px;
+
+  h2 {
+    margin-left: 10px;
+  }
+
+  .user-time-confirm {
+    margin-left: 10px;
+  }
 }
 
 //unhide forms
@@ -167,7 +180,7 @@ body {
 // Scroll bar styling.
 
 ::-webkit-scrollbar {
-  width: 10px;  
+  width: 10px;
   background: #432C04;
 }
 
@@ -184,8 +197,10 @@ body {
   background-color: #21313f;
 }
 
-::-webkit-resizer { 
+::-webkit-resizer {
   background-image: url(/resources/resize.png);
-  background-repeat: no-repeat; 
-  background-position: bottom right; 
+  background-repeat: no-repeat;
+  background-position: bottom right;
 }
+
+
