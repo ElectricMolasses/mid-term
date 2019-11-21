@@ -32,6 +32,7 @@ $("document").ready(function() {
       }
     })
     blurOff();
+    $("#restaurant-popup").show();
   }
 
   function loadOrders() {
