@@ -95,8 +95,9 @@ h2 {
 .restaurant-fill {
   display: grid;
   padding: 0px 10px;
-  grid-template-columns: 15% 15% 40% 15% 15%;
+  grid-template-columns: 14% 14% 40% 14% 14%;
   grid-template-rows: 50% 50%;
+  grid-column-gap: 1%;
   justify-content: space-evenly;
   margin: 10px 10px;
   background-color: $card-bg;
