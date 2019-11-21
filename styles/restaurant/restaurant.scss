@@ -1,6 +1,7 @@
 @import '../base';
 
 body {
+  box-sizing: border-box;
   margin: 0;
   background-color: $background;
   padding-bottom: 40px;
@@ -134,6 +135,69 @@ h2 {
   pointer-events: none;
 }
 
+/* ========================= */
+/* ========================= */
+/* POP UP SECTION STARTS HUR */
+/* ========================= */
+/* ========================= */
+
+.restaurant-pop-up-form-holder {
+  margin: auto;
+  text-align: center;
+  .restaurant-pop-up-form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+
+    * {
+      margin: 5px;
+    }
+
+    input {
+      margin: 3px auto;
+      border-style: none;
+      height: 20px;
+      width: 110px;
+      box-shadow: 0px 0px 1px 1px $glow-blue;
+      text-align: center;
+      border-radius: 3px;
+    }
+
+    button {
+      width: 100px;
+      height: 25px;
+      margin: 5px auto;
+      border-style: none;
+      border-radius: 2px;
+      background: $background-secondary;
+      color: $text-secondary;
+      box-shadow: 0px 0px 1px 1px rgba(4, 130, 158, 0.062);
+    }
+  }
+}
+
+.restaurant-pop-up-holder {
+  z-index: 100;
+  position: fixed;
+  top: 42%;
+  left: 38.5%;
+  width: 25%;
+  height: 16%;
+  background: $card-bg;
+  padding: 10px;
+  color: $text-primary;
+  font-family: monospace;
+  display: flex;
+  border-radius: 3px;
+
+  box-shadow: 0px 0px 1px 1px $card-shadow,
+              inset 0px 0px 1px 1px $card-shadow-inverse;
+}
+
+// * {
+//   filter: blur(1px);
+// }
+
 ::-webkit-scrollbar {
   width: 10px;
   background: $background-secondary;
@@ -210,35 +274,3 @@ h2 {
 
 
 }
-
-/* ========================= */
-/* ========================= */
-/* POP UP SECTION STARTS HUR */
-/* ========================= */
-/* ========================= */
-
-.restaurant-pop-up-form-holder {
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-.restaurant-pop-up-holder {
-  margin: 27em 27em;
-  position: fixed;
-  width: 300px;
-  padding: 5% 7%;
-  background-color: #ffffff;
-  z-index: 9;
-  img {
-    width: 30px;
-    height: 30px;
-    float: right;
-  }
-  input, button {
-    display: block;
-    width: 250px;
-  }
-}
-
-
-
