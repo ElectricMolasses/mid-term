@@ -5,7 +5,7 @@
   background-color: #63422E;
   box-shadow: 0px 0px 0px 1px #63422E;
   opacity: 80%;
-  overflow-x: auto;
+  overflow: scroll;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   padding: 5px 10px;
@@ -20,6 +20,10 @@
       color: #ca9714;
     }
   }
+}
+
+.user-nav-menu::-webkit-scrollbar {
+  display: none;
 }
 
 .user-header-menu {
@@ -88,10 +92,6 @@
   a {
     display: inline-block;
   }
-}
-
-::-webkit-scrollbar {
-  display: none;
 }
 
 @media only screen and (min-width: 800px) {
