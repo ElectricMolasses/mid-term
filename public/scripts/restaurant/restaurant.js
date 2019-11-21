@@ -130,17 +130,16 @@ $("document").ready(function() {
       <span class="restaurant-phone">${i.phone_number}</span>
       </div>
       <div class="restaurant-current-time-holder">
-        <p class="restaurant-current-time-elasped">Time complete</p>
-        <span class="restaurant-current-time"><span>
+        <p class="restaurant-current-time-elasped"></p>
       </div>`);
-    if (i.time_complete) {
-      $(".restaurant-current-time").text(parseTimeStamp(i.time_complete));
-      console.log(i.time_complete);
-    }
+
     object[div.getAttribute("id")] = div;
     div.addEventListener('dragstart', dragStart);
     div.addEventListener('dragend', dragEnd);
     IdArray.push(i.id);
+    if (i.time_complete) {
+      $(".restaurant-current-time-elasped").text("Order-Completed");
+    }
     return div;
   }
 
@@ -212,7 +211,7 @@ $("document").ready(function() {
         })
       } else if (this === document.getElementById("restaurant-complete") && originList[originList.length - 1] === i) {
         $("#restaurant-complete").append($(`#${originList[0]}`));
-        $(`#${originList[0]} .restaurant-current-time`).text(moment());
+        $(`#${originList[0]} .restaurant-current-time-elasped`).text("Order-Completed");
         orderComplete();
       } else if (this === document.getElementById("restaurant-deny-order") && originList[originList.length - 1] === i) {
         denyOrder(originList[0]);
