@@ -11,7 +11,8 @@
 }
 
 .user-order {
-  overflow: auto;
+  overflow-y: auto;
+  height: 450px;
   border-radius: 15px;
   position: fixed;
   margin-right: 100px;
@@ -69,6 +70,10 @@
   .user-item-remove {
     height: 15px;
   }
+}
+
+.blurred {
+  filter: blur(1px);
 }
 
 

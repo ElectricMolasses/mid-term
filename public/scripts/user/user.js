@@ -50,6 +50,7 @@ $(() => {
     let $this = $(".user-close-form");
     if ($this.closest("div").hasClass('visible')) {
       $this.closest("div").hide().removeClass('visible');
+      blurOff();
     } else {
       $this.closest("div").show().addClass('visible');
     }
@@ -66,6 +67,11 @@ $(() => {
     }
   })
   );
+
+  // Blur Background
+  $("order-cart-icon").on("click", (event) => {
+    alert("hello");
+  })
 
   //LOGOUT: logout, clear all localStorage (total, item, cart)
 
@@ -116,6 +122,57 @@ $(() => {
       });
     });
   }));
+<<<<<<< HEAD
+
+  const anchorOffset = function() {
+    document.querySelectorAll(".user-nav-menu")
+      .forEach((element) => {
+        console.log(element);
+      });
+  };
+
+  const blurOn = function() {
+    const elements = document.querySelectorAll("body > *");
+
+    for (let element of elements) {
+      element.className += " blurred";
+      //element.style.filter = "blur(1px)";
+    }
+
+    let noBlur = document.getElementsByClassName('noblur');
+
+    for (const element of noBlur) {
+      recursiveBlurOff(element);
+    }
+  };
+
+  const recursiveBlurOff = function(element) {
+    element.classList.remove("blurred");
+    //element.style.filter = "blur(0px)";
+
+    for (const child of element.children) {
+      recursiveBlurOff(child);
+    }
+  };
+
+  const blurOff = function() {
+    const elements = document.getElementsByTagName("*");
+
+    for (let element of elements) {
+      element.style.filter = '';
+    }
+  };
+
+  document.querySelector(".user-close-form")
+    .addEventListener("click", (event) => {
+      document.querySelector(".user-order")
+        .style.display = "none";
+        recursiveBlurOff(document.querySelector("HTML"));
+    });
+
+
+=======
+>>>>>>> e39427d251b2d04d9a359f4459a00065938aa29a
 });
 
 
