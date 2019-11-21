@@ -9,6 +9,7 @@
   <link type="text/css" href="styles/user/user-menu.css" rel="stylesheet">
   <link type="text/css" href="styles/user/user-shopping.css" rel="stylesheet">
 
+
   <!-- External JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -27,14 +28,14 @@
   <nav class="user-header">
     <div class="user-navbar">
       <a>THAI-TANIC</a>
-      
+
       <!-- //shopping cart always show -->
-      <span class="order-cart-icon"> 
+      <span class="order-cart-icon">
         <img src="/resources/cart-outline.png">
         <a class ="item-total"></a>
         <a class="total"></a>
       </span>
-    </div>  
+    </div>
 
     <!-- login/sign up button when not log in -->
     <!-- username and shopping cart when log in -->
@@ -90,12 +91,14 @@
   <div class="user-menu">
   <!-- add menu -->
   </div>
-
-  <div class="user-order">
+  <div class="user-orderHolder">
+    <div class="user-order">
       <img class="user-close-form" src="/resources/cancel.png">
       <h2>Order Summary</h2>
-    <!--add to order cart  -->
+      <!--add to order cart  -->
+    </div>
   </div>
+
 
   <!-- pop up order confirmation -->
   <div class="order-confirmation">
