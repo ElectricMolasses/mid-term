@@ -56,11 +56,11 @@ $("document").ready(function() {
     })
   }
 
-  function orderComplete() {
+  function orderComplete(id) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',
       data: {
-        orderId: 3,
+        orderId: id,
         orderStatus: 'complete'
       }
     });
@@ -91,6 +91,7 @@ $("document").ready(function() {
         deny.append(createOrder(order));
       } else if (order.time_complete) {
         complete.append(createOrder(order));
+        $(".restaurant-current-time-elasped").text("Order-Completed");
       } else if (order.time_confirmed) {
         inProgress.append(createOrder(order));
       } else {
@@ -138,9 +139,6 @@ $("document").ready(function() {
     div.addEventListener('dragstart', dragStart);
     div.addEventListener('dragend', dragEnd);
     IdArray.push(i.id);
-    if (i.time_complete) {
-      $(".restaurant-current-time-elasped").text("Order-Completed");
-    }
     return div;
   }
 
@@ -212,9 +210,10 @@ $("document").ready(function() {
           inprogressList.pop();
         })
       } else if (this === document.getElementById("restaurant-complete") && originList[originList.length - 1] === i) {
+        orderComplete(originList[0]);
         $("#restaurant-complete").append($(`#${originList[0]}`));
         $(`#${originList[0]} .restaurant-current-time-elasped`).text("Order-Completed");
-        orderComplete();
+
       } else if (this === document.getElementById("restaurant-deny-order") && originList[originList.length - 1] === i) {
         denyOrder(originList[0]);
         $("#restaurant-deny-order").append($(`#${originList[0]}`));
@@ -243,7 +242,7 @@ $("document").ready(function() {
     }
 
     let noBlur = document.getElementsByClassName('noblur');
-    
+
     for (const element of noBlur) {
       recursiveBlurOff(element);
     }
