@@ -64,14 +64,11 @@ $(() => {
     } else {
       $(".user-order").show().addClass('visible');
       $(".user-order1").show().addClass('visible');
+      blurOn();
     }
   })
   );
 
-  // Blur Background
-  $("order-cart-icon").on("click", (event) => {
-    alert("hello");
-  })
 
   //LOGOUT: logout, clear all localStorage (total, item, cart)
 
@@ -122,7 +119,6 @@ $(() => {
       });
     });
   }));
-<<<<<<< HEAD
 
   const anchorOffset = function() {
     document.querySelectorAll(".user-nav-menu")
@@ -171,8 +167,6 @@ $(() => {
     });
 
 
-=======
->>>>>>> e39427d251b2d04d9a359f4459a00065938aa29a
 });
 
 
