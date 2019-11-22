@@ -6,4 +6,6 @@ INSERT INTO users (
   'ALSKVNASDJO@IJE)(!@', 'test', 'user', 'testUser@test.test', 'password', '+19023945393'
 ), (
   'A:SVNOISFJAOWJAWFIO', 'Owner', 'Mcgee', 'businessOwner@buss.ness', 'password', '+19023945393'
+), (
+  'AJS:ODIJQ@FIOJQ@D', 'Eli', 'Kit', 'EliKit@email.com', 'password', '+16044176262'
 );
