@@ -3,10 +3,12 @@ const templateOrder = `
 
 <div class="user-order1">
   <span class="user-item-name"></span>
-  <span class="user-order-quantity"></span>
-  <span class="user-item-price"></span>
   <img class="user-item-remove"src="/resources/minus.png">
+  <span class="user-order-quantity"></span>
   <img class="user-item-add" src="/resources/plus.png">
+  <span class="user-item-price"></span>
+  
+  
 </div>
 <div class="footer">
   <span class="order-subtotal">Subtotal: </span>

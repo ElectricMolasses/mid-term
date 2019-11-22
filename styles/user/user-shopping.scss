@@ -36,7 +36,7 @@
   font-family: Bebas Neue;
   .user-order1 {
     display: grid;
-    grid-template-columns: 56% 10% 20% 7% 7%;
+    grid-template-columns: 56% 7% 10% 7% 20%;
     padding: 10px;
     justify-content: space-between;
     border-bottom: 1px solid rgba(0, 0, 0, 0.164);
@@ -48,15 +48,18 @@
 
     .user-order-quantity {
       text-align: right;
+      justify-self: center;
     }
 
     .user-item-price {
       text-align: right;
-      margin-right: 25px;
+      // margin-right: 25px;
+      justify-self: end;
     }
 
     .user-item-add .user-item-remove {
-      margin: auto;
+      // margin: auto;
+      justify-self: center;
     }
   }
   .footer {
