@@ -81,6 +81,8 @@
   filter: blur(1px);
 }
 
-
-
-
+@media only screen and (max-width: 800px) {
+  user-order {
+    width: 80%
+  }
+}
