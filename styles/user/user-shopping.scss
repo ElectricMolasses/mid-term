@@ -6,6 +6,7 @@
   z-index: 100000;
   width: 40%;
   left: 30%;
+  visibility: hidden;
 }
 
 .user-close-form {
@@ -32,19 +33,38 @@
   margin-bottom: 20px;
   font-family: Bebas Neue;
   .user-order1 {
-    display: flex;
-    flex-flow: row-reverse;
+    display: grid;
+    grid-template-columns: 60% 10% 20% 5% 5%;
     padding: 10px;
     justify-content: space-between;
-    border: 1px solid black;
-    border-left: none;
-    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.164);
     margin: 10px;
+
+    .user-item-name {
+      text-align: left;
+    }
+
+    .user-order-quantity {
+      text-align: right;
+    }
+
+    .user-item-price {
+      text-align: right;
+      margin-right: 25px;
+    }
+
+    .user-item-add .user-item-remove {
+      margin: auto;
+    }
   }
-  .footer span{
-    display: block;
-    margin-left: 10px;
-    font-size: 20px;
+  .footer {  
+    margin-top: 40px;
+  
+    span {
+      display: block;
+      margin-left: 10px;
+      font-size: 20px;
+    }
   }
   input {
     background-color: #f9f9f9; /* Green */
@@ -69,7 +89,6 @@
 
   .user-item-add {
     height: 15px;
-    margin-left: 100px;
   }
 
   .user-item-remove {
@@ -79,10 +98,4 @@
 
 .blurred {
   filter: blur(1px);
-}
-
-@media only screen and (max-width: 800px) {
-  user-order {
-    width: 80%
-  }
 }
