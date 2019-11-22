@@ -131,19 +131,7 @@ const orderSum = () => {
         .then((res) => {
           console.log(res);
           id = res;
-          console.log(id);
-          // let intervId = setInterval(() => {
-          //   console.log("Checking for response.");
-          //   checkData().then(res => {
-          //     if (res) {
-          //       clearInterval(intervId);
-          //     }
-          //   })
-          //     .fail((err) => {
-          //       console.log(err);
-          //     });
-          // }, 5000);
-
+          console.log(id);;
           repeatCheck();
         });
 
@@ -168,9 +156,9 @@ const orderSum = () => {
           console.log("Response received.");
           if (data.time_estimate !== null) {
             const time =
-            moment(data.time_estimate.replace('T', ' ').slice(0, 19));
+            moment(data.time_estimate.replace('T', ' ')).fromNow();
             console.log(time);
-            console.log(moment(time).local())
+            console.log(moment(time).local());
             $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
             return true;
           }
