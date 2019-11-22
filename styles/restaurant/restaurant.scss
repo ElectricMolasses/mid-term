@@ -148,7 +148,7 @@ h2 {
   .restaurant-pop-up-form {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 100%;
 
     * {
       margin: 5px;
@@ -165,7 +165,7 @@ h2 {
     }
 
     button {
-      width: 100px;
+      width: 66%;
       height: 25px;
       margin: 5px auto;
       border-style: none;
@@ -183,7 +183,8 @@ h2 {
   top: 42%;
   left: 42.5%;
   width: 15%;
-  height: 16%;
+  height: 100px;
+  max-width: 150px;
   background: $card-bg;
   padding: 10px;
   color: $text-primary;
