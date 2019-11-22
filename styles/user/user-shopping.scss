@@ -3,7 +3,7 @@
   position: fixed;
   display: flex;
   justify-content: center;
-  height: 450px;
+  height: 375px;
   z-index: 100000;
   width: 40%;
   left: 30%;
@@ -18,7 +18,7 @@
 
 .user-order {
   overflow-y: auto;
-  height: 450px;
+  height: 375px;
   border-radius: 15px;
   position: fixed;
   margin-right: 100px;
@@ -34,20 +34,23 @@
   font-family: Bebas Neue;
   .user-order1 {
     display: flex;
-    flex-flow: row-reverse;
-    padding: 10px;
     justify-content: space-between;
+    padding: 10px;
     border: 1px solid black;
     border-left: none;
     border-right: none;
     margin: 10px;
   }
-  .footer span{
-    display: block;
-    margin-left: 10px;
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
     font-size: 20px;
+    margin-right: 3%;
   }
+
   input {
+    align-self: flex-end;
     background-color: #f9f9f9; /* Green */
     border: 2px solid black;
     border-radius: 10px;;
@@ -58,10 +61,11 @@
     display: inline-block;
     font-size: 16px;
     font-family: Bebas Neue;
-    margin-left: 10px;
+    margin-left: 70%;
     margin-bottom: 10px;
     margin-top: 10px;
     font-size: 18px;
+    cursor: pointer;
   }
 
   h2 {
@@ -70,17 +74,35 @@
 
   .user-item-add {
     height: 15px;
-    margin-left: 100px;
+    // order: 2;
   }
 
   .user-item-remove {
     height: 15px;
+  }
+
+  .user-text {
+    align-self: flex-end;
+    margin: 0;
+  }
+
+  .order-subtotal {
+    margin-left: 7px;
+  }
+
+  .order-tax {
+    margin-left: 60px;
+  }
+
+  .order-total {
+    margin-left: 30px;
   }
 }
 
 .blurred {
   filter: blur(1px);
 }
+
 
 
 

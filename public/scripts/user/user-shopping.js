@@ -3,15 +3,15 @@ const templateOrder = `
 
 <div class="user-order1">
   <span class="user-item-name"></span>
-  <span class="user-order-quantity"></span>
-  <span class="user-item-price"></span>
-  <img class="user-item-remove"src="/resources/minus.png">
   <img class="user-item-add" src="/resources/plus.png">
+  <span class="user-order-quantity"></span>
+  <img class="user-item-remove"src="/resources/minus.png">
+  <span class="user-item-price"></span>
 </div>
 <div class="footer">
-  <span class="order-subtotal">Subtotal: </span>
-  <span class="order-tax">Tax: </span>
-  <span class="order-total">Total: </span>
+  <p class="user-text">Subtotal: <span class="order-subtotal"></span></p>
+  <p class="user-text">Tax: <span class="order-tax"></span></p>
+  <p class="user-text">Total: <span class="order-total"></span></p>
 </div>
 <input class="user-order-submit" type="submit" value="Place Order"></input>
 `;
@@ -27,9 +27,9 @@ const totalOrder = (orders) => {
     subTotal += orders[order]["price"] * orders[order]["quantity"];
     totalItem += orders[order]["quantity"];
   }
-  $(".order-subtotal").text(`SubTotal: ${subTotal.toFixed(2)}`);
-  $(".order-tax").text(`Tax: ${(subTotal * 0.05).toFixed(2)}`);
-  $(".order-total").text(`Total: ${(subTotal + (subTotal * 0.05)).toFixed(2)}`);
+  $(".order-subtotal").text(`${subTotal.toFixed(2)}`);
+  $(".order-tax").text(`${(subTotal * 0.05).toFixed(2)}`);
+  $(".order-total").text(`${(subTotal + (subTotal * 0.05)).toFixed(2)}`);
   $(".cart").attr('data',`${totalItem}`);
   $(".total").text((subTotal + (subTotal * 0.05)).toFixed(2));
 
