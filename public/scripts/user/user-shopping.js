@@ -115,6 +115,11 @@ const orderSum = () => {
     let id;
     $(".user-order-submit").on('click', ((event) => {
       event.preventDefault();
+      $(".user-time-confirm").text(`Restaurant is confirming your order`);
+      //get update on order confirmation
+      $(".user-order").hide().removeClass('visible');
+      $(".order-confirmation").show().addClass('visible');
+      blurOff();
       localStorage.clear();
       $.ajax("user/order", {
         method: 'POST',
@@ -123,13 +128,43 @@ const orderSum = () => {
           items: orderItems,
         }
       })
-        .done((res) => {
+        .then((res) => {
+          console.log(res);
           id = res;
-          console.log(id);
-          $(".user-time-confirm").text(`Restaurant is confirming your order`);
-          //get update on order confirmation
-
+          console.log(id);;
+          repeatCheck();
         });
+
+      // eslint-disable-next-line func-style
+      function repeatCheck() {
+        setTimeout(() => {
+          checkData().then(res => {
+            if (!res) repeatCheck();
+          });
+        }, 5000);
+      }
+
+      // eslint-disable-next-line func-style
+      function checkData() {
+        return $.ajax('/user/update', {
+          method: 'POST',
+          dataType: "json",
+          data: {
+            order: id
+          }
+        }).then((data) => {
+          console.log("Response received.");
+          if (data.time_estimate !== null) {
+            const time =
+            moment(data.time_estimate.replace('T', ' ')).fromNow();
+            console.log(time);
+            console.log(moment(time).local());
+            $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
+            return true;
+          }
+          return false;
+        });
+<<<<<<< HEAD
       $(".user-order").hide().removeClass('visible');
       $(".user-orderHolder").hide().removeClass('visible');
       $(".order-confirmation").show().addClass('visible');
@@ -137,20 +172,11 @@ const orderSum = () => {
         checkData();
       }, 5000);
     }));
+=======
+      }
+>>>>>>> 4a493f67cf35046b3184db561e4a86b4820fdaae
 
-    function checkData() {
-      $.ajax('/user/update', {
-        method: 'POST',
-        dataType: "json",
-        data: {
-          order: id
-        }
-      }).then((data) => {
-        const time = (data.time_estimate).substring(11, 16);
-        console.log('test');
-        $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
-      });
-    }
+    }))
   });
 
   //remove items from order cart
@@ -178,7 +204,6 @@ const orderSum = () => {
     }
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
   });
-
 };
 
 

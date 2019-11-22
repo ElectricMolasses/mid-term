@@ -161,7 +161,6 @@ module.exports = (db, twilio) => {
             Promise.all(promises)
               .then((query) => {
                 console.log('THE QUERY', query);
-                res.send('Restaurant is confirming your order');
                 // Bother twilio to send an SMS here.
                 twilio.messages.create({
                   body: 'A new order has been requested.',
