@@ -106,7 +106,7 @@ module.exports = (db, twilio) => {
         `, [request.orderId, estimate])
           .then(query => getUserNumber(query.rows[0].id))
           .then((id) => {
-            console.log(id);
+            console.log('Order Confirmed!')
             res.json({ status: 'success' });
             twilio.messages.create({
               body: `Your order has been confirmed.

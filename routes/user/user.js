@@ -164,7 +164,7 @@ module.exports = (db, twilio) => {
                 // Bother twilio to send an SMS here.
                 twilio.messages.create({
                   body: 'A new order has been requested.',
-                  to: phone_number,
+                  to: '+19023945393',
                   from: '+12029029010'
                 })
                   .then((mes) => {
