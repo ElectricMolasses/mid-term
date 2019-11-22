@@ -10,7 +10,6 @@ $(() => {
   $(".user-logout").hide();
 
   let loggedIn = false; //check login to switch login/logout
-
   //get "/" when user cookie exists
 
   $.ajax('/user/profile', {
@@ -39,12 +38,12 @@ $(() => {
     event.preventDefault();
     if (loggedIn) {
       localStorage.clear();
+      loggedIn = false;   //switch to login feature on user-menu-navbar
       $.ajax('/user/logout', {
         method: 'POST',
         dataType: "json",
       }).done((res) => {
-        console.log(res);
-        loggedIn = true;   //switch to login feature on user-menu-navbar
+        // loggedIn = false;   //switch to login feature on user-menu-navbar
       });
       $(".user-email1").empty();
     } else {
@@ -53,9 +52,8 @@ $(() => {
       } else {
         $(".user-login-form").show().addClass('visible');
       }
-  }
-}));
-
+    }
+  }));
   //SIGNUP BUTTON: get signup form popup
   // $(".user-signup").on('click', (() => {
   //   if ($(".user-signup-form").hasClass('visible')) {
@@ -127,7 +125,6 @@ $(() => {
         $(".user-access").hide().removeClass('visible');
         $(".user-email1").text(data.first_name);
         $(".user-logged").show().addClass('visible');
-
       });
     });
   }));

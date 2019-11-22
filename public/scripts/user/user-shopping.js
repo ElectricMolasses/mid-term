@@ -3,10 +3,12 @@ const templateOrder = `
 
 <div class="user-order1">
   <span class="user-item-name"></span>
-  <span class="user-order-quantity"></span>
-  <span class="user-item-price"></span>
   <img class="user-item-remove"src="/resources/minus.png">
+  <span class="user-order-quantity"></span>
   <img class="user-item-add" src="/resources/plus.png">
+  <span class="user-item-price"></span>
+  
+  
 </div>
 <div class="footer">
   <span class="order-subtotal">Subtotal: </span>
@@ -105,7 +107,6 @@ const orderSum = () => {
 
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
 
-
     //submit order to server then send thankyou message to customer waiting for
     //confirmation from restarant. Estimated complete time of the order will show up
     //in the interval of 5s.
@@ -117,6 +118,8 @@ const orderSum = () => {
       event.preventDefault();
       $(".cart").attr('data',`0`);
       $(".total").text("0.00");
+      $foodName = {};
+      
       $(".user-time-confirm").text(`Restaurant is confirming your order`);
       //get update on order confirmation
       $(".user-order").hide().removeClass('visible');
@@ -132,7 +135,8 @@ const orderSum = () => {
         .then((res) => {
           console.log(res);
           id = res;
-          console.log(id);;
+          console.log(id);
+          orderItems = [];
           repeatCheck();
         });
 
