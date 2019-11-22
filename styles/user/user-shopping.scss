@@ -28,24 +28,35 @@
   background-color: #f9f9f9;
   border: 1px solid black;
   box-shadow: 7px 7px 0px 7px rgba(0, 0, 0, 0.516);
-  width: 500px;
   margin-bottom: 20px;
   font-family: Bebas Neue;
   .user-order1 {
-    display: flex;
-    flex-flow: row-reverse;
-    padding: 10px;
-    justify-content: space-between;
-    border: 1px solid black;
-    border-left: none;
-    border-right: none;
-    margin: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.192);
+    margin-top: 5px;
+    width: 350px;
+    display: grid;
+    grid-template-columns: 60% 10% 10% 10% 10%;
+
+    * {
+      margin: 2px auto;
+    }
+
+    .user-item-name {
+      margin-left: 5px;
+      text-align: left;
+    }
   }
-  .footer span{
-    display: block;
-    margin-left: 10px;
-    font-size: 20px;
+
+  .footer {
+    margin-top: 40px;
+
+    span {
+      display: block;
+      margin-left: 10px;
+      font-size: 20px;
+    }
   }
+
   input {
     background-color: #f9f9f9; /* Green */
     border: 2px solid black;
@@ -69,7 +80,6 @@
 
   .user-item-add {
     height: 15px;
-    margin-left: 100px;
   }
 
   .user-item-remove {
@@ -79,10 +89,4 @@
 
 .blurred {
   filter: blur(1px);
-}
-
-@media only screen and (max-width: 800px) {
-  user-order {
-    width: 80%
-  }
 }

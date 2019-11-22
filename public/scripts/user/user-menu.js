@@ -56,7 +56,6 @@ $(() => {
       // $(".user-nav-menu span").attr("href",`#${category[index]}`);
     });
 
-
     $(".user-order-now").hide().addClass('visible');
 
     orderSum();
