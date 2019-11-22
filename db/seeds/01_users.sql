@@ -7,5 +7,5 @@ INSERT INTO users (
 ), (
   'A:SVNOISFJAOWJAWFIO', 'Owner', 'Mcgee', 'businessOwner@buss.ness', 'password', '+19023945393'
 ), (
-  'AJS:ODIJQ@FIOJQ@D', 'Eli', 'Kit', 'EliKit@email.com', 'password', '+16044176262'
+  'AJS:ODIJQ@FIOJQ@D', 'Eli', 'Kit', 'elikit@email.com', 'password', '+16044176262'
 );
