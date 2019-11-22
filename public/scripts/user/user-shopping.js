@@ -128,28 +128,57 @@ const orderSum = () => {
           items: orderItems,
         }
       })
-        .done((res) => {
+        .then((res) => {
+          console.log(res);
           id = res;
           console.log(id);
-          setInterval(() => {
-            checkData();
-          }, 5000);
-        });
-    }));
+          // let intervId = setInterval(() => {
+          //   console.log("Checking for response.");
+          //   checkData().then(res => {
+          //     if (res) {
+          //       clearInterval(intervId);
+          //     }
+          //   })
+          //     .fail((err) => {
+          //       console.log(err);
+          //     });
+          // }, 5000);
 
-    function checkData() {
-      $.ajax('/user/update', {
-        method: 'POST',
-        dataType: "json",
-        data: {
-          order: id
-        }
-      }).then((data) => {
-        const time = data.time_estimate;
-        console.log('test');
-        $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
-      });
-    }
+          repeatCheck();
+        });
+
+      // eslint-disable-next-line func-style
+      function repeatCheck() {
+        setTimeout(() => {
+          checkData().then(res => {
+            if (!res) repeatCheck();
+          });
+        }, 5000);
+      }
+
+      // eslint-disable-next-line func-style
+      function checkData() {
+        return $.ajax('/user/update', {
+          method: 'POST',
+          dataType: "json",
+          data: {
+            order: id
+          }
+        }).then((data) => {
+          console.log("Response received.");
+          if (data.time_estimate !== null) {
+            const time =
+            moment(data.time_estimate.replace('T', ' ').slice(0, 19));
+            console.log(time);
+            console.log(moment(time).local())
+            $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
+            return true;
+          }
+          return false;
+        });
+      }
+
+    }))
   });
 
   //remove items from order cart
