@@ -115,6 +115,8 @@ const orderSum = () => {
     let id;
     $(".user-order-submit").on('click', ((event) => {
       event.preventDefault();
+      $(".cart").attr('data',`0`);
+      $(".total").text("0.00");
       $(".user-time-confirm").text(`Restaurant is confirming your order`);
       //get update on order confirmation
       $(".user-order").hide().removeClass('visible');
