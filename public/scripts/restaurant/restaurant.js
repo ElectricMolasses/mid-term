@@ -20,6 +20,11 @@ $("document").ready(function() {
     setInterval(sendOrderIds, 10000);
   });
 
+  document.querySelector('.restaurant-nav-title')
+    .addEventListener('click', () => {
+      document.getElementById('thx').play();
+    });
+
   function confirmOrderAccepted(id, time) {
     $.ajax('/restaurant/orders', {
       method: 'PUT',

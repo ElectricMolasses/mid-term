@@ -121,7 +121,6 @@ const orderSum = () => {
       //get update on order confirmation
       $(".user-order").hide().removeClass('visible');
       $(".order-confirmation").show().addClass('visible');
-      blurOff();
       localStorage.clear();
       $.ajax("user/order", {
         method: 'POST',
@@ -223,18 +222,7 @@ const recursiveBlurOff = function(element) {
 };
 
 const blurOff = function() {
-  const elements = document.getElementsByTagName("*");
-
-  for (let element of elements) {
-    element.style.filter = '';
-  }
+  recursiveBlurOff(document.querySelector("HTML"))
 };
 
-// document.querySelector(".user-order-submit")
-//   .addEventListener("submit", (event) => {
-//     event.preventDefault();
-//     document.querySelector(".user-order")
-//       .style.display = "none";
-//       recursiveBlurOff(document.querySelector("HTML"));
-//   });
 

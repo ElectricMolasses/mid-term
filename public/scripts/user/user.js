@@ -8,7 +8,7 @@ $(() => {
   $(".item-total").text(item);
   $(".total").text(total);
   $(".user-logout").hide();
-  
+
   let loggedIn = false; //check login to switch login/logout
 
   //get "/" when user cookie exists
@@ -17,7 +17,7 @@ $(() => {
     method: 'GET',
     dataType: "json"
   }).done((data) => {
-    
+
     $(".user-access").hide().removeClass('visible');
     $(".user-email1").text(data.first_name);
     $(".user-logged").show().addClass('visible');
@@ -32,7 +32,7 @@ $(() => {
     }
   })
 
-  
+
   //LOGIN BUTTON: get login form popup
 
   $(".user-login").on('click', ((event) => {
@@ -73,6 +73,7 @@ $(() => {
     let $this = $(".user-close-form");
     if ($this.closest("div").hasClass('visible')) {
       $this.closest("div").hide().removeClass('visible');
+      blurOff();
     } else {
       $this.closest("div").show().addClass('visible');
     }
@@ -86,6 +87,7 @@ $(() => {
     } else {
       $(".user-order").show().addClass('visible');
       $(".user-order1").show().addClass('visible');
+      blurOn();
     }
   })
   );
@@ -125,12 +127,12 @@ $(() => {
         $(".user-access").hide().removeClass('visible');
         $(".user-email1").text(data.first_name);
         $(".user-logged").show().addClass('visible');
-        
+
       });
     });
   }));
-  
-  
+
+
 
   document.querySelectorAll(".user-nav-menu > span")
     .forEach((element) => {
