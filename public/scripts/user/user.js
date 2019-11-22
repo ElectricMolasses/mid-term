@@ -8,6 +8,8 @@ $(() => {
   $(".item-total").text(item);
   $(".total").text(total);
   $(".user-logout").hide();
+  
+  let loggedIn = false; //check login to switch login/logout
 
   //get "/" when user cookie exists
 
@@ -32,18 +34,27 @@ $(() => {
 
 
   //LOGIN BUTTON: get login form popup
+
   $(".user-login").on('click', ((event) => {
     event.preventDefault();
-    if ($(".user-login-form").hasClass('visible')) {
-      $(".user-login-form").hide().removeClass('visible');
-
+    if (loggedIn) {
+      localStorage.clear();
+      $.ajax('/user/logout', {
+        method: 'POST',
+        dataType: "json",
+      }).done((res) => {
+        console.log(res);
+        loggedIn = true;   //switch to login feature on user-menu-navbar
+      });
+      $(".user-email1").empty();
     } else {
-      $(".user-login-form").show().addClass('visible');
-
-      // $(".user-signup-form").hide().removeClass('visible');
-    }
-  })
-  );
+      if ($(".user-login-form").hasClass('visible')) {
+        $(".user-login-form").hide().removeClass('visible');
+      } else {
+        $(".user-login-form").show().addClass('visible');
+      }
+  }
+}));
 
   //SIGNUP BUTTON: get signup form popup
   // $(".user-signup").on('click', (() => {
@@ -85,21 +96,6 @@ $(() => {
   })
   );
 
-  //LOGOUT: logout, clear all localStorage (total, item, cart)
-
-  $(".user-logout").on('click', (() => {
-    localStorage.clear();
-    $.ajax('/user/logout', {
-      method: 'POST',
-      dataType: "json",
-    }).done((res) => {
-      console.log(res);
-      // $(".user-logout").removeClass(".user-logout")
-      // $(".user-logout").addClass(".user-login")
-    });
-  }));
-
-
   /*POST signin data.
   Login button changed to logged - DONE
   Hide Register button - DONE
@@ -108,6 +104,8 @@ $(() => {
   */
 
   let $button = $(".user-login-button");
+
+
   $button.on('click', ((event) => {
     event.preventDefault();
 
@@ -121,7 +119,7 @@ $(() => {
     }).done((res) => {
       if (res["success"] === "Logged in") {
         $(".user-login-form").hide().removeClass('visible');
-        // $(".user-order-now").trigger('click'); // menu section pop up once click login
+        loggedIn = true; // switch to logout feature on user-menu-navbar
       } else {
         alert("Your email/password is wrong. Please try again!");
       }
@@ -137,6 +135,8 @@ $(() => {
       });
     });
   }));
+  
+  
 
   document.querySelectorAll(".user-nav-menu > span")
     .forEach((element) => {
