@@ -130,10 +130,9 @@ const orderSum = () => {
           //get update on order confirmation
 
         });
-      blurOff();
       $(".user-order").hide().removeClass('visible');
+      $(".user-orderHolder").hide().removeClass('visible');
       $(".order-confirmation").show().addClass('visible');
-      blurOff();
       setInterval(() => {
         checkData();
       }, 5000);
@@ -182,43 +181,5 @@ const orderSum = () => {
 
 };
 
-const blurOn = function() {
-  const elements = document.querySelectorAll("body > *");
 
-  for (let element of elements) {
-    element.className += " blurred";
-    //element.style.filter = "blur(1px)";
-  }
-
-  let noBlur = document.getElementsByClassName('noblur');
-
-  for (const element of noBlur) {
-    recursiveBlurOff(element);
-  }
-};
-
-const recursiveBlurOff = function(element) {
-  element.classList.remove("blurred");
-  //element.style.filter = "blur(0px)";
-
-  for (const child of element.children) {
-    recursiveBlurOff(child);
-  }
-};
-
-const blurOff = function() {
-  const elements = document.getElementsByTagName("*");
-
-  for (let element of elements) {
-    element.style.filter = '';
-  }
-};
-
-// document.querySelector(".user-order-submit")
-//   .addEventListener("submit", (event) => {
-//     event.preventDefault();
-//     document.querySelector(".user-order")
-//       .style.display = "none";
-//       recursiveBlurOff(document.querySelector("HTML"));
-//   });
 

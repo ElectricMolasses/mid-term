@@ -15,7 +15,7 @@ $(() => {
     method: 'GET',
     dataType: "json"
   }).done((data) => {
-    
+
     $(".user-access").hide().removeClass('visible');
     $(".user-email1").text(data.first_name);
     $(".user-logged").show().addClass('visible');
@@ -30,7 +30,7 @@ $(() => {
     }
   })
 
-  
+
   //LOGIN BUTTON: get login form popup
   $(".user-login").on('click', ((event) => {
     event.preventDefault();
@@ -62,8 +62,10 @@ $(() => {
     let $this = $(".user-close-form");
     if ($this.closest("div").hasClass('visible')) {
       $this.closest("div").hide().removeClass('visible');
+      blurOff();
     } else {
       $this.closest("div").show().addClass('visible');
+      blurOn()
     }
   });
 
@@ -72,9 +74,13 @@ $(() => {
   $(".order-cart-icon").on('click', ((event) => {
     if ($(".user-order").hasClass('visible')) {
       $(".user-order").hide().removeClass('visible');
+      $(".user-orderHolder").hide().removeClass('visible');
+      blurOff();
     } else {
       $(".user-order").show().addClass('visible');
       $(".user-order1").show().addClass('visible');
+      $(".user-orderHolder").show().addClass('visible');
+      blurOn()
     }
   })
   );
@@ -127,7 +133,7 @@ $(() => {
         $(".user-access").hide().removeClass('visible');
         $(".user-email1").text(data.first_name);
         $(".user-logged").show().addClass('visible');
-        
+
       });
     });
   }));
@@ -136,6 +142,35 @@ $(() => {
     .forEach((element) => {
       console.log(element);
     });
+
+    const blurOn = function() {
+      const elements = document.querySelectorAll("body > *");
+
+      for (let element of elements) {
+        element.className += " blurred";
+        //element.style.filter = "blur(1px)";
+      }
+
+      let noBlur = document.getElementsByClassName('noblur');
+
+      for (const element of noBlur) {
+        recursiveBlurOff(element);
+      }
+    };
+
+    const recursiveBlurOff = function(element) {
+      element.classList.remove("blurred");
+      //element.style.filter = "blur(0px)";
+
+      for (const child of element.children) {
+        recursiveBlurOff(child);
+      }
+    };
+
+    const blurOff = function() {
+      // const elements = document.getElementsByTagName("*");
+      recursiveBlurOff(document.querySelector("HTML"));
+    };
 });
 
 
