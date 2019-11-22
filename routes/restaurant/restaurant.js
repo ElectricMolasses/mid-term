@@ -200,10 +200,11 @@ module.exports = (db, twilio) => {
           .then(query => getUserNumber(query.rows[0].id))
           .then(id => {
             res.json({ status: 'success' });
+            console.log(id);
             twilio.messages.create({
               body: `Your order has been complete and is ready for pick up!`,
               to: id.phone_number,
-              from: `+120329029010`
+              from: `+12029029010`
             })
               .then((mes) => {
                 console.log(mes.sid);
