@@ -115,6 +115,11 @@ const orderSum = () => {
     let id;
     $(".user-order-submit").on('click', ((event) => {
       event.preventDefault();
+      $(".user-time-confirm").text(`Restaurant is confirming your order`);
+      //get update on order confirmation
+      $(".user-order").hide().removeClass('visible');
+      $(".order-confirmation").show().addClass('visible');
+      blurOff();
       localStorage.clear();
       $.ajax("user/order", {
         method: 'POST',
@@ -126,17 +131,10 @@ const orderSum = () => {
         .done((res) => {
           id = res;
           console.log(id);
-          $(".user-time-confirm").text(`Restaurant is confirming your order`);
-          //get update on order confirmation
-
+          setInterval(() => {
+            checkData();
+          }, 5000);
         });
-      blurOff();
-      $(".user-order").hide().removeClass('visible');
-      $(".order-confirmation").show().addClass('visible');
-      blurOff();
-      setInterval(() => {
-        checkData();
-      }, 5000);
     }));
 
     function checkData() {
@@ -147,7 +145,7 @@ const orderSum = () => {
           order: id
         }
       }).then((data) => {
-        const time = (data.time_estimate).substring(11, 16);
+        const time = data.time_estimate;
         console.log('test');
         $(".user-time-confirm").text(`Your order was confirmed. The estimate pick-up time is ${time}.`);
       });
@@ -179,7 +177,6 @@ const orderSum = () => {
     }
     localStorage.setItem('sessionCart', JSON.stringify($foodName));
   });
-
 };
 
 const blurOn = function() {
